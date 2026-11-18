@@ -15,12 +15,12 @@ Cada integrante tiene **un rol XP**, **una historia del framework**, **historias
 
 | # | Rol XP | Parte 1 · Framework | Parte 2 · Aplicación | Diagrama / documento | Pts |
 |---|---|---|---|---|---|
-| 1 | Entrenador (Coach) | XP-01 Núcleo y directrices (3) | HU-06 Autómata (3) · HU-14 Bomba (2) | Grafo con gramática del autómata, guía XP, estándar de código | 8 |
-| 2 | Cliente | XP-02 Historias de usuario (2) | HU-01 Autenticación (3) · HU-09 Vuelo y fuente de poder (2) · HU-15 Configuración por archivo (2) | Diagrama de casos de uso | 9 |
-| 3 | Encargado de pruebas | XP-05 Pruebas y aceptación (3) | HU-03 Generar `Grupo##.csv` (3) · HU-04 Leer con loading (3) | Reporte de pruebas de aceptación | 9 |
-| 4 | Encargado de seguimiento | XP-03 Plan de entregas y velocidad (3) | HU-05 Hormigas y alimentos (3) · HU-10 Idiomas (2) · HU-02 Presentar equipo (1) | Diagrama de clases, plan de entregas | 9 |
-| 5 | Consultor | XP-04 Diseño: metáfora y CRC (2) | HU-07 IA buscar (3) · HU-08 Armas (2) · HU-13 Docker (2) | Diagrama de arquitectura, tarjetas CRC, spikes | 9 |
-| 6 | Gestor | XP-06 Equipo, parejas e integración continua (3) | HU-11 Pantallas del hormiguero (3) · HU-12 Persistencia (3) | Modelo entidad-relación, actas de reuniones | 9 |
+| 1 · Sebastián Jibaja | Entrenador (Coach) | XP-01 Núcleo y directrices (3) | HU-06 Autómata (3) · HU-14 Bomba (2) | Grafo con gramática del autómata, guía XP, estándar de código | 8 |
+| 2 · Karen Mosquera | Cliente | XP-02 Historias de usuario (2) | HU-01 Autenticación (3) · HU-09 Vuelo y fuente de poder (2) · HU-15 Configuración por archivo (2) | Diagrama de casos de uso | 9 |
+| 3 · Kened Lugmaña | Encargado de pruebas | XP-05 Pruebas y aceptación (3) | HU-03 Generar `Grupo##.csv` (3) · HU-04 Leer con loading (3) | Reporte de pruebas de aceptación | 9 |
+| 4 · David Jumbo | Encargado de seguimiento | XP-03 Plan de entregas y velocidad (3) | HU-05 Hormigas y alimentos (3) · HU-10 Idiomas (2) · HU-02 Presentar equipo (1) | Diagrama de clases, plan de entregas | 9 |
+| 5 · Daniel Mera | Consultor | XP-04 Diseño: metáfora y CRC (2) | HU-07 IA buscar (3) · HU-08 Armas (2) · HU-13 Docker (2) | Diagrama de arquitectura, tarjetas CRC, spikes | 9 |
+| 6 · Leonel Morales | Gestor | XP-06 Equipo, parejas e integración continua (3) | HU-11 Pantallas del hormiguero (3) · HU-12 Persistencia (3) | Modelo entidad-relación, actas de reuniones | 9 |
 
 Total: 16 puntos de framework + 37 de aplicación = 53 puntos.
 
