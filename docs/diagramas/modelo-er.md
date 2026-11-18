@@ -82,7 +82,7 @@ id;nombre_usuario;clave_hash;creado_en
 
 ```text
 id;hormiguero_id;tipo;sexo;estado;creada_en
-1;1;HSoldado;HEMBRA;TRANSFORMADA;2026-11-16 10:16:40
+1;1;HZángano;HEMBRA;TRANSFORMADA;2026-11-16 10:16:40
 2;1;HLarva;MACHO;VIVA;2026-11-16 10:17:05
 ```
 

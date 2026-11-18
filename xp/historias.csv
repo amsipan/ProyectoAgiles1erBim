@@ -1,4 +1,4 @@
-# Backlog XP del proyecto ANTDRON (lo leen los comandos del framework: antdron xp backlog | plan | velocidad | aceptacion).
+# Backlog XP del proyecto ANTDRON (lo leen los comandos del framework: xp backlog | plan | velocidad | aceptacion).
 # Proyecto de 2 días: iteración 1 = día 1, iteración 2 = día 2. 1 punto ≈ 1 hora ideal de trabajo en pareja.
 # Responsable: nombre del integrante (roles en config/integrantes.csv; ver docs/division-tareas.md). Criterios separados por '|'.
 id;titulo;como;quiero;para;prioridad;puntos;iteracion;estado;responsable;criterios

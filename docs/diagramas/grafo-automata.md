@@ -145,7 +145,7 @@ Las cédulas de los integrantes **no se escriben en este documento**: se escribe
 | 1 | Cada integrante escribe su cédula en `config/integrantes.csv` (columna `cedula`). Pueden faltar algunas: la aplicación avisa y trabaja con las que haya. |
 | 2 | Se pulsa **«Recargar configuración»** en la aplicación (o se vuelve a ejecutar desde VS Code; en Docker, el botón de la ventana). |
 | 3 | `MotorAntdron` toma el último dígito de cada cédula, obtiene las coordenadas objetivo y el lenguaje de cada una, construye el AFD mínimo de la unión y crea la bomba. |
-| 4 | Se regenera **`datos/automata-grupo##.md`** (## = número de grupo con dos dígitos, por ejemplo `datos/automata-grupo01.md`) con la tabla de integrantes, el lenguaje L, la definición formal, la gramática, el grafo Mermaid y el DOT de Graphviz. También se regenera `datos/Grupo##.csv`. |
+| 4 | Se regenera **`datos/automata-grupo##.md`** (## = número de grupo con dos dígitos, por ejemplo `datos/automata-grupo04.md`) con la tabla de integrantes, el lenguaje L, la definición formal, la gramática, el grafo Mermaid y el DOT de Graphviz. También se regenera `datos/Grupo##.csv`. |
 | 5 | La pestaña **«Bomba y autómata»** muestra lo mismo: lenguaje, coordenadas objetivo, definición formal, gramática, el grafo dibujado y una prueba de palabras (`¿w ∈ L?`). |
 
 Ejemplo de `config/integrantes.csv` (se usan las cédulas del enunciado solo como ejemplo):

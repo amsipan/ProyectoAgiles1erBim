@@ -39,7 +39,7 @@ Todos los roles programan. El rol de cada integrante se declara en `config/integ
 | | Velocidad del proyecto | Tracker | `xp/historias.csv` | No se comprometen más puntos que los terminados en la iteración anterior. |
 | | Iteraciones | Tracker | `xp/historias.csv` | Duración fija y corta, definida al iniciar (en ANTDRON, 1 día); cada historia tiene iteración y estado. |
 | | Rotaciones | Gestor | `config/integrantes.csv` | Las parejas rotan en cada bloque de trabajo (al menos una vez por iteración). |
-| | Reuniones | Gestor | `xp/reuniones.md` | Reunión diaria de pie de 15 min; se anotan los acuerdos. |
+| | Reuniones | Gestor | `xp/reuniones.md` | Reunión diaria de pie de 10 min como máximo; se anotan los acuerdos. |
 | II. Diseño | Metáfora del sistema | Consultor | `xp/metafora.md` | Una historia compartida explica el sistema y nombra sus partes. |
 | | Tarjetas CRC | Consultor | `xp/tarjetas-crc.md` | Toda clase principal tiene tarjeta y se actualiza con el código. |
 | | Soluciones puntuales | Consultor | `xp/spikes.md` | Prototipo pequeño y desechable ante cada duda técnica; se anota la conclusión. |
@@ -90,7 +90,7 @@ class BombaTest {
 
 En VS Code, «Pruebas + reporte de aceptación» (el comando `xp probar`) ejecuta las pruebas del framework y de la aplicación, guarda los resultados por historia en `build/pruebas/resultados.csv` y escribe el reporte `xp/pruebas-aceptacion.md`.
 
-Solo las **pruebas** de la aplicación usan el framework. El código de la aplicación (`antdron/src`) no lo importa: `IndependenciaTest` falla si alguien lo hace, y la imagen Docker compila la aplicación sola. Así la aplicación vale por sí sola y el framework dicta y verifica el proceso.
+Solo las **pruebas** de la aplicación usan el framework. El código de la aplicación (`antdron/src`) no lo importa: `IndependenciaTest` falla si alguien lo hace, y la imagen Docker compila las cuatro carpetas (framework, aplicación y sus pruebas) y ejecuta todas las pruebas al construirse. Así la aplicación vale por sí sola y el framework dicta y verifica el proceso.
 
 ## 6. Ciclo de una iteración
 
@@ -99,9 +99,9 @@ En ANTDRON el proyecto dura **2 días** y cada día es una iteración. Un punto 
 | Momento del día | Duración | Qué se hace |
 |---|---|---|
 | Inicio | 30 min | **Planificación:** el Cliente prioriza y el Tracker compara los puntos con la velocidad (`xp plan`, `xp velocidad`). El día 1 se usa la estimación; el día 2, lo terminado el día 1. |
-| Inicio | 15 min | **Reunión de pie:** qué hará cada uno, qué lo bloquea. El Gestor publica las parejas de la mañana (`xp parejas`). |
+| Inicio | 10 min | **Reunión de pie:** qué hará cada uno, qué lo bloquea. El Gestor publica las parejas de la mañana (`xp parejas`). |
 | Mañana | ~3 h | **Desarrollo:** prueba → código → reciclaje, en pareja y en una rama por historia. |
-| Mediodía | 15 min | **Reunión de pie de control** y rotación de parejas para la tarde. |
+| Mediodía | 10 min | **Reunión de pie de control** y rotación de parejas para la tarde. |
 | Tarde | ~3 h | **Desarrollo e integración:** pull request con «Pruebas + reporte de aceptación» en VS Code en verde y la revisión de otra pareja. |
 | Cierre | 30 min | **Aceptación:** el Tester ejecuta `xp aceptacion` y el Cliente marca `TERMINADA`. **Retrospectiva:** se ajustan la guía y el estándar si hace falta. |
 
