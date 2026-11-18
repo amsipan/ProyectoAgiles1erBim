@@ -26,7 +26,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
   2. `lib/` trae `javafx-base`, `javafx-graphics` y `javafx-controls` 21.0.5 para Windows (las DLL vienen dentro de los `.jar`);
   3. `ec.edu.epn.antdron.App` no hereda de `Application`, así JavaFX arranca desde el classpath sin `--module-path` (Java solo muestra el aviso «Unsupported JavaFX configuration», que no afecta).
 - **Decisión:** `.vscode/launch.json` trae las configuraciones «AntCiberDron (JavaFX)», «AntCiberDron (consola)», «AntCiberDron (autómata de cédulas)», «Pruebas + reporte de aceptación» y «Framework XP (comando)».
-- **Consecuencias:** solo se instala un JDK 17+ y VS Code con el Extension Pack for Java; no hace falta internet. Como todo se compila junto, `IndependenciaTest` comprueba que `antdron/src` no importe el framework, y Docker compila además la aplicación sola.
+- **Consecuencias:** solo se instala un JDK 21 (o superior) y VS Code con el Extension Pack for Java; no hace falta internet. Como todo se compila junto, `IndependenciaTest` comprueba que `antdron/src` no importe el framework, y la imagen Docker vuelve a compilar todo y ejecuta las pruebas al construirse.
 
 ## Spike 2 · Interfaz gráfica en Docker con Xvfb y noVNC
 

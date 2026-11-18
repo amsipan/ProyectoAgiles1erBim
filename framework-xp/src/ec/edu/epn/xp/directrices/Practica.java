@@ -28,7 +28,7 @@ public enum Practica {
             "Las parejas rotan en cada bloque de trabajo (al menos una vez por iteración) para que todos "
             + "conozcan todo el código."),
     REUNIONES(Fase.PLANIFICACION, "Reuniones", RolXP.GESTOR, "xp/reuniones.md",
-            "Reunión diaria de pie de 15 minutos: qué hice, qué haré, qué me bloquea. Se registran los acuerdos."),
+            "Reunión diaria de pie de 10 minutos como máximo: qué hice, qué haré, qué me bloquea. Se registran los acuerdos."),
 
     // II. Diseño
     METAFORA(Fase.DISENO, "Metáfora del sistema", RolXP.CONSULTOR, "xp/metafora.md",
