@@ -1,6 +1,6 @@
 # Arquitectura
 
-**Responsable:** Integrante 5 (Consultor) · **Historias:** XP-04 (diseño) y HU-13 (aplicación dockerizada).
+**Responsable:** Daniel Mera (Consultor) · **Historias:** XP-04 (diseño) y HU-13 (aplicación dockerizada).
 
 El proyecto son **dos partes independientes** que se abren juntas en **VS Code** (Windows) y una imagen Docker. No se usa Maven ni herramienta de construcción: VS Code compila las cuatro carpetas de fuentes en `bin/` con los `.jar` de JavaFX 21.0.5 para Windows que trae `lib/`, y Docker compila lo mismo con `javac` y JavaFX para Linux.
 

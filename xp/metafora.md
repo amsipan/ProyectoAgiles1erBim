@@ -1,6 +1,6 @@
 # Metáfora del sistema · «Hormiguero de guerra»
 
-**Responsable:** Integrante 5 (Consultor) · **Práctica XP:** Metáfora del sistema
+**Responsable:** Daniel Mera (Consultor) · **Práctica XP:** Metáfora del sistema
 
 > Cada módulo del sistema es una hormiga especializada que coopera con las demás para que el **AntCiberDron** cumpla su misión. La colonia obedece a una reina que no vemos —el archivo de configuración— y todo lo demás se organiza a partir de lo que ella pone en el nido.
 

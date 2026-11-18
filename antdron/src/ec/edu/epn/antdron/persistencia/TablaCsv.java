@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
+import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
+
 /**
  * Tabla guardada como archivo CSV separado por ';' con una cabecera. La primera columna es el id numérico.
  * Sin dependencias externas: suficiente para el hormiguero virtual de cada usuario.
@@ -38,7 +40,7 @@ final class TablaCsv {
             List<String> lineas = Files.readAllLines(archivo, StandardCharsets.UTF_8);
             for (int i = 1; i < lineas.size(); i++) {
                 if (!lineas.get(i).isBlank()) {
-                    String[] f = lineas.get(i).split(";", -1);
+                    String[] f = Utility.campos(lineas.get(i));
                     if (f.length == columnas.length) {
                         filas.add(f);
                     }
@@ -56,7 +58,7 @@ final class TablaCsv {
         String[] fila = new String[valores.length + 1];
         fila[0] = String.valueOf(id);
         for (int i = 0; i < valores.length; i++) {
-            fila[i + 1] = limpiar(valores[i]);
+            fila[i + 1] = Utility.campoSeguro(valores[i]);
         }
         try {
             Files.writeString(archivo, String.join(";", fila) + "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
@@ -73,7 +75,7 @@ final class TablaCsv {
         for (String[] f : filas) {
             String[] fila = Integer.parseInt(f[0]) == id ? cambio.apply(f.clone()) : f;
             for (int i = 0; i < fila.length; i++) {
-                fila[i] = limpiar(fila[i]);
+                fila[i] = Utility.campoSeguro(fila[i]);
             }
             sb.append(String.join(";", fila)).append('\n');
         }
@@ -82,9 +84,5 @@ final class TablaCsv {
         } catch (IOException e) {
             throw new UncheckedIOException("No se pudo escribir " + archivo, e);
         }
-    }
-
-    private static String limpiar(String valor) {
-        return valor == null ? "" : valor.replace(";", ",").replace("\n", " ").replace("\r", " ");
     }
 }

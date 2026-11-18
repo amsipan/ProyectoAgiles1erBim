@@ -1,6 +1,6 @@
 # Modelo entidad-relación
 
-**Responsable:** Integrante 6 (Gestor) · **Historias:** HU-11 (pantallas del hormiguero virtual) y HU-12 (persistencia).
+**Responsable:** Leonel Morales (Gestor) · **Historias:** HU-11 (pantallas del hormiguero virtual) y HU-12 (persistencia).
 
 El hormiguero virtual de los usuarios KGD se guarda en **cuatro tablas** que viven como archivos **CSV** (separador `;`, primera línea con la cabecera) en `datos/hormiguero/`. No hay base de datos ni controladores externos: la clase `TablaCsv` lee y escribe cada archivo y `HormigueroServicio` aplica las reglas del dominio. Los archivos se crean solos la primera vez que se usa el hormiguero.
 

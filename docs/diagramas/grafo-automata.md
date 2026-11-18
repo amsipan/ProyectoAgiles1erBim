@@ -1,6 +1,6 @@
 # Grafo y gramática del autómata de la bomba
 
-**Responsable:** Integrante 1 (Entrenador) · **Historias:** HU-06 (autómata) y HU-14 (bomba) · **Código:** `antdron/src/ec/edu/epn/antdron/automata` y `bomba`
+**Responsable:** Sebastián Jibaja (Entrenador) · **Historias:** HU-06 (autómata) y HU-14 (bomba) · **Código:** `antdron/src/ec/edu/epn/antdron/automata` y `bomba`
 
 ## 1. Regla del enunciado
 
