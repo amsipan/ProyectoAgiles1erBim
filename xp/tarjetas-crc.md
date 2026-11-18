@@ -1,6 +1,6 @@
 # Tarjetas CRC (Clase · Responsabilidades · Colaboradores)
 
-**Responsable:** Integrante 5 (Consultor) · **Práctica XP:** Tarjetas CRC
+**Responsable:** Daniel Mera (Consultor) · **Práctica XP:** Tarjetas CRC
 
 Hay una tarjeta por cada clase, interfaz, enumeración, registro y excepción de `antdron/src`. El encabezado de cada tarjeta debe ser exactamente `### Clase: NombreDeLaClase`: el comando `xp crc` lo usa para listar las clases sin tarjeta y las tarjetas de clases que ya no existen. Si se agrega o se borra una clase, se actualiza este archivo en la misma pareja.
 
@@ -188,6 +188,14 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 | Responsabilidades | Colaboradores |
 |---|---|
 | Declarar que la IA puede buscar un tipo de arsenal (`buscar`) | AntCiberDron |
+
+### Clase: Utility
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Limpiar y partir las líneas de los archivos CSV separados por `;` | LectorConfiguracion, SistemaRuso, TablaCsv |
+| Dejar un valor seguro para escribirlo en un campo CSV | TablaCsv |
+| Normalizar textos sin tildes y en minúsculas | FabricaAlimentos |
 
 ## Paquete `antciberdron`
 

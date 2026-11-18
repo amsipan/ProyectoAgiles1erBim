@@ -1,22 +1,22 @@
 # Soluciones puntuales (spikes)
 
-**Responsable:** Integrante 5 (Consultor) · **Práctica XP:** Soluciones puntuales (spikes)
+**Coordina:** Daniel Mera (Consultor) · **Responsables:** cada spike indica quién lo investigó · **Práctica XP:** Soluciones puntuales (spikes)
 
 Un **spike** es una investigación corta para reducir un riesgo técnico antes de estimar o programar una historia. Cada uno responde una pregunta, tiene un tiempo máximo y termina con una **decisión**. Aquí se resumen los cinco spikes del proyecto.
 
-| Spike | Historia | Pregunta | Decisión |
-|---|---|---|---|
-| 1 | HU-13, XP-05 | ¿Se puede usar JavaFX sin Maven? | Sí: VS Code compila con los `.jar` de JavaFX para Windows en `lib/`. |
-| 2 | HU-13 | ¿Se puede ver una interfaz gráfica dentro de Docker? | Sí: Xvfb + x11vnc + noVNC en el puerto 6080. |
-| 3 | HU-12 | ¿SQLite o CSV para el hormiguero? | CSV, con el mismo modelo ER. |
-| 4 | XP-05 | ¿JUnit o un ejecutor de pruebas propio? | Ejecutor propio con `@Prueba` y `@Historia`. |
-| 5 | HU-06 | ¿Cómo construir el AFD mínimo? | Subconjuntos + minimización de Moore. |
+| Spike | Responsable | Historia | Pregunta | Decisión |
+|---|---|---|---|---|
+| 1 | Sebastián | HU-13, XP-05 | ¿Se puede usar JavaFX sin Maven? | Sí: VS Code compila con los `.jar` de JavaFX para Windows en `lib/`. |
+| 2 | Daniel | HU-13 | ¿Se puede ver una interfaz gráfica dentro de Docker? | Sí: Xvfb + x11vnc + noVNC en el puerto 6080. |
+| 3 | Leonel | HU-12 | ¿SQLite o CSV para el hormiguero? | CSV, con el mismo modelo ER. |
+| 4 | Kened | XP-05 | ¿JUnit o un ejecutor de pruebas propio? | Ejecutor propio con `@Prueba` y `@Historia`. |
+| 5 | Sebastián | HU-06 | ¿Cómo construir el AFD mínimo? | Subconjuntos + minimización de Moore. |
 
 ---
 
 ## Spike 1 · JavaFX sin Maven
 
-- **Historias:** HU-13 (aplicación dockerizada) y XP-05 (pruebas). **Tiempo máximo:** 1 hora.
+- **Historias:** HU-13 (aplicación dockerizada) y XP-05 (pruebas). **Tiempo máximo:** 1 hora. **Responsable:** Sebastián Jibaja (Entrenador).
 - **Pregunta:** el proyecto no usa Maven y se trabaja en Windows con VS Code. ¿Cómo se compila y ejecuta una aplicación JavaFX con solo un JDK?
 - **Intentos:**
   - Instalar el SDK de JavaFX en cada computadora y pasar `--module-path`: cada integrante tendría una ruta distinta.
@@ -30,7 +30,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 
 ## Spike 2 · Interfaz gráfica en Docker con Xvfb y noVNC
 
-- **Historia:** HU-13. **Tiempo máximo:** 1 hora.
+- **Historia:** HU-13. **Tiempo máximo:** 1 hora. **Responsable:** Daniel Mera (Consultor).
 - **Pregunta:** el profesor debe probar la aplicación «sin instalar Java». ¿Cómo se muestra una ventana JavaFX desde un contenedor?
 - **Intentos:**
   - Reenviar un servidor X al anfitrión: depende del sistema operativo de cada persona.
@@ -46,7 +46,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 
 ## Spike 3 · Persistencia: CSV o SQLite
 
-- **Historia:** HU-12. **Tiempo máximo:** 1 hora.
+- **Historia:** HU-12. **Tiempo máximo:** 1 hora. **Responsable:** Leonel Morales (Gestor).
 - **Pregunta:** el enunciado pide guardar los hormigueros. ¿Se usa una base de datos?
 - **Intentos:**
   - **SQLite:** necesita el controlador JDBC (un `.jar` externo). Sin Maven habría que descargarlo, versionarlo y agregarlo al classpath en la compilación, en Docker y en las pruebas.
@@ -66,7 +66,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 
 ## Spike 4 · Ejecutor de pruebas propio o JUnit
 
-- **Historia:** XP-05. **Tiempo máximo:** 1 hora.
+- **Historia:** XP-05. **Tiempo máximo:** 1 hora. **Responsable:** Kened Lugmaña (Encargado de pruebas).
 - **Pregunta:** sin Maven, ¿cómo se ejecutan las pruebas unitarias y se sabe qué historias están aceptadas?
 - **Intentos:**
   - **JUnit:** habría que descargar sus `.jar` y la consola de ejecución, y no sabe qué historia cubre cada prueba.
@@ -81,7 +81,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 
 ## Spike 5 · AFD mínimo con subconjuntos y Moore
 
-- **Historia:** HU-06. **Tiempo máximo:** 2 horas.
+- **Historia:** HU-06. **Tiempo máximo:** 2 horas. **Responsable:** Sebastián Jibaja (Entrenador).
 - **Pregunta:** dado el conjunto de lenguajes de las cédulas del equipo (por ejemplo `{abcdt+, ab*}`), ¿cómo se obtiene el autómata, la gramática y el grafo?
 - **Intentos:**
   - Construirlo a mano para cada combinación de dígitos: son 10 lenguajes y miles de combinaciones posibles.

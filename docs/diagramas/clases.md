@@ -1,6 +1,6 @@
 # Diagrama de clases
 
-**Responsable:** Integrante 4 (Encargado de seguimiento) · **Historias:** HU-05 (hormigas y alimentos) y HU-10 (idiomas).
+**Responsable:** David Jumbo (Encargado de seguimiento) · **Historias:** HU-05 (hormigas y alimentos) y HU-10 (idiomas).
 
 El código tiene **dos partes independientes**: la aplicación `antdron/` (JavaFX) y el framework `framework-xp/`. La aplicación no importa ninguna clase del framework. Los diagramas están divididos por tema para que se lean bien; las relaciones entre diagramas se indican en el texto.
 
@@ -8,7 +8,7 @@ Convenciones: `<<abstract>>` clase abstracta, `<<interface>>` interfaz, `<<enume
 
 ## 1. Aplicación · Hormigas y alimentos (HU-05)
 
-`Hormiga` y `Alimento` son abstractas y el contrato `pkAntCiberDronContract` define `IHormiga` e `IIA`, como pide el enunciado. Toda hormiga **nace como `HLarva`**: vive con néctar y se transforma al comer el alimento de su `TipoHormiga` (según el número de grupo: 1-2 `HSoldado`, 3-4 `HZangano`, 5 `HRastreadora`).
+`Hormiga` y `Alimento` son abstractas y el contrato `pkAntCiberDronContract` define `IHormiga`, `IIA` y `Utility`, como pide el enunciado. Toda hormiga **nace como `HLarva`**: vive con néctar y se transforma al comer el alimento de su `TipoHormiga` (según el número de grupo: 1-2 `HSoldado`, 3-4 `HZangano`, 5 `HRastreadora`).
 
 ```mermaid
 classDiagram
@@ -322,6 +322,8 @@ classDiagram
 
 `MotorAntdron` es el punto central: lee `config/`, regenera `datos/Grupo##.csv`, la bomba y `datos/automata-grupo##.md` cada vez que se carga (arranque o «Recargar configuración»), y entrega todo a la consola y a la interfaz JavaFX.
 
+`Utility` (paquete `pkAntCiberDronContract`, como en el diagrama del enunciado) reúne el manejo de líneas CSV separadas por `;` y la normalización de textos que usan `LectorConfiguracion`, `TablaCsv`, `SistemaRuso` y `FabricaAlimentos`.
+
 ```mermaid
 classDiagram
     direction TB
@@ -426,6 +428,17 @@ classDiagram
     class TipoHormiga {
         <<enumeration>>
     }
+    class Utility {
+        <<pkAntCiberDronContract>>
+        +SEPARADOR String$
+        +limpiarLinea(String) String$
+        +campos(String) String[]$
+        +esComentario(String) boolean$
+        +campoSeguro(String) String$
+        +normalizar(String) String$
+    }
+    class SistemaRuso
+    class FabricaAlimentos
 
     App --> MotorAntdron : consola y generar
     App --> Autenticador
@@ -449,6 +462,10 @@ classDiagram
     HormigueroServicio ..> HormigaRegistro : lista
     HormigueroServicio ..> Claves : hash con sal
     HormigueroServicio --> TipoHormiga
+    LectorConfiguracion ..> Utility : líneas CSV
+    TablaCsv ..> Utility : campos CSV
+    SistemaRuso ..> Utility : líneas CSV
+    FabricaAlimentos ..> Utility : normalizar
 ```
 
 ## 5. Aplicación · Interfaz JavaFX (sin FXML)

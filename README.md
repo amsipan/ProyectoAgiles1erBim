@@ -11,7 +11,7 @@ Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de co
 
 ## Requisitos (Windows)
 
-1. **JDK 17 o superior**, por ejemplo [Temurin 21](https://adoptium.net).
+1. **JDK 21 o superior**, por ejemplo [Temurin 21](https://adoptium.net). Con versiones nuevas (por ejemplo Java 27) la aplicación funciona igual; solo aparecen avisos `WARNING` de JavaFX en la consola, que no afectan.
 2. **VS Code** con la extensión **Extension Pack for Java**. VS Code la sugiere al abrir la carpeta.
 3. Para la versión dockerizada: **Docker Desktop**.
 
@@ -29,20 +29,34 @@ Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de co
 | **Pruebas + reporte de aceptación** | Ejecuta todas las pruebas y actualiza `xp/pruebas-aceptacion.md`. |
 | **Framework XP (comando)** | Pide un comando del framework: `verificar`, `backlog`, `plan`, `velocidad`, `parejas 2`, `crc`, `ayuda`... |
 
-Usuarios de ejemplo: el profesor `patmic` con clave `123`, y los integrantes `integrante1` a `integrante6` con clave `1234`.
+## Usuarios
 
-## Cédulas del equipo: lo único que hay que editar
+| Usuario | Clave | Quién |
+|---|---|---|
+| `patmic` | `123` | Profesor |
+| `sjibaja` | `1234` | Sebastián Jibaja · Entrenador |
+| `kmosquera` | `1234` | Karen Mosquera · Cliente |
+| `klugmana` | `1234` | Kened Lugmaña · Encargado de pruebas |
+| `djumbo` | `1234` | David Jumbo · Encargado de seguimiento |
+| `dmera` | `1234` | Daniel Mera · Consultor |
+| `lmorales` | `1234` | Leonel Morales · Gestor |
 
-Abra `config/integrantes.csv` y escriba la cédula de cada integrante en la **primera columna** (empiezan vacías). También puede cambiar nombres, usuarios y claves. El número y el nombre del grupo están en `config/equipo.properties`.
+Máximo 3 intentos; al tercer error se bloquea el ingreso.
+
+## Configuración del equipo (Grupo 4 · Pragmatics)
+
+El grupo está en `config/equipo.properties` (`grupo=4`, `nombre=Pragmatics`) y los integrantes en `config/integrantes.csv`, con su cédula en la **primera columna**:
 
 ```
 cedula;nombre;usuario;clave;rol
-1754265385;Integrante 1;integrante1;1234;ENTRENADOR
-;Integrante 2;integrante2;1234;CLIENTE
+1754265385;Sebastián Jibaja;sjibaja;1234;ENTRENADOR
+1750094144;Karen Mosquera;kmosquera;1234;CLIENTE
 ...
 ```
 
-Después pulse **«Recargar configuración»** en la aplicación (o vuelva a abrirla). El programa hace todo lo demás:
+Con los últimos dígitos de las cédulas (5, 4, 6, 7, 9 y 7) las coordenadas objetivo son Coord-04, 05, 06, 07 y 09, y la bomba reconoce **L = { abcdt+ , abcd* , ab* }**. La hormiga del grupo 4 es **HZángano** (omnívoro).
+
+Si se cambia una cédula, pulse **«Recargar configuración»** en la aplicación (o vuelva a abrirla). El programa hace todo lo demás:
 
 - genera `datos/Grupo##.csv` con las coordenadas de las cédulas;
 - lo lee y lo muestra con su animación de carga;
@@ -50,7 +64,7 @@ Después pulse **«Recargar configuración»** en la aplicación (o vuelva a abr
 - exporta `datos/automata-grupo##.md` (definición formal, gramática, Mermaid y Graphviz) para la documentación;
 - prepara al AntCiberDron con la hormiga del grupo (1-2 HSoldado, 3-4 HZángano, 5 HRastreadora).
 
-Si faltan cédulas, la aplicación no falla: usa las que haya y muestra un aviso. Los archivos se pueden editar con VS Code, el Bloc de notas o Excel (guardando como CSV con `;`).
+Si faltan cédulas, la aplicación no falla: usa las que haya y muestra un aviso. Edite los archivos solo con VS Code, el Bloc de notas o el editor web de GitHub; **no use Excel**, porque cambia el separador y la codificación.
 
 ## Ejecutar con Docker (aplicación dockerizada)
 
@@ -68,6 +82,7 @@ La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alg
 
 | Documento | Contenido |
 |---|---|
+| [docs/evidencias.md](docs/evidencias.md) | Índice para el profesor: cada práctica XP con su artefacto, video, captura, acta y PR |
 | [docs/division-tareas.md](docs/division-tareas.md) | Roles, reparto de historias, contratos y plan de 2 días |
 | [framework-xp/docs/guia-xp.md](framework-xp/docs/guia-xp.md) | Directrices XP del framework |
 | [framework-xp/docs/estandar-codigo.md](framework-xp/docs/estandar-codigo.md) | Estándar de código |
@@ -76,7 +91,7 @@ La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alg
 | [docs/diagramas/grafo-automata.md](docs/diagramas/grafo-automata.md) | Grafo con gramática del autómata |
 | [docs/diagramas/modelo-er.md](docs/diagramas/modelo-er.md) | Modelo entidad-relación |
 | [docs/diagramas/arquitectura.md](docs/diagramas/arquitectura.md) | Diagrama de arquitectura |
-| [xp/](xp/) | Backlog, plan de entregas, reuniones, metáfora, tarjetas CRC, spikes y reporte de aceptación |
+| [xp/](xp/) | Backlog, plan de entregas, reuniones y actas, metáfora, tarjetas CRC, spikes, funcionalidad mínima y reporte de aceptación |
 
 ## Estructura
 
@@ -86,7 +101,8 @@ lib/            JavaFX 21.0.5 para Windows (base, graphics, controls)
 framework-xp/   Parte 1: src/, pruebas/, docs/
 antdron/        Parte 2: src/, pruebas/
 config/         equipo.properties e integrantes.csv (cédulas)
-datos/          se genera: Grupo##.csv, automata-grupo##.md, hormiguero/
+datos/          se genera: Grupo04.csv, automata-grupo04.md, hormiguero/
+docs/           diagramas/, evidencias.md (índice) y evidencias/ (capturas)
 xp/             artefactos XP que revisa el framework
 docker/, Dockerfile, docker-compose.yml
 ```

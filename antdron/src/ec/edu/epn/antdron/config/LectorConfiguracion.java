@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
+
 /**
  * Lee la configuración que el equipo edita a mano:
  * <ul>
@@ -52,11 +54,11 @@ public final class LectorConfiguracion {
     public List<Integrante> parsearIntegrantes(List<String> lineas) {
         List<Integrante> integrantes = new ArrayList<>();
         for (int i = 0; i < lineas.size(); i++) {
-            String linea = lineas.get(i).replace("\uFEFF", "").strip();
-            if (linea.isEmpty() || linea.startsWith("#") || linea.toLowerCase().startsWith("cedula;")) {
+            String linea = Utility.limpiarLinea(lineas.get(i));
+            if (linea.isEmpty() || Utility.esComentario(linea) || linea.toLowerCase().startsWith("cedula;")) {
                 continue;
             }
-            String[] c = linea.split(";", -1);
+            String[] c = Utility.campos(linea);
             if (c.length < 4 || c.length > 5) {
                 throw new IllegalArgumentException(ARCHIVO_INTEGRANTES + " línea " + (i + 1)
                         + ": se esperaban 5 campos separados por ';' (cedula;nombre;usuario;clave;rol)");

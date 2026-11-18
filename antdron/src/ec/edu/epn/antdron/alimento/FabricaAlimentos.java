@@ -1,8 +1,8 @@
 package ec.edu.epn.antdron.alimento;
 
-import java.text.Normalizer;
 import java.util.List;
-import java.util.Locale;
+
+import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
 
 /** Crea alimentos a partir de su nombre (usado por las pantallas web). */
 public final class FabricaAlimentos {
@@ -27,8 +27,6 @@ public final class FabricaAlimentos {
     }
 
     public static String normalizar(String texto) {
-        return Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
-                .replaceAll("\\p{M}", "")
-                .toLowerCase(Locale.ROOT);
+        return Utility.normalizar(texto);
     }
 }
