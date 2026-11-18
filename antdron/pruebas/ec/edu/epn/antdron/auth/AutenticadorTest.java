@@ -91,6 +91,7 @@ class AutenticadorTest {
         Autenticador a = new Autenticador(EQUIPO);
         Afirmar.igual(Autenticador.Resultado.RECHAZADO, a.intentar("pepito", "x"));
         Afirmar.igual(2, a.intentosRestantes());
+        Afirmar.igual(2, a.conEquipo(EQUIPO).intentosRestantes(), "recargar el equipo conserva los fallos");
         Afirmar.igual(Autenticador.Resultado.ACEPTADO, a.intentar("pepito", "clave1"));
         Afirmar.igual(Autenticador.Resultado.RECHAZADO, a.intentar("pepito", "y"));
         Afirmar.igual(Autenticador.Resultado.BLOQUEADO, a.intentar("pepito", "z"));
