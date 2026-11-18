@@ -1,10 +1,17 @@
 # Capturas de las sesiones
 
-Guarde aquí las capturas (PNG o JPG) con estos nombres, para que el índice [`docs/evidencias.md`](../evidencias.md) las encuentre. Los videos **no** van aquí: se suben a Drive o YouTube (oculto) y su enlace se pega en el índice.
+Guarde cada captura (PNG o JPG) en la carpeta de su fase y con el nombre indicado, para que el índice [`docs/evidencias.md`](../evidencias.md) la encuentre. Los videos **no** van aquí: se suben a Drive o YouTube (oculto) y su enlace se pega en el índice.
+
+| Carpeta | Fase | Sesión |
+|---|---|---|
+| [`1-planificacion/`](1-planificacion/) | I. Planificación | S1 |
+| [`2-diseno/`](2-diseno/) | II. Diseño | S2 |
+| [`3-desarrollo/`](3-desarrollo/) | III. Desarrollo | S3 |
+| [`4-pruebas/`](4-pruebas/) | IV. Pruebas y retrospectiva | S4 |
 
 Cada captura muestra el archivo abierto en VS Code o en GitHub, o la salida del comando. Las evidencias que se presentan en un video sin su autor se suben **antes de la grabación**.
 
-## S1 · Fase I: Planificación
+## S1 · Fase I: Planificación → `1-planificacion/`
 
 | Archivo | Qué debe verse | Quién la toma |
 |---|---|---|
@@ -16,7 +23,7 @@ Cada captura muestra el archivo abierto en VS Code o en GitHub, o la salida del 
 | `f1-reglas-xp.png` | `framework-xp/docs/guia-xp.md` o `xp directrices` | Sebas |
 | `f1-validacion.png` | Criterios en `xp/historias.csv` y salida de `xp verificar` | Kened |
 
-## S2 · Fase II: Diseño
+## S2 · Fase II: Diseño → `2-diseno/`
 
 | Archivo | Qué debe verse | Quién la toma |
 |---|---|---|
@@ -36,7 +43,7 @@ Cada captura muestra el archivo abierto en VS Code o en GitHub, o la salida del 
 | `f2-reciclaje-pruebas.png` | Pruebas en verde después del reciclaje («Pruebas + reporte de aceptación») | Sebas |
 | `f2-utility-crc.png` | Tarjeta CRC de `Utility` y salida de `xp verificar` con 17/17 | Daniel |
 
-## S3 · Fase III: Desarrollo (video)
+## S3 · Fase III: Desarrollo (video) → `3-desarrollo/`
 
 | Archivo | Qué debe verse | Quién la toma |
 |---|---|---|
@@ -44,7 +51,7 @@ Cada captura muestra el archivo abierto en VS Code o en GitHub, o la salida del 
 | `s3-pruebas-verde-hu01.png` | Pruebas en verde con HU-01 aceptada (evidencia previa) | Kened |
 | `s3-pr-fusionado.png` | PR aprobado por Karen y fusionado por Sebas | Sebas |
 
-## S4 · Fase IV: Pruebas y retrospectiva (video)
+## S4 · Fase IV: Pruebas y retrospectiva (video) → `4-pruebas/`
 
 | Archivo | Qué debe verse | Quién la toma |
 |---|---|---|
