@@ -160,6 +160,69 @@ Con esas dos cédulas, `datos/automata-grupo##.md` contiene el autómata del eje
 
 Si el último dígito de una cédula nueva ya está incluido, el lenguaje no cambia; solo se agrega la fila en la tabla de integrantes. El archivo `datos/automata-grupo##.md` es generado: **no se edita a mano**, se vuelve a crear en cada recarga.
 
+### Autómata del Grupo 4 · Pragmatics (configuración actual)
+
+Con las seis cédulas de `config/integrantes.csv` la aplicación construye este autómata (es lo mismo que muestra la pestaña **«Bomba y autómata»** y lo que exporta `datos/automata-grupo04.md`). Solo se usa el último dígito de cada cédula; las cédulas completas no se copian aquí.
+
+| Integrante | Último dígito | Coordenada objetivo | Lenguaje de la coordenada |
+|---|---|---|---|
+| Sebastián Jibaja | 5 | Coord-05 | `abcdt+` |
+| Karen Mosquera | 4 | Coord-04 | `abcd*` |
+| Kened Lugmaña | 6 | Coord-06 | `abcdt+` |
+| David Jumbo | 7 | Coord-07 | `abcd*` |
+| Daniel Mera | 9 | Coord-09 | `ab*` |
+| Leonel Morales | 7 | Coord-07 | `abcd*` (repetido: no cambia el lenguaje) |
+
+**L = { `abcdt+` , `abcd*` , `ab*` }** · coordenadas objetivo: Coord-04, Coord-05, Coord-06, Coord-07 y Coord-09.
+
+```text
+A = (Q, Σ, δ, q0, F)
+Q  = {q0, q1, q2, q3, q4, q5, q6, q7}
+Σ  = {a, b, c, d, t}        a = Avión · b = Barco · c = Convoy · d = Dron · t = Tanque
+q0 = q0
+F  = {q1, q2, q3, q4, q5, q6, q7}
+δ(q0, a) = q1   δ(q1, b) = q2   δ(q2, b) = q3   δ(q2, c) = q4   δ(q3, b) = q3
+δ(q4, d) = q5   δ(q5, d) = q6   δ(q5, t) = q7   δ(q6, d) = q6   δ(q7, t) = q7
+```
+
+Gramática regular G = (N, T, P, S), con N = {S, A, B, C, D, E, F, G} y T = {a, b, c, d, t}:
+
+```text
+S → aA | a
+A → bB | b
+B → bC | b | cD | c
+C → bC | b
+D → dE | d
+E → dF | d | tG | t
+F → dF | d
+G → tG | t
+```
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q0
+    q0 --> q1 : a
+    q1 --> q2 : b
+    q2 --> q3 : b
+    q2 --> q4 : c
+    q3 --> q3 : b
+    q4 --> q5 : d
+    q5 --> q6 : d
+    q5 --> q7 : t
+    q6 --> q6 : d
+    q7 --> q7 : t
+    q1 --> [*]
+    q2 --> [*]
+    q3 --> [*]
+    q4 --> [*]
+    q5 --> [*]
+    q6 --> [*]
+    q7 --> [*]
+```
+
+Cómo se lee: toda palabra empieza con `a` (avión) y `b` (barco). Desde q2 hay dos caminos: más `b` (lenguaje `ab*`) o `c` (convoy) para seguir con `d` (dron); desde q5, más `d` (`abcd*`) o `t` repetida (`abcdt+`). Por ejemplo, `abcdttt` y `abcdd` son aceptadas; `abcdtd` y `abt` no. La bomba explota solo si **además** la coordenada es objetivo: `a` está en `ab*`, pero en Coord-01 no explota.
+
 ### Imprimir el autómata de cualquier cédula
 
 Sin tocar `config/`, se puede imprimir el autómata de cualquier lista de cédulas (definición formal, gramática, DOT y Mermaid): en VS Code, **Ejecutar y depurar** (Ctrl+Shift+D) → «AntCiberDron (autómata de cédulas)» → F5, y escriba las cédulas separadas por espacios (por defecto `1103635 1503639`).
