@@ -128,7 +128,7 @@ La rotación del equipo se registra en la tabla de rotación de parejas (prácti
 - **Capturas de S1 y S2:** cada rol según `docs/evidencias/LEEME.md`
 - **Acuerdos:**
   - ____
-- **Captura de la reunión:** `docs/evidencias/f1-reunion-coordinacion.png`
+- **Captura de la reunión:** `docs/evidencias/1-planificacion/f1-reunion-coordinacion.png`
 
 ### S3 · Fase III: Desarrollo
 
@@ -168,4 +168,4 @@ La rotación del equipo se registra en la tabla de rotación de parejas (prácti
 
 - **Acuerdos finales:**
   - ____
-- **Video:** ____ · **Captura:** `docs/evidencias/s4-participantes.png`
+- **Video:** ____ · **Captura:** `docs/evidencias/4-pruebas/s4-participantes.png`
