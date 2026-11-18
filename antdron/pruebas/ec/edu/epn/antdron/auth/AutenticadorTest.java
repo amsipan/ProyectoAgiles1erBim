@@ -80,6 +80,9 @@ class AutenticadorTest {
         Afirmar.contiene(texto(), "se superó el máximo de 3 intentos");
         Afirmar.igual(Autenticador.Resultado.BLOQUEADO, a.intentar("patmic", "123"));
         Afirmar.igual(0, a.intentosRestantes());
+        Autenticador alVolver = a.conEquipo(EQUIPO);
+        Afirmar.verdadero(alVolver.estaBloqueado(), "volver a la pantalla de ingreso no devuelve intentos");
+        Afirmar.igual(Autenticador.Resultado.BLOQUEADO, alVolver.intentar("patmic", "123"));
     }
 
     @Prueba
