@@ -92,6 +92,7 @@ La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alg
 | [docs/diagramas/modelo-er.md](docs/diagramas/modelo-er.md) | Modelo entidad-relación |
 | [docs/diagramas/arquitectura.md](docs/diagramas/arquitectura.md) | Diagrama de arquitectura |
 | [xp/](xp/) | Backlog, plan de entregas, reuniones y actas, metáfora, tarjetas CRC, spikes, funcionalidad mínima y reporte de aceptación |
+| [Videos de evidendia](https://epnecuador-my.sharepoint.com/:f:/r/personal/velky_jibaja_epn_edu_ec/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim&share=cgrUtkIE7YrIQZ%2DL%2DrtcRnQREgUDKWnlfLpdcQsaUgJLh1w5qw) | Videos de evidencia de la aplicación de programación XP, seccionador por los roles de los integrantes |
 
 ## Estructura
 
