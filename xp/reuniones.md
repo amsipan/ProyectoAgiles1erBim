@@ -322,28 +322,144 @@ El repositorio respalda la integración de la corrección mediante el Pull Reque
 
 La grabación sirve como evidencia de colaboración y demostración funcional, mientras que el reporte de pruebas y GitHub complementan los resultados que no se observan completamente en el video.
 
-### S4 · Fase IV: Pruebas y retrospectiva
+### ### S4 · Fase IV: Pruebas y retrospectiva
 
-- **Fecha:** ____ · **Hora de inicio:** ____ · **Duración:** ____ min
-- **Participantes en el video:** Leonel Morales (Gestor), Kened Lugmaña (Encargado de pruebas) y Daniel Mera (Consultor)
-- **Evidencia previa:** Karen Mosquera (aceptación en GitHub), David Jumbo (estado y velocidad), Sebastián Jibaja (v1.0 y evaluación de XP)
-- **Prácticas defendidas:** implantación (Daniel) y pruebas de aceptación (Kened + Karen)
-- **Docker:** `docker compose up --build` funcionando ( ) · app abierta en `http://localhost:6080/vnc.html` ( )
-- **Reporte de aceptación:** ____/21 historias aceptadas
-- **Aceptación del Cliente (Karen):** enlace al comentario en GitHub ____
-- **Estado final y velocidad (David):** ____
-- **Evaluación de XP y versión v1.0 (Sebastián):** enlace ____
-- **Retrospectiva** (una frase por integrante):
+**Proyecto:** ANTDRON  
+**Grupo:** 4 — Pragmatics  
+**Metodología:** Extreme Programming (XP)  
+**Fecha de inicio:** 18 de noviembre de 2026  
+**Hora de inicio:** 23:51 (Ecuador)  
+**Hora de finalización aproximada:** 00:06 del 19 de noviembre  
+**Duración de la grabación:** 15 minutos y 29 segundos  
+**Modalidad:** Reunión virtual mediante Microsoft Teams  
+**Responsable del acta:** Leonel Morales (Gestor)
+
+#### 1. Participantes
+
+- Leonel Morales — Gestor.
+- Kened Lugmaña — Encargado de pruebas (Tester).
+- Daniel Mera — Consultor.
+
+#### 2. Objetivo de la sesión
+
+Evidenciar la cuarta fase de Extreme Programming, correspondiente a la implantación del software, la ejecución de pruebas automatizadas, la validación de las historias de usuario y la revisión del proceso de desarrollo.
+
+#### 3. Práctica XP 16 — Implantación
+
+**Responsable: Daniel Mera (Consultor)**
+
+Daniel realizó una demostración técnica del despliegue de ANTDRON utilizando Docker.
+
+Durante la grabación se observaron las siguientes actividades:
+
+- Revisión de la configuración en `docker-compose.yml`.
+- Ejecución del comando `docker compose up --build -d`.
+- Construcción de la imagen y creación del contenedor.
+- Verificación de contenedores mediante `docker ps`.
+- Acceso a la aplicación desde el navegador.
+- Demostración de diferentes pantallas y funcionalidades de ANTDRON.
+
+**Resultado:** se observó que el contenedor inició y que la interfaz de la aplicación era accesible desde el navegador.
+
+**Evidencia:** `docs/evidencias/4-pruebas/s4-docker-funcionando.png`
+
+#### 4. Práctica XP 17 — Pruebas de aceptación
+
+**Responsable: Kened Lugmaña (Tester)**
+
+Kened presentó la ejecución de las pruebas automatizadas y el reporte de aceptación generado para el proyecto.
+
+Durante la sesión se observaron:
+
+- La ejecución de pruebas desde Visual Studio Code.
+- La salida del ejecutor de pruebas.
+- El mensaje de finalización satisfactoria: «TODAS LAS PRUEBAS PASARON».
+- El archivo `xp/pruebas-aceptacion.md`.
+- Las historias registradas con el estado ACEPTADA.
+
+**Resultados documentados:**
+
+- Historias aceptadas: **21/21**.
+- Historias de la aplicación: **15**.
+- Historias del framework XP: **6**.
+- Historias rechazadas en el reporte: **0**.
+- Pruebas fallidas registradas: **0**.
+
+El reporte del repositorio suma 128 casos aprobados, aunque otras notas del proyecto indican 100. Para presentar una cifra única de pruebas debe confirmarse la salida correspondiente a la versión final.
+
+**Evidencia:** `docs/evidencias/4-pruebas/s4-reporte-21-de-21.png`
+
+#### 5. Coordinación y seguimiento del proyecto
+
+**Responsable: Leonel Morales (Gestor)**
+
+En la parte final de la grabación se presentó el repositorio de GitHub y se revisó documentación relacionada con la coordinación del equipo.
+
+Se mostraron archivos del proyecto, incluido el registro de reuniones y las rotaciones de parejas.
+
+El proyecto cuenta con una planificación de dos iteraciones, 21 historias y 53 puntos estimados, documentados en `xp/plan-entregas.md`.
+
+La coordinación y las evidencias correspondientes a las cuatro fases XP se registran en `xp/reuniones.md` y `docs/evidencias.md`.
+
+#### 6. Retrospectiva
+
+La retrospectiva tiene como finalidad identificar los aspectos positivos y las oportunidades de mejora del proceso de desarrollo.
+
+**Aportes escritos disponibles de los integrantes:**
 
 | Integrante | Qué funcionó | Qué mejoraría | Medio |
 |---|---|---|---|
-| Sebastián Jibaja | | | Escrita |
-| Karen Mosquera | | | Escrita |
-| Kened Lugmaña | | | Video |
-| David Jumbo | | | Escrita |
-| Daniel Mera | | | Video |
-| Leonel Morales | | | Video |
+| Sebastián Jibaja | La verificación de las prácticas XP mediante el framework y las pruebas durante la construcción de Docker | Revisar los Pull Requests por otra persona antes de fusionarlos | Acta escrita del Cliente |
+| Karen Mosquera | Contar con criterios de aceptación permitió identificar el problema de autenticación de HU-01 | Probar la aplicación como Cliente al final de cada iteración | Acta escrita del Cliente |
+| Kened Lugmaña | Demostró la ejecución de pruebas automatizadas y el reporte de aceptación | Pendiente de confirmar su comentario de retrospectiva | Video |
+| David Jumbo | Pendiente de recibir su aportación | Pendiente de recibir su aportación | Escrita |
+| Daniel Mera | Demostró el despliegue mediante Docker y el funcionamiento de la aplicación | Pendiente de confirmar su comentario de retrospectiva | Video |
+| Leonel Morales | Coordinó la sesión y presentó la documentación del equipo | Pendiente de confirmar su comentario de retrospectiva | Video |
 
-- **Acuerdos finales:**
-  - ____
-- **Video:** https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FGestor%2FLlamada%20con%20DANIEL%20y%201%20persona%20m%C3%A1s%2D20261118%5F235106%2DGrabaci%C3%B3n%20de%20la%20reuni%C3%B3n%2Emp4&share=cQqALYi1YZZNQICysACVZDd0EgUD3OKVRv1w9Y4%5Fr0KTarNmRw&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ee9a66fe5%2Dc3df%2D4866%2D9f0a%2D8710233796fe· **Captura:** `docs/evidencias/4-pruebas/s4-participantes.png`
+Los aportes de Karen y Sebastián proceden del acta escrita incorporada en el PR #11. Las frases específicas de los demás integrantes deben confirmarse con ellos antes de atribuirles opiniones.
+
+#### 7. Seguimiento documental
+
+Para completar la entrega de S4 quedan identificadas las siguientes actividades:
+
+1. Incorporar la aceptación de Karen en la carpeta de evidencias correspondiente.
+2. Agregar el estado final y la velocidad de las iteraciones preparados por David.
+3. Verificar la publicación de la versión `v1.0` por Sebastián.
+4. Registrar los comentarios de retrospectiva de los seis integrantes.
+5. Consolidar el índice de evidencias con los enlaces y minutos del video.
+
+Estas actividades se registran como pendientes de seguimiento, no como acuerdos verbales confirmados.
+
+#### 8. Evidencias de la sesión
+
+**Grabación:** [Ver video S4 — Pruebas y retrospectiva](https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FGestor%2FLlamada%20con%20DANIEL%20y%201%20persona%20m%C3%A1s%2D20261118%5F235106%2DGrabaci%C3%B3n%20de%20la%20reuni%C3%B3n%2Emp4&share=cQqALYi1YZZNQICysACVZDd0EgUD3OKVRv1w9Y4%5Fr0KTarNmRw&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ee9a66fe5%2Dc3df%2D4866%2D9f0a%2D8710233796fe)
+
+**Captura de participantes:**
+
+`docs/evidencias/4-pruebas/s4-participantes.png`
+
+**Captura de Docker:**
+
+`docs/evidencias/4-pruebas/s4-docker-funcionando.png`
+
+**Reporte de aceptación:**
+
+`docs/evidencias/4-pruebas/s4-reporte-21-de-21.png`
+
+**Acta de aceptación escrita del Cliente:**
+
+`datos/xp/actas/acta-S4-aceptacion-final-cliente.md`
+
+**Evaluación XP:**
+
+`docs/evidencias/4-pruebas/v1.0-notas-version.md`
+
+#### 9. Conclusión
+
+La sesión S4 permitió presentar evidencias de dos prácticas fundamentales de Extreme Programming: implantación y pruebas de aceptación.
+
+La demostración de Docker mostró que ANTDRON puede ejecutarse mediante contenedores y que su interfaz es accesible.
+
+Las pruebas automatizadas finalizaron satisfactoriamente y el reporte documentó 21 de 21 historias aceptadas.
+
+Como resultado, se dispone de evidencia técnica del funcionamiento de la aplicación y de su validación. Queda pendiente completar algunos respaldos documentales y las aportaciones individuales de la retrospectiva para cerrar formalmente la fase IV.
