@@ -45,6 +45,13 @@ public final class Utility {
                 || (cabecera != null && limpia.regionMatches(true, 0, cabecera, 0, cabecera.length()));
     }
 
+    /** Reconoce líneas vacías, comentarios y cabeceras de CSV. */
+    public static boolean esLineaIgnorable(String linea, String cabecera) {
+        String limpia = limpiarLinea(linea);
+        return limpia.isEmpty() || esComentario(limpia)
+                || (cabecera != null && limpia.regionMatches(true, 0, cabecera, 0, cabecera.length()));
+    }
+
     /** Lee UTF-8 con o sin BOM y admite CSV anteriores guardados en Windows-1252. */
     public static String leerTexto(Path archivo) throws IOException {
         byte[] bytes = Files.readAllBytes(archivo);

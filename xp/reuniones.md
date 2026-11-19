@@ -448,7 +448,7 @@ Estas actividades se registran como pendientes de seguimiento, no como acuerdos 
 
 **Acta de aceptación escrita del Cliente:**
 
-`xp/actas/acta-S4-aceptacion-final-cliente.md`
+`datos/xp/actas/acta-S4-aceptacion-final-cliente.md`
 
 **Evaluación XP:**
 

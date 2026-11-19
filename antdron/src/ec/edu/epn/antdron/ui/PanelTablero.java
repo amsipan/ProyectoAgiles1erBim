@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
@@ -23,11 +22,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -72,11 +66,13 @@ final class PanelTablero {
     private static final String TODOS_RESULTADOS = "Todos los resultados";
 
     private final MotorAntdron motor;
-    private final BorderPane raiz = new BorderPane();
-    private final StackPane contenido = new StackPane();
-    private final ToggleGroup menu = new ToggleGroup();
-    private final Map<Seccion, ToggleButton> botones = new EnumMap<>(Seccion.class);
-    private final Map<Seccion, Label> contadores = new EnumMap<>(Seccion.class);
+    private final VBox raiz = new VBox(12);
+    private final ComboBox<String> integrante = new ComboBox<>();
+    private final ComboBox<String> sesion = new ComboBox<>();
+    private final HBox resumen = new HBox(12);
+    private final HBox columnas = new HBox(12);
+    private final TabPane detalle = new TabPane();
+    private final Label error = Ui.aviso("", true);
     private TableroXp tablero;
     private Seccion actual = Seccion.RESUMEN;
 
@@ -140,14 +136,26 @@ final class PanelTablero {
         Label ayuda = Ui.texto("Lee xp/tareas.csv, xp/historias.csv, las capturas de docs/evidencias/ y el último "
                 + "resultado de las pruebas.");
         ayuda.getStyleClass().add("tenue");
-        ayuda.setStyle("-fx-font-size: 11px;");
-        Region resto = new Region();
-        VBox.setVgrow(resto, Priority.ALWAYS);
-        menuBox.getChildren().addAll(resto, actualizar, ayuda);
-        menuBox.getStyleClass().add("tablero-menu");
-        menuBox.setPrefWidth(255);
-        menuBox.setMinWidth(255);
-        return menuBox;
+        Label ver = new Label("Ver:");
+        for (Region r : List.of(ver, integrante, sesion, actualizar)) {
+            r.setMinWidth(Region.USE_PREF_SIZE);
+        }
+        integrante.setPrefWidth(230);
+        sesion.setPrefWidth(250);
+        HBox filtros = new HBox(10, ver, integrante, sesion, actualizar);
+        filtros.setAlignment(Pos.CENTER_LEFT);
+
+        columnas.setMinHeight(260);
+        VBox.setVgrow(columnas, Priority.ALWAYS);
+        detalle.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        detalle.setPrefHeight(230);
+        detalle.setMinHeight(200);
+        error.setVisible(false);
+        error.setManaged(false);
+
+        raiz.getChildren().addAll(Ui.titulo("Tablero de trabajo XP · Grupo " + motor.getEquipo().grupo() + " "
+                + motor.getEquipo().nombre()), filtros, error, resumen, ayuda, columnas, detalle);
+        cargar();
     }
 
     private void cargar() {
@@ -155,119 +163,42 @@ final class PanelTablero {
             tablero = TableroXp.cargar(motor.getRaiz(), motor.getEquipo());
         } catch (IOException | IllegalArgumentException e) {
             tablero = null;
-            contadores.values().forEach(c -> c.setText(""));
-            VBox caja = new VBox(12, Ui.titulo("Tablero XP"), Ui.aviso("No se pudo leer el tablero: " + e.getMessage(), true));
-            caja.setPadding(new Insets(24));
-            contenido.getChildren().setAll(caja);
+            resumen.getChildren().clear();
+            columnas.getChildren().clear();
+            detalle.getTabs().clear();
+            Ui.mensaje(error, e.getMessage(), true);
             return;
         }
-        int total = tablero.getTareas().size();
-        contadores.get(Seccion.ACTIVIDADES).setText(tablero.contar(EstadoTarea.HECHA) + "/" + total);
-        contadores.get(Seccion.HISTORIAS).setText(tablero.historiasAceptadas() + "/" + tablero.getHistorias().size());
-        long fallidas = tablero.getPruebas().stream().filter(p -> !pasó(p)).count();
-        contadores.get(Seccion.PRUEBAS).setText(tablero.getPruebas().isEmpty() ? "—"
-                : fallidas > 0 ? fallidas + " ✘" : tablero.getPruebas().size() + " ✔");
-        contadores.get(Seccion.DIVISION).setText(String.valueOf(motor.getEquipo().integrantes().size()));
-        List<TableroXp.AvancePractica> practicas = tablero.porPractica();
-        contadores.get(Seccion.PRACTICAS).setText(practicas.stream().filter(TableroXp.AvancePractica::defendida).count()
-                + "/" + practicas.size());
-        mostrar(actual);
+        error.setVisible(false);
+        error.setManaged(false);
+        pintarResumen();
+        pintarColumnas();
+        pintarDetalle();
     }
 
-    private void mostrar(Seccion s) {
-        actual = s;
-        botones.get(s).setSelected(true);
-        if (tablero == null) {
-            return;
-        }
-        Node cuerpo = switch (s) {
-            case RESUMEN -> resumen();
-            case ACTIVIDADES -> actividades();
-            case HISTORIAS -> historias();
-            case PRUEBAS -> pruebas();
-            case DIVISION -> division();
-            case PRACTICAS -> practicas();
-        };
-        Label titulo = Ui.titulo(s.titulo);
-        Label descripcion = Ui.texto(s.descripcion);
-        descripcion.getStyleClass().add("tenue");
-        VBox pagina = new VBox(16, new VBox(4, titulo, descripcion), cuerpo);
-        pagina.setPadding(new Insets(22, 26, 22, 26));
-        VBox.setVgrow(cuerpo, Priority.ALWAYS);
-        if (s == Seccion.ACTIVIDADES || s == Seccion.PRUEBAS) {
-            // Estas secciones tienen sus propias barras de desplazamiento.
-            contenido.getChildren().setAll(pagina);
-        } else {
-            ScrollPane scroll = new ScrollPane(pagina);
-            scroll.setFitToWidth(true);
-            contenido.getChildren().setAll(scroll);
-        }
-    }
-
-    // ------------------------------------------------------------------ Resumen
-
-    private Node resumen() {
+    private void pintarResumen() {
         int total = tablero.getTareas().size();
         long hechas = tablero.contar(EstadoTarea.HECHA);
         List<TableroXp.AvancePractica> practicas = tablero.porPractica();
         long defendidas = practicas.stream().filter(TableroXp.AvancePractica::defendida).count();
-        int nHistorias = tablero.getHistorias().size();
-        long aceptadas = tablero.historiasAceptadas();
-        List<TableroXp.PruebaEjecutada> pruebas = tablero.getPruebas();
-        long pasadas = pruebas.stream().filter(PanelTablero::pasó).count();
-
-        HBox cifras = new HBox(14,
-                cifra("ACTIVIDADES HECHAS", hechas + " de " + total,
+        List<TableroXp.AvanceIteracion> iteraciones = tablero.porIteracion();
+        String velocidad = iteraciones.stream()
+                .map(it -> "Iteración " + it.numero() + ": " + it.terminados() + "/" + it.planificados() + " pts")
+                .collect(Collectors.joining("\n"));
+        int terminados = iteraciones.stream().mapToInt(TableroXp.AvanceIteracion::terminados).sum();
+        boolean hayResultados = tablero.getHistorias().stream().anyMatch(h -> !"SIN_PRUEBAS".equals(h.aceptacion()));
+        int fallidas = tablero.pruebasFallidas();
+        String resultados = hayResultados ? fallidas + " resultados fallidos" : "Pruebas pendientes de ejecutar";
+        resumen.getChildren().setAll(
+                cifra("Tareas hechas", hechas + " / " + total,
                         tablero.contar(EstadoTarea.EN_CURSO) + " en curso · " + tablero.contar(EstadoTarea.POR_HACER)
-                                + " por hacer", fraccion(hechas, total), "", Seccion.ACTIVIDADES),
-                cifra("HISTORIAS ACEPTADAS", aceptadas + " de " + nHistorias,
-                        tablero.pruebasFallidas() == 0 ? "Sin pruebas de aceptación fallidas"
-                                : tablero.pruebasFallidas() + " pruebas de aceptación fallidas",
-                        fraccion(aceptadas, nHistorias), "verde", Seccion.HISTORIAS),
-                cifra("PRUEBAS EN VERDE", pruebas.isEmpty() ? "—" : pasadas + " de " + pruebas.size(),
-                        pruebas.isEmpty() ? "Aún no se ejecutan las pruebas" : (pruebas.size() - pasadas) + " fallidas",
-                        pruebas.isEmpty() ? 0 : fraccion(pasadas, pruebas.size()), "verde", Seccion.PRUEBAS),
-                cifra("PRÁCTICAS XP DEFENDIDAS", defendidas + " de " + practicas.size(),
-                        "Con todas sus evidencias", fraccion(defendidas, practicas.size()), "", Seccion.PRACTICAS));
-
-        GridPane sesiones = rejilla();
-        int fila = 0;
-        for (TableroXp.AvanceSesion a : tablero.porSesion()) {
-            agregarFilaAvance(sesiones, fila++, Tarea.nombreSesion(a.sesion()), fraccion(a.hechas(), a.total()),
-                    a.hechas() + "/" + a.total() + (a.enCurso() > 0 ? "  ·  " + a.enCurso() + " en curso" : ""), "");
-        }
-        VBox tarjetaSesiones = Ui.tarjeta(Ui.subtitulo("Avance por sesión"), sesiones);
-
-        GridPane iteraciones = rejilla();
-        fila = 0;
-        for (TableroXp.AvanceIteracion it : tablero.porIteracion()) {
-            agregarFilaAvance(iteraciones, fila++, "Iteración " + it.numero(), fraccion(it.terminados(), it.planificados()),
-                    it.terminados() + " de " + it.planificados() + " pts", "verde");
-        }
-        int terminados = tablero.porIteracion().stream().mapToInt(TableroXp.AvanceIteracion::terminados).sum();
-        Label velocidad = new Label("Velocidad total: " + terminados + " puntos terminados");
-        velocidad.getStyleClass().add("tenue");
-        VBox tarjetaIteraciones = Ui.tarjeta(Ui.subtitulo("Velocidad por iteración"), iteraciones, velocidad);
-
-        HBox fila2 = new HBox(14, tarjetaSesiones, tarjetaIteraciones);
-        HBox.setHgrow(tarjetaSesiones, Priority.ALWAYS);
-        HBox.setHgrow(tarjetaIteraciones, Priority.ALWAYS);
-        tarjetaSesiones.setMaxWidth(Double.MAX_VALUE);
-        tarjetaIteraciones.setMaxWidth(Double.MAX_VALUE);
-        tarjetaSesiones.setPrefWidth(420);
-        tarjetaIteraciones.setPrefWidth(420);
-
-        VBox pendientes = new VBox(8);
-        tablero.getTareas().stream().filter(t -> tablero.estado(t) != EstadoTarea.HECHA).limit(5)
-                .forEach(t -> pendientes.getChildren().add(filaPendiente(t)));
-        if (pendientes.getChildren().isEmpty()) {
-            pendientes.getChildren().add(Ui.aviso("¡Todas las actividades están hechas!", false));
-        }
-        Button verTodas = new Button("Ver todas las actividades");
-        verTodas.setOnAction(e -> mostrar(Seccion.ACTIVIDADES));
-        VBox tarjetaPendientes = Ui.tarjeta(Ui.subtitulo("Lo siguiente por hacer"), pendientes, verTodas);
-
-        return new VBox(14, cifras, fila2, tarjetaPendientes);
+                                + " por hacer", total == 0 ? 0 : (double) hechas / total),
+                cifra("Prácticas XP defendidas", defendidas + " / " + practicas.size(),
+                        "Con todas sus evidencias entregadas", practicas.isEmpty() ? 0 : (double) defendidas / practicas.size()),
+                cifra("Historias aceptadas", tablero.historiasAceptadas() + " / " + tablero.getHistorias().size(),
+                        resultados,
+                        tablero.getHistorias().isEmpty() ? 0 : (double) tablero.historiasAceptadas() / tablero.getHistorias().size()),
+                cifra("Velocidad (puntos terminados)", terminados + " pts", velocidad, -1));
     }
 
     private Node filaPendiente(Tarea t) {
@@ -364,14 +295,12 @@ final class PanelTablero {
             ScrollPane scroll = new ScrollPane(tarjetas);
             scroll.setFitToWidth(true);
             VBox.setVgrow(scroll, Priority.ALWAYS);
-            Label cabecera = new Label(estado.getEtiqueta());
-            cabecera.getStyleClass().add("columna-cabecera");
-            HBox encabezado = new HBox(8, cabecera, Ui.insignia(String.valueOf(deEstado.size()), colorEstado(estado)));
-            encabezado.setAlignment(Pos.CENTER_LEFT);
-            VBox columna = new VBox(10, encabezado, scroll);
-            columna.getStyleClass().addAll("columna-tablero", "columna-" + estado.name());
-            columna.setPadding(new Insets(12));
-            columna.setId("columna-" + estado.name().toLowerCase().replace('_', '-'));
+            Label cabecera = Ui.subtitulo(estado.getEtiqueta() + " (" + deEstado.size() + ")");
+            VBox columna = new VBox(8, cabecera, scroll);
+            String estilo = estado.name().toLowerCase(Locale.ROOT);
+            columna.getStyleClass().addAll("columna-tablero", "columna-" + estilo);
+            columna.setPadding(new Insets(10));
+            columna.setId("columna-" + estilo.replace('_', '-'));
             HBox.setHgrow(columna, Priority.ALWAYS);
             columna.setPrefWidth(320);
             columna.setMaxWidth(Double.MAX_VALUE);
@@ -403,8 +332,8 @@ final class PanelTablero {
         if (!t.evidencia().isEmpty()) {
             caja.getChildren().add(detalle("Evidencia: " + archivo(t.evidencia()), estado == EstadoTarea.HECHA));
         }
-        caja.getStyleClass().addAll("tarea", "tarea-" + estado.name());
-        caja.setPadding(new Insets(10, 12, 10, 12));
+        caja.getStyleClass().addAll("tarea", "tarea-" + estado.name().toLowerCase(Locale.ROOT));
+        caja.setPadding(new Insets(8, 10, 8, 10));
         caja.setMinHeight(Region.USE_PREF_SIZE);
         return caja;
     }
@@ -706,65 +635,68 @@ final class PanelTablero {
         return l;
     }
 
-    private static Label estadoInsignia(EstadoTarea e) {
-        return Ui.insignia(e.getEtiqueta(), colorEstado(e));
+    private void pintarDetalle() {
+        TableView<TableroXp.AvanceIntegrante> personas = Ui.tabla("Sin integrantes");
+        personas.getColumns().add(Ui.columna("Integrante", a -> a.integrante().nombre(), 170));
+        personas.getColumns().add(Ui.columna("Rol XP", a -> a.integrante().rol(), 170));
+        personas.getColumns().add(Ui.columna("Tareas hechas", a -> a.hechas() + " / " + a.total() + "  (" + a.porcentaje() + " %)", 120));
+        personas.getColumns().add(Ui.columna("En curso", a -> String.valueOf(a.enCurso()), 80));
+        personas.getColumns().add(Ui.columna("Historias del backlog", a -> String.join(", ", a.historias()), 250));
+        personas.setItems(FXCollections.observableArrayList(tablero.porIntegrante()));
+        personas.setId("tabla-integrantes");
+
+        TableView<TableroXp.Historia> historias = Ui.tabla("No se encontró xp/historias.csv");
+        historias.getColumns().add(Ui.columna("Historia", TableroXp.Historia::id, 70));
+        historias.getColumns().add(Ui.columna("Título", TableroXp.Historia::titulo, 230));
+        historias.getColumns().add(Ui.columna("Responsable", h -> String.join(", ", h.responsables()), 150));
+        historias.getColumns().add(Ui.columna("Iteración", h -> String.valueOf(h.iteracion()), 70));
+        historias.getColumns().add(Ui.columna("Puntos", h -> String.valueOf(h.puntos()), 60));
+        historias.getColumns().add(Ui.columna("Estado", TableroXp.Historia::estado, 100));
+        historias.getColumns().add(Ui.columna("Pruebas", h -> h.pasadas() + " ✔  " + h.fallidas() + " ✘", 90));
+        historias.getColumns().add(Ui.columna("Aceptación", TableroXp.Historia::aceptacion, 110));
+        historias.setItems(FXCollections.observableArrayList(tablero.getHistorias()));
+        historias.setId("tabla-historias");
+
+        TableView<TableroXp.AvancePractica> practicas = Ui.tabla("Sin prácticas");
+        practicas.getColumns().add(Ui.columna("Práctica XP", TableroXp.AvancePractica::practica, 260));
+        practicas.getColumns().add(Ui.columna("Tareas hechas", p -> p.hechas() + " / " + p.total(), 120));
+        practicas.getColumns().add(Ui.columna("Estado", p -> p.defendida() ? "Defendida" : "Falta evidencia", 160));
+        practicas.setItems(FXCollections.observableArrayList(tablero.porPractica()));
+        practicas.setId("tabla-practicas");
+
+        detalle.getTabs().setAll(new Tab("Por integrante", personas),
+                new Tab("Historias (HU) y pruebas", historias),
+                new Tab("Pruebas ejecutadas", vistaPruebas()),
+                new Tab("Prácticas XP", practicas));
     }
 
-    private static String colorEstado(EstadoTarea e) {
-        return switch (e) {
-            case HECHA -> "verde";
-            case EN_CURSO -> "ambar";
-            default -> "gris";
-        };
-    }
-
-    private static Region crecer() {
-        Region r = new Region();
-        HBox.setHgrow(r, Priority.ALWAYS);
-        return r;
-    }
-
-    private static Region espacio(double alto) {
-        Region r = new Region();
-        r.setMinHeight(alto);
-        return r;
-    }
-
-    private static double fraccion(long parte, long total) {
-        return total == 0 ? 0 : (double) parte / total;
-    }
-
-    private static boolean pasó(TableroXp.PruebaEjecutada p) {
-        return "PASO".equals(p.resultado());
-    }
-
-    private Optional<Integrante> buscarPorNombre(String nombre) {
-        return motor.getEquipo().integrantes().stream().filter(i -> i.nombre().equals(nombre)).findFirst();
-    }
-
-    /** «PREP» → «Preparación»; «S1» se queda igual. */
-    private static String corta(String sesion) {
-        return "PREP".equals(sesion) ? "Preparación" : sesion;
-    }
-
-    /** Solo el nombre del archivo; los entregables que no son archivos se muestran tal cual. */
-    private static String archivo(String ruta) {
-        return ruta.contains("/") ? ruta.substring(ruta.lastIndexOf('/') + 1) : ruta;
-    }
-
-    /** «cicloDeVidaDeLaHormiga_seGuarda» → «Ciclo de vida de la hormiga · se guarda». */
-    static String humanizar(String metodo) {
-        List<String> partes = new ArrayList<>();
-        for (String trozo : metodo.split("_")) {
-            String palabras = trozo.replaceAll("(?<=[\\p{Ll}\\d])(?=\\p{Lu})", " ")
-                    .replaceAll("(?<=\\p{Lu})(?=\\p{Lu}\\p{Ll})", " ")
-                    .replaceAll("(?<=\\p{L}{2})(?=\\d)", " ").toLowerCase(java.util.Locale.ROOT).strip();
-            if (!palabras.isEmpty()) {
-                partes.add(palabras);
-            }
-        }
-        String texto = String.join(" · ", partes);
-        return texto.isEmpty() ? metodo : Character.toUpperCase(texto.charAt(0)) + texto.substring(1);
+    private VBox vistaPruebas() {
+        List<TableroXp.PruebaEjecutada> pruebas = tablero.getPruebas();
+        long pasadas = pruebas.stream().filter(p -> "PASO".equals(p.resultado())).count();
+        Label resumenPruebas = new Label(pruebas.isEmpty()
+                ? "Ejecute las pruebas y pulse Actualizar para cargar los resultados."
+                : pruebas.size() + " pruebas · " + pasadas + " pasaron · " + (pruebas.size() - pasadas) + " fallaron");
+        resumenPruebas.setId("resumen-pruebas-xp");
+        TextField filtro = new TextField();
+        filtro.setPromptText("Buscar por clase, prueba, historia o resultado");
+        TableView<TableroXp.PruebaEjecutada> tabla = Ui.tabla("Sin pruebas para mostrar");
+        tabla.getColumns().add(Ui.columna("Clase", TableroXp.PruebaEjecutada::clase, 190));
+        tabla.getColumns().add(Ui.columna("Prueba", TableroXp.PruebaEjecutada::metodo, 350));
+        tabla.getColumns().add(Ui.columna("Historias", TableroXp.PruebaEjecutada::historias, 140));
+        tabla.getColumns().add(Ui.columna("Resultado", TableroXp.PruebaEjecutada::resultado, 90));
+        tabla.getColumns().add(Ui.columna("ms", TableroXp.PruebaEjecutada::milisegundos, 60));
+        tabla.getColumns().add(Ui.columna("Detalle", TableroXp.PruebaEjecutada::detalle, 200));
+        tabla.setId("tabla-pruebas-xp");
+        tabla.setItems(FXCollections.observableArrayList(pruebas));
+        filtro.textProperty().addListener((propiedad, anterior, valor) -> {
+            String consulta = valor.strip().toLowerCase(Locale.ROOT);
+            tabla.getItems().setAll(pruebas.stream().filter(p -> String.join(" ", p.clase(), p.metodo(),
+                    p.historias(), p.resultado()).toLowerCase(Locale.ROOT).contains(consulta)).toList());
+        });
+        VBox.setVgrow(tabla, Priority.ALWAYS);
+        VBox vista = new VBox(8, resumenPruebas, filtro, tabla);
+        vista.setPadding(new Insets(8));
+        return vista;
     }
 
     Parent getRaiz() {

@@ -53,12 +53,6 @@ public final class TableroXp {
     public record AvanceIteracion(int numero, int planificados, int terminados) {
     }
 
-    public record AvanceSesion(String sesion, int hechas, int enCurso, int total) {
-        public int porcentaje() {
-            return total == 0 ? 0 : Math.round(hechas * 100f / total);
-        }
-    }
-
     public record PruebaEjecutada(String clase, String metodo, String historias, String resultado,
                                   String milisegundos, String detalle) {
     }
