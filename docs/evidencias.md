@@ -21,7 +21,7 @@
 |---|---|---|---|---|---|---|---|
 | S1 | I. Planificación | Capturas + acta de coordinación | Los 6 | | [`1-planificacion/`](evidencias/1-planificacion/) | — | [Acta de coordinación](../xp/reuniones.md#acta-de-coordinación--s1-y-s2-planificación-y-diseño) |
 | S2 | II. Diseño | Capturas y diagramas (incluye el reciclaje: clase `Utility`) | Los 6 | | [`2-diseno/`](evidencias/2-diseno/) | — | [Acta de coordinación](../xp/reuniones.md#acta-de-coordinación--s1-y-s2-planificación-y-diseño) |
-| S3 | III. Desarrollo | Video (2:40) | Karen Mosquera y Sebastián Jibaja | 18/11/2026 | [Capturas](evidencias/3-desarrollo/) | [Ver video](PEGA_AQUI_EL_ENLACE_DE_DRIVE) | [Acta S3](../xp/reuniones.md#s3-fase-iii-desarrollo) |
+| S3 | III. Desarrollo | Video (2:40) | Karen Mosquera y Sebastián Jibaja | 18/11/2026 | [Capturas](evidencias/3-desarrollo/) | [Ver video](https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FCliente%2FVideo4%2DCliente%2Emp4&share=cQo%5FugZXmz5BQIrjGmUzrt8IEgUDAzuSWnqQtNA1XUi6R6FShg&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eebb673f0%2D55eb%2D4a17%2D83f9%2Da87b1fef11b2) | [Acta S3](../xp/reuniones.md#s3-fase-iii-desarrollo) |
 | S4 | IV. Pruebas y retrospectiva | Video (~20 min) | Leonel Morales, Kened Lugmaña y Daniel Mera | | [`4-pruebas/`](evidencias/4-pruebas/) | | [Acta S4](../xp/reuniones.md#s4--fase-iv-pruebas-y-retrospectiva) |
 
 ## Las 17 prácticas XP
@@ -54,7 +54,7 @@
 | 12 | Disponibilidad del cliente | Karen | Criterios de HU-01 y aprobación del PR | S3 · Video | — | | |
 | 13 | Unidad de pruebas | Kened | [`antdron/pruebas/`](../antdron/pruebas/) y [`framework-xp/pruebas/`](../framework-xp/pruebas/) | S3 · Captura (presentada en el video) | [`s3-pruebas-verde-hu01.png`](evidencias/3-desarrollo/s3-pruebas-verde-hu01.png) | | |
 | 14 | Programación en parejas | Karen + Sebas | Live Share (HU-01) | S3 · Video | [`s3-live-share-karen-sebas.png`](evidencias/3-desarrollo/s3-live-share-karen-sebas.png) | | |
-| 15 | Integración | Sebas | PR aprobado y fusionado a `main` | S3 · Video | [`s3-pr-fusionado.png`](evidencias/3-desarrollo/s3-pr-fusionado.png) | | |
+| 15 | Integración | Sebas | PR aprobado y fusionado a `main` | S3 · Video | [`s3-pr-fusionado.png`](evidencias/3-desarrollo/s3-pr-fusionado.png) | | [PR #10](https://github.com/amsipan/ProyectoAgiles1erBim/pull/10)|
 
 ### IV. Pruebas
 
