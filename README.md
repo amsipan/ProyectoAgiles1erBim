@@ -83,7 +83,9 @@ Abra [AntCiberDron en noVNC](http://localhost:6080/vnc.html?autoconnect=true&res
 
 Abra **Entrar al hormiguero virtual**, registre una cuenta y pulse **Crear HLarva**. El archivo SQLite se crea en `datos/hormiguero/hormiguero.db` y el montaje de `datos/` lo conserva cuando se recrea el contenedor. En la primera migración, los datos de los CSV se importan con sus identificadores. El CSV de coordenadas `datos/Grupo##.csv` sigue siendo un artefacto independiente.
 
-El tablero exportado desde Docker queda en `datos/tablero-xp.html`. Ábralo con su navegador.
+Tras entrar con una cuenta del equipo o del profesor, la pestaña **Tablero XP** muestra la preparación y las fases S1 a S4, con filtros por integrante y sesión. Edita `xp/tareas.csv` o añade capturas en la carpeta de su fase dentro de `docs/evidencias/`. Usa **Actualizar** para leer los cambios. Docker monta `xp/` y `docs/` desde el proyecto.
+
+La sección **Pruebas ejecutadas** de ambos tableros muestra cada resultado de la suite, incluso las pruebas sin una historia asociada. La imagen ya trae los resultados de su construcción. Para volver a ejecutar las pruebas en el contenedor activo, usa `docker compose exec antdron java -cp 'bin:/opt/javafx/*:lib/*' ec.edu.epn.xp.XpCli probar` y pulsa **Actualizar**. El tablero HTML exportado con Compose queda en `datos/tablero-xp.html`.
 
 ## Documentación
 

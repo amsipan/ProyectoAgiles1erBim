@@ -404,6 +404,27 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 |---|---|
 | Guardar una fila de hormiga (id, tipo, sexo, estado, fecha) para mostrarla | HormigueroServicio, VistaKgd |
 
+## Paquete `tablero`
+
+### Clase: Tarea
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Representar una tarea con sesión, responsables, artefacto y evidencia | EstadoTarea, TableroXp |
+
+### Clase: EstadoTarea
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Definir las columnas Por hacer, En curso y Hecha | TableroXp, PanelTablero |
+
+### Clase: TableroXp
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Leer tareas, capturas, backlog, aceptación y resultados de la suite | Tarea, Equipo, Utility |
+| Calcular avance por integrante, práctica e iteración | EstadoTarea, PanelTablero |
+
 ## Paquete `ui` (JavaFX sin FXML)
 
 ### Clase: AntdronFx
@@ -461,6 +482,13 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 |---|---|
 | Ofrecer IA buscar arsenal, armas, vuelo, energía e idiomas | AntCiberDron, MotorAntdron |
 | Mostrar los errores de entrenamiento no autorizado | ExpertoParlante, EntrenamientoNoAutorizadoException |
+
+### Clase: PanelTablero
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Mostrar tareas por sesión y responsable, y resultados por historia y prueba | TableroXp, Tarea, Ui |
+| Recargar el tablero cuando cambian los artefactos | MotorAntdron |
 
 ### Clase: VistaKgd
 

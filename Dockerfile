@@ -22,6 +22,7 @@ COPY framework-xp framework-xp
 COPY antdron antdron
 COPY config config
 COPY xp xp
+COPY docs docs
 COPY xp.properties Dockerfile docker-compose.yml ./
 COPY .vscode .vscode
 COPY docker/iniciar.sh docker/iniciar.sh

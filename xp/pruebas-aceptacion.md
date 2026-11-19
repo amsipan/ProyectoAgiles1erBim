@@ -16,10 +16,10 @@
 | HU-12 | Persistencia | 7 | 0 | 0 | ACEPTADA |
 | HU-13 | Aplicación dockerizada | 4 | 0 | 0 | ACEPTADA |
 | HU-14 | Bomba | 6 | 0 | 0 | ACEPTADA |
-| HU-15 | Configuración por archivo | 10 | 0 | 0 | ACEPTADA |
+| HU-15 | Configuración por archivo | 14 | 0 | 0 | ACEPTADA |
 | XP-01 | Núcleo y directrices XP | 14 | 0 | 0 | ACEPTADA |
 | XP-02 | Historias de usuario | 9 | 0 | 0 | ACEPTADA |
-| XP-03 | Plan de entregas y velocidad | 10 | 0 | 0 | ACEPTADA |
+| XP-03 | Plan de entregas y velocidad | 15 | 0 | 0 | ACEPTADA |
 | XP-04 | Diseño: metáfora y tarjetas CRC | 6 | 0 | 0 | ACEPTADA |
 | XP-05 | Pruebas unitarias y de aceptación | 14 | 0 | 0 | ACEPTADA |
 | XP-06 | Equipo, parejas e integración continua | 10 | 0 | 0 | ACEPTADA |

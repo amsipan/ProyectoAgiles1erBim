@@ -36,11 +36,13 @@ flowchart TB
         Dominio["Dominio: hormiga, alimento, antciberdron, bomba, automata, sistema"]
         Auth["auth + config"]
         Pers["persistencia - BaseDatos, HormigueroServicio"]
+        TableroFX["Tablero XP en JavaFX"]
         UI --> Motor
         Consola --> Motor
         Motor --> Dominio
         Motor --> Auth
         Motor --> Pers
+        UI --> TableroFX
     end
 
     subgraph fw["Parte 1 - framework-xp/"]
@@ -57,7 +59,8 @@ flowchart TB
         Cfg["config/equipo.properties<br/>config/integrantes.csv"]
         Gen["datos/Grupo##.csv<br/>datos/automata-grupo##.md"]
         Hormi[("datos/hormiguero/hormiguero.db")]
-        Xp["xp/historias.csv, metafora, CRC,<br/>plan, reuniones, spikes"]
+        Xp["xp/historias.csv, xp/tareas.csv, aceptación,<br/>plan, reuniones, spikes"]
+        Evidencias["docs/evidencias/"]
     end
 
 
@@ -74,6 +77,7 @@ flowchart TB
     Cfg -->|lee| Motor
     Motor -->|regenera| Gen
     Pers --> Hormi
+    TableroFX -->|lee tareas, aceptación y capturas| Xp & Evidencias
     Cli -->|lee y verifica| Xp
     Cli -->|lee| Cfg
     Ini -->|ejecuta con JavaFX Linux| app
@@ -106,7 +110,7 @@ La aplicación se compila con JavaFX y usa SQLite JDBC en ejecución. Las prueba
 
 | Capa | Paquetes | Responsabilidad |
 |---|---|---|
-| Presentación | `ec.edu.epn.antdron.ui`, `App` (consola) | Pestañas JavaFX (Equipo, Coordenadas, Bomba y autómata, AntCiberDron, Hormiguero virtual) y modo consola. Solo muestran lo que entrega el motor. |
+| Presentación | `ec.edu.epn.antdron.ui`, `App` (consola) | Pestañas JavaFX para equipo, coordenadas, autómata, AntCiberDron, hormiguero virtual y tablero XP. |
 | Orquestación | `MotorAntdron` | Lee `config/`, regenera `Grupo##.csv`, la bomba y `automata-grupo##.md`, y crea el AntCiberDron. |
 | Dominio | `hormiga`, `alimento`, `antciberdron`, `bomba`, `automata`, `sistema`, `pkAntCiberDronContract` | Reglas del enunciado: hormigas y alimentos, IA y armas, autómata, estrategia OTAN, coordenadas. |
 | Configuración y seguridad | `config`, `auth` | Lectura de `config/`, validación de usuarios (3 intentos) y claves con SHA-256. |

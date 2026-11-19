@@ -63,3 +63,7 @@ Cada captura muestra el archivo abierto en VS Code o en GitHub, o la salida del 
 | `s4-participantes.png` | Leonel, Kened y Daniel en la llamada | Leonel |
 
 No ponga cédulas en las capturas.
+
+## Tablero XP
+
+La pestaña **Tablero XP** lee los nombres de archivo desde [xp/tareas.csv](../../xp/tareas.csv). Guarda cada captura en la subcarpeta de su fase con el nombre indicado y pulsa **Actualizar** en la app para reflejar la evidencia. Para videos y entregables en GitHub, actualiza el estado en el CSV cuando el equipo los confirme.

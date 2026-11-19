@@ -93,6 +93,10 @@ class ComandosTest {
     @Prueba
     void elTableroUsaElBacklogYLosResultadosReales() throws IOException {
         Files.writeString(raiz.resolve("xp.properties"), "proyecto.nombre=Equipo <XP>\n");
+        Files.writeString(raiz.resolve("xp/tareas.csv"),
+                "S3-01;S3;Unidad de pruebas;u0;Presentar cobertura;xp/historias.csv;Video;POR_HACER\n");
+        Files.writeString(raiz.resolve("build/pruebas/suite.tsv"),
+                "clase\tmétodo\thistorias\tresultado\tms\tdetalle\nClase\tpruebaSinHistoria\t\tPASO\t1\t\n");
         Afirmar.igual(0, xp("tablero"));
         Path tablero = raiz.resolve("build/xp/tablero.html");
         String html = Files.readString(tablero);
@@ -101,6 +105,9 @@ class ComandosTest {
         Afirmar.contiene(html, "<td>Aceptada</td>");
         Afirmar.contiene(html, "<td>Rechazada</td>");
         Afirmar.contiene(html, "<td>Sin pruebas</td>");
+        Afirmar.contiene(html, "S3 · Desarrollo");
+        Afirmar.contiene(html, "Presentar cobertura");
+        Afirmar.contiene(html, "pruebaSinHistoria");
         Afirmar.noContiene(html, "1754265385");
 
         Files.delete(raiz.resolve("build/pruebas/resultados.csv"));
