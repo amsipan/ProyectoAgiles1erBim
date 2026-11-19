@@ -13,6 +13,7 @@ import ec.edu.epn.antdron.config.Integrante;
 import ec.edu.epn.antdron.config.LectorConfiguracion;
 import ec.edu.epn.xp.directrices.Practica;
 import ec.edu.epn.xp.pruebas.Afirmar;
+import ec.edu.epn.xp.pruebas.EjecutorPruebas;
 import ec.edu.epn.xp.pruebas.Historia;
 import ec.edu.epn.xp.pruebas.Prueba;
 import ec.edu.epn.xp.pruebas.Temporal;
@@ -55,9 +56,12 @@ class TableroXpTest {
             Afirmar.verdadero(t.artefacto().isEmpty() || tablero.existe(t.artefacto()),
                     t.id() + ": no existe el artefacto " + t.artefacto());
             if (t.evidenciaEsArchivo()) {
-                Afirmar.verdadero(t.evidencia().matches("docs/evidencias/f[1-4]-[a-z0-9-]+\\.png"), t.id());
+                Afirmar.verdadero(t.evidencia().matches(
+                        "docs/evidencias/[1-4]-[a-z]+/[fs][1-4]-[a-z0-9-]+\\.png"), t.id());
             }
         }
+        Tarea historias = tablero.getTareas().stream().filter(t -> t.id().equals("S1-03")).findFirst().orElseThrow();
+        Afirmar.igual(EstadoTarea.HECHA, tablero.estado(historias), "la captura publicada cuenta como evidencia");
         Afirmar.igual(21, tablero.getHistorias().size());
         Afirmar.verdadero(tablero.getHistorias().stream().allMatch(h -> !h.responsables().isEmpty()));
     }
@@ -84,6 +88,11 @@ class TableroXpTest {
         Afirmar.igual(1, karen.hechas());
         Afirmar.igual(List.of(new TableroXp.AvancePractica("Reuniones", 1, 2),
                 new TableroXp.AvancePractica("Integración continua", 1, 1)), tablero.porPractica());
+        Afirmar.igual(List.of(new TableroXp.AvanceSesion("PREP", 0, 1, 1), new TableroXp.AvanceSesion("S1", 1, 1, 2),
+                new TableroXp.AvanceSesion("S2", 0, 0, 0), new TableroXp.AvanceSesion("S3", 1, 0, 1),
+                new TableroXp.AvanceSesion("S4", 0, 0, 1)), tablero.porSesion());
+        Afirmar.igual(50, tablero.porSesion().get(1).porcentaje());
+        Afirmar.igual(java.util.Map.of("PREP", 1, "S3", 1, "S4", 1), tablero.tareasPorSesion(EQUIPO.integrantes().get(1)));
     }
 
     @Prueba
@@ -115,6 +124,21 @@ class TableroXpTest {
                 () -> TableroXp.cargar(proyecto("T-1;S9;;sjibaja;Algo;;;\n"), EQUIPO));
         Afirmar.lanza(IllegalArgumentException.class,
                 () -> TableroXp.cargar(proyecto("T-1;S1;;sjibaja;Algo;;;LISTA\n"), EQUIPO));
+        Afirmar.lanza(IllegalArgumentException.class, () -> TableroXp.cargar(
+                proyecto("T-1;S1;;sjibaja;Algo;;;\nT-1;S1;;sjibaja;Otra tarea;;;\n"), EQUIPO));
         Afirmar.lanza(java.io.IOException.class, () -> TableroXp.cargar(Temporal.directorio(), EQUIPO));
+    }
+
+    @Prueba
+    void muestraCadaPruebaUnaVezInclusoSinHistoria() throws Exception {
+        Path raiz = proyecto("T-1;S1;;kmosquera;Tarea;;;\n");
+        EjecutorPruebas.guardarDetalle(List.of(
+                new EjecutorPruebas.ResultadoPrueba("Clase", "asociada", List.of("HU-01", "HU-06"), true, null, 10),
+                new EjecutorPruebas.ResultadoPrueba("Clase", "sinHistoria", List.of(), false, "falló\nen la prueba", 3)),
+                raiz.resolve(TableroXp.SUITE));
+        List<TableroXp.PruebaEjecutada> pruebas = TableroXp.cargar(raiz, EQUIPO).getPruebas();
+        Afirmar.igual(List.of(
+                new TableroXp.PruebaEjecutada("Clase", "asociada", "HU-01, HU-06", "PASO", "10", ""),
+                new TableroXp.PruebaEjecutada("Clase", "sinHistoria", "", "FALLO", "3", "falló en la prueba")), pruebas);
     }
 }

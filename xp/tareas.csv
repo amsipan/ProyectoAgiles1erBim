@@ -13,45 +13,51 @@ P-03;PREP;;todos;Clonar el repositorio y configurar git user.name y user.email c
 P-04;PREP;;kmosquera,sjibaja;Instalar Live Share en VS Code para la programación en pareja de S3;;Live Share instalado;POR_HACER
 P-05;PREP;;kmosquera;Tener el proyecto ejecutándose (Java 21 y extensión de Java en VS Code) antes de S3;.vscode/launch.json;Proyecto abierto en VS Code;POR_HACER
 P-06;PREP;Implantación;dmera;Instalar y probar Docker Desktop (WSL2) antes de S4: la primera construcción no se hace en vivo;Dockerfile;docker compose up --build probado;POR_HACER
-S1-01;S1;Reuniones;lmorales;Organizar la reunión de coordinación y registrar el acta (fecha, hora, asistentes y rol, duración, acuerdos);xp/reuniones.md;docs/evidencias/f1-reunion-coordinacion.png;POR_HACER
-S1-02;S1;Rotaciones;lmorales;Captura de la tabla de rotación de parejas (xp/reuniones.md o xp parejas);xp/reuniones.md;docs/evidencias/f1-rotaciones.png;POR_HACER
-S1-03;S1;Historias de usuario;kmosquera;Historias de usuario: qué pide cada una, su prioridad y sus criterios de aceptación;xp/historias.csv;docs/evidencias/f1-historias.png;POR_HACER
-S1-04;S1;Plan de entregas;djumbo;Plan de entregas;xp/plan-entregas.md;docs/evidencias/f1-plan-entregas.png;POR_HACER
-S1-05;S1;Iteraciones;djumbo;Las dos iteraciones del plan (día 1 y día 2);xp/plan-entregas.md;docs/evidencias/f1-plan-entregas.png;POR_HACER
-S1-06;S1;Velocidad del proyecto;djumbo;Velocidad del proyecto con el comando xp velocidad;xp/historias.csv;docs/evidencias/f1-velocidad.png;POR_HACER
-S1-07;S1;;sjibaja;Reglas XP del equipo: parejas que rotan, revisión antes de integrar y pruebas en verde;framework-xp/docs/guia-xp.md;docs/evidencias/f1-reglas-xp.png;POR_HACER
+P-07;PREP;;todos;Repasar el artefacto del propio rol antes de la sesión para explicarlo con sus palabras;;Ensayo previo;POR_HACER
+P-08;PREP;;klugmana,kmosquera,djumbo,sjibaja;Entregar antes de grabar las evidencias que presentará otro integrante (pruebas para S3 y validación, velocidad y versión para S4);docs/evidencias.md;Evidencias previas en el índice;POR_HACER
+S1-01;S1;Reuniones;lmorales;Acordar fechas, participantes y plazo para subir las capturas de S3 y S4. Registrar fecha, hora, asistentes y rol, duración y acuerdos;xp/reuniones.md;docs/evidencias/1-planificacion/f1-reunion-coordinacion.png;POR_HACER
+S1-02;S1;Rotaciones;lmorales;Captura de la tabla de rotación de parejas (xp/reuniones.md o xp parejas);xp/reuniones.md;docs/evidencias/1-planificacion/f1-rotaciones.png;POR_HACER
+S1-03;S1;Historias de usuario;kmosquera;Historias de usuario: qué pide cada una, su prioridad y sus criterios de aceptación;xp/historias.csv;docs/evidencias/1-planificacion/f1-historias.png;POR_HACER
+S1-04;S1;Plan de entregas;djumbo;Plan de entregas;xp/plan-entregas.md;docs/evidencias/1-planificacion/f1-plan-entregas.png;POR_HACER
+S1-05;S1;Iteraciones;djumbo;Las dos iteraciones del plan (día 1 y día 2);xp/plan-entregas.md;docs/evidencias/1-planificacion/f1-plan-entregas.png;POR_HACER
+S1-06;S1;Velocidad del proyecto;djumbo;Velocidad del proyecto con el comando xp velocidad;xp/historias.csv;docs/evidencias/1-planificacion/f1-velocidad.png;POR_HACER
+S1-07;S1;;sjibaja;Reglas XP del equipo: parejas que rotan, revisión antes de integrar y pruebas en verde;framework-xp/docs/guia-xp.md;docs/evidencias/1-planificacion/f1-reglas-xp.png;POR_HACER
 S1-08;S1;;dmera;Resumir en la reunión de coordinación lo que se verá en Diseño (queda en el acta);xp/reuniones.md;Acta de coordinación;POR_HACER
-S1-09;S1;Historias de usuario;klugmana;Cómo se valida que cada historia cumple sus criterios (xp/historias.csv y xp verificar);xp/historias.csv;docs/evidencias/f1-validacion.png;POR_HACER
-S2-01;S2;Metáfora del sistema;dmera;Metáfora del sistema;xp/metafora.md;docs/evidencias/f2-metafora.png;POR_HACER
-S2-02;S2;Tarjetas CRC;dmera;Tarjetas CRC (xp/tarjetas-crc.md o xp crc);xp/tarjetas-crc.md;docs/evidencias/f2-crc.png;POR_HACER
-S2-03;S2;;dmera;Diagrama de arquitectura;docs/diagramas/arquitectura.md;docs/evidencias/f2-arquitectura.png;POR_HACER
-S2-04;S2;Soluciones puntuales (spikes);dmera;Spike 2: Docker con interfaz gráfica;xp/spikes.md;docs/evidencias/f2-spike2.png;POR_HACER
-S2-05;S2;;sjibaja;Grafo y gramática del autómata (también datos/automata-grupo04.md);docs/diagramas/grafo-automata.md;docs/evidencias/f2-grafo-automata.png;POR_HACER
-S2-06;S2;Soluciones puntuales (spikes);sjibaja;Spikes 1 (JavaFX sin Maven) y 5 (AFD mínimo);xp/spikes.md;docs/evidencias/f2-spikes-1-5.png;POR_HACER
-S2-07;S2;;kmosquera;Diagrama de casos de uso;docs/diagramas/casos-uso.md;docs/evidencias/f2-casos-uso.png;POR_HACER
-S2-08;S2;Funcionalidad mínima;kmosquera;Funcionalidad mínima: qué historias son prioritarias y por qué;xp/funcionalidad-minima.md;docs/evidencias/f2-funcionalidad-minima.png;POR_HACER
-S2-09;S2;;djumbo;Diagrama de clases;docs/diagramas/clases.md;docs/evidencias/f2-clases.png;POR_HACER
-S2-10;S2;;lmorales;Modelo entidad-relación (SQLite);docs/diagramas/modelo-er.md;docs/evidencias/f2-modelo-er.png;POR_HACER
-S2-11;S2;Soluciones puntuales (spikes);lmorales;Spike 3: persistencia, CSV o SQLite;xp/spikes.md;docs/evidencias/f2-spike3.png;POR_HACER
-S2-12;S2;Soluciones puntuales (spikes);klugmana;Spike 4: ejecutor de pruebas propio o JUnit;xp/spikes.md;docs/evidencias/f2-spike4.png;POR_HACER
-S2-13;S2;Reciclaje (refactorización);sjibaja;Reciclaje: Utility.java y una de las clases que la usan;antdron/src/ec/edu/epn/antdron/pkAntCiberDronContract/Utility.java;docs/evidencias/f2-utility.png;POR_HACER
-S2-14;S2;Reciclaje (refactorización);sjibaja;Pruebas en verde después del reciclaje («Pruebas + reporte de aceptación»);xp/pruebas-aceptacion.md;docs/evidencias/f2-reciclaje-pruebas.png;POR_HACER
-S2-15;S2;Reciclaje (refactorización);dmera;Tarjeta CRC de Utility y salida de xp verificar con 17/17 directrices;xp/tarjetas-crc.md;docs/evidencias/f2-utility-crc.png;POR_HACER
+S1-09;S1;Historias de usuario;klugmana;Cómo se valida que cada historia cumple sus criterios (xp/historias.csv y xp verificar);xp/historias.csv;docs/evidencias/1-planificacion/f1-validacion.png;POR_HACER
+S2-01;S2;Metáfora del sistema;dmera;Metáfora del sistema;xp/metafora.md;docs/evidencias/2-diseno/f2-metafora.png;POR_HACER
+S2-02;S2;Tarjetas CRC;dmera;Tarjetas CRC (xp/tarjetas-crc.md o xp crc);xp/tarjetas-crc.md;docs/evidencias/2-diseno/f2-crc.png;POR_HACER
+S2-03;S2;;dmera;Diagrama de arquitectura;docs/diagramas/arquitectura.md;docs/evidencias/2-diseno/f2-arquitectura.png;POR_HACER
+S2-04;S2;Soluciones puntuales (spikes);dmera;Spike 2: Docker con interfaz gráfica;xp/spikes.md;docs/evidencias/2-diseno/f2-spike2.png;POR_HACER
+S2-05;S2;;sjibaja;Grafo y gramática del autómata (también datos/automata-grupo04.md);docs/diagramas/grafo-automata.md;docs/evidencias/2-diseno/f2-grafo-automata.png;POR_HACER
+S2-06;S2;Soluciones puntuales (spikes);sjibaja;Spikes 1 (JavaFX sin Maven) y 5 (AFD mínimo);xp/spikes.md;docs/evidencias/2-diseno/f2-spikes-1-5.png;POR_HACER
+S2-07;S2;;kmosquera;Diagrama de casos de uso;docs/diagramas/casos-uso.md;docs/evidencias/2-diseno/f2-casos-uso.png;POR_HACER
+S2-08;S2;Funcionalidad mínima;kmosquera;Funcionalidad mínima: qué historias son prioritarias y por qué;xp/funcionalidad-minima.md;docs/evidencias/2-diseno/f2-funcionalidad-minima.png;POR_HACER
+S2-09;S2;;djumbo;Diagrama de clases;docs/diagramas/clases.md;docs/evidencias/2-diseno/f2-clases.png;POR_HACER
+S2-10;S2;;lmorales;Modelo entidad-relación (SQLite);docs/diagramas/modelo-er.md;docs/evidencias/2-diseno/f2-modelo-er.png;POR_HACER
+S2-11;S2;Soluciones puntuales (spikes);lmorales;Spike 3: persistencia, CSV o SQLite;xp/spikes.md;docs/evidencias/2-diseno/f2-spike3.png;POR_HACER
+S2-12;S2;Soluciones puntuales (spikes);klugmana;Spike 4: ejecutor de pruebas propio o JUnit;xp/spikes.md;docs/evidencias/2-diseno/f2-spike4.png;POR_HACER
+S2-13;S2;Reciclaje (refactorización);sjibaja;Reciclaje: Utility.java y una de las clases que la usan;antdron/src/ec/edu/epn/antdron/pkAntCiberDronContract/Utility.java;docs/evidencias/2-diseno/f2-utility.png;POR_HACER
+S2-14;S2;Reciclaje (refactorización);sjibaja;Pruebas en verde después del reciclaje («Pruebas + reporte de aceptación»);xp/pruebas-aceptacion.md;docs/evidencias/2-diseno/f2-reciclaje-pruebas.png;POR_HACER
+S2-15;S2;Reciclaje (refactorización);dmera;Tarjeta CRC de Utility, xp crc con todas las clases cubiertas y xp verificar con 17/17 directrices;xp/tarjetas-crc.md;docs/evidencias/2-diseno/f2-utility-crc.png;POR_HACER
 S2-16;S2;;lmorales;Enlazar todas las evidencias en el índice para el profesor;docs/evidencias.md;Índice completo;POR_HACER
-S3-01;S3;Unidad de pruebas;klugmana;Captura de las pruebas en verde con HU-01 aceptada (antes de grabar);antdron/pruebas;docs/evidencias/f3-pruebas-hu01.png;POR_HACER
-S3-02;S3;Programación por parejas;kmosquera,sjibaja;Recorrer HU-01 por Live Share: Karen conduce Autenticador, cambian de rol y Sebas explica Claves;antdron/src/ec/edu/epn/antdron/auth/Autenticador.java;docs/evidencias/f3-live-share.png;POR_HACER
+S2-17;S2;Reuniones;lmorales;Mostrar en Diseño el acta de coordinación compartida con Planificación;xp/reuniones.md;docs/evidencias/1-planificacion/f1-reunion-coordinacion.png;POR_HACER
+S3-01;S3;Unidad de pruebas;klugmana;Entregar antes de grabar la captura de la suite en verde y las pruebas de HU-01 aceptadas;antdron/pruebas;docs/evidencias/3-desarrollo/s3-pruebas-verde-hu01.png;POR_HACER
+S3-02;S3;Programación por parejas;kmosquera,sjibaja;Min. 1–7. Karen conduce el recorrido de validar, intentar y autenticar. Cambian de rol y Sebas explica Claves y SHA-256;antdron/src/ec/edu/epn/antdron/auth/Autenticador.java;docs/evidencias/3-desarrollo/s3-live-share-karen-sebas.png;POR_HACER
 S3-03;S3;Disponibilidad del cliente;kmosquera;Confirmar como Cliente los criterios de HU-01 (3 intentos, integrantes y patmic / 123);xp/historias.csv;Video S3 (min 7–8);POR_HACER
 S3-04;S3;Disponibilidad del cliente;kmosquera;Aprobar el PR pendiente del proyecto;;PR aprobado por Karen;POR_HACER
-S3-05;S3;Integración continua;sjibaja;Fusionar a main el PR aprobado;;PR fusionado por Sebas;POR_HACER
-S3-06;S3;Unidad de pruebas;sjibaja;Ejecutar «Pruebas + reporte de aceptación» después de fusionar y mostrar la captura de Kened;xp/pruebas-aceptacion.md;Video S3 (min 10–12);POR_HACER
+S3-05;S3;Integración continua;sjibaja;Fusionar a main el PR aprobado;;docs/evidencias/3-desarrollo/s3-pr-fusionado.png;POR_HACER
+S3-06;S3;Unidad de pruebas;sjibaja;Ejecutar la suite completa después de fusionar, mostrar que HU-01 sigue aceptada y presentar la captura de Kened;xp/pruebas-aceptacion.md;Video S3 (min 10–12);POR_HACER
 S3-07;S3;Reuniones;lmorales;Acta de S3 a partir del video;xp/reuniones.md;Acta de S3;POR_HACER
 S3-08;S3;Programación por parejas;kmosquera,sjibaja;Grabar el video de Desarrollo (~12 min) y subirlo a Drive o YouTube (oculto);;Video S3;POR_HACER
-S4-01;S4;Implantación;dmera;Levantar la app con docker compose up --build y recorrerla: login, equipo, coordenadas, bomba, hormiguero y tablero;Dockerfile;docs/evidencias/f4-docker.png;POR_HACER
-S4-02;S4;Pruebas de aceptación;klugmana;Ejecutar las pruebas y presentar xp/pruebas-aceptacion.md con 21/21 historias aceptadas;xp/pruebas-aceptacion.md;Video S4;POR_HACER
+S3-09;S3;;kmosquera;Min. 0–1. Presentar Grupo 4 Pragmatics, fecha, fase de Desarrollo, pareja e historia HU-01;;Apertura del video S3;POR_HACER
+S4-01;S4;Implantación;dmera;Levantar la app con docker compose up --build y recorrerla: login, equipo, coordenadas, bomba, hormiguero y tablero;Dockerfile;docs/evidencias/4-pruebas/s4-docker-funcionando.png;POR_HACER
+S4-02;S4;Pruebas de aceptación;klugmana;Ejecutar la suite completa, presentar el reporte con 21/21 historias aceptadas y mostrar el comentario de Karen;xp/pruebas-aceptacion.md;docs/evidencias/4-pruebas/s4-reporte-21-de-21.png;POR_HACER
 S4-03;S4;Pruebas de aceptación;kmosquera;Recorrer la app y registrar la aceptación final como comentario en GitHub («Acepto las 21 historias»);;Comentario de aceptación en GitHub;POR_HACER
-S4-04;S4;Velocidad del proyecto;djumbo;Captura del estado final de las historias y la velocidad (xp plan y xp velocidad);xp/plan-entregas.md;docs/evidencias/f4-estado-velocidad.png;POR_HACER
+S4-04;S4;Velocidad del proyecto;djumbo;Captura del estado final de las historias y la velocidad (xp plan y xp velocidad);xp/plan-entregas.md;docs/evidencias/4-pruebas/s4-estado-velocidad.png;POR_HACER
 S4-05;S4;;sjibaja;Crear la versión v1.0 en GitHub con la evaluación de cómo aplicamos XP;;Release v1.0 en GitHub;POR_HACER
 S4-06;S4;Reuniones;lmorales;Abrir la sesión, presentar la evidencia de David y la v1.0 de Sebas, conducir la retrospectiva y cerrar el acta;xp/reuniones.md;Acta de retrospectiva;POR_HACER
 S4-07;S4;Reuniones;kmosquera,djumbo,sjibaja;Entregar a Leonel su frase de retrospectiva (qué funcionó y qué mejoraría) antes de grabar;xp/reuniones.md;Frases en el acta;POR_HACER
 S4-08;S4;;lmorales;Llenar el encabezado del enunciado: fecha, grupo, metáfora, cédula, nombre y rol de cada uno;config/integrantes.csv;Encabezado del enunciado;POR_HACER
-S4-09;S4;;lmorales,klugmana,dmera;Grabar el video de Pruebas y retrospectiva (~20 min) con captura final de los tres;;docs/evidencias/f4-cierre.png;POR_HACER
+S4-09;S4;;lmorales,klugmana,dmera;Grabar y publicar el video de Pruebas y retrospectiva (~20 min) en Drive o YouTube oculto;docs/evidencias.md;Video S4;POR_HACER
+S4-10;S4;Reuniones;lmorales,klugmana,dmera;Compartir qué funcionó y qué se puede mejorar. Leonel registra los acuerdos finales;xp/reuniones.md;Acta de retrospectiva;POR_HACER
+S4-11;S4;;lmorales;Cerrar la grabación y guardar la captura con Leonel, Kened y Daniel en pantalla;;docs/evidencias/4-pruebas/s4-participantes.png;POR_HACER

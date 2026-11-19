@@ -25,12 +25,15 @@ public record Tarea(String id, String sesion, String practica, List<String> resp
         if (responsables.isEmpty()) {
             throw new IllegalArgumentException("Tarea " + id + ": falta el responsable");
         }
+        if (descripcion.isBlank()) {
+            throw new IllegalArgumentException("Tarea " + id + ": falta la descripción");
+        }
         responsables = List.copyOf(responsables);
     }
 
     /** La evidencia es un archivo del repositorio (una captura) y no un video, PR o comentario. */
     public boolean evidenciaEsArchivo() {
-        return evidencia.startsWith("docs/");
+        return evidencia.startsWith("docs/evidencias/");
     }
 
     public static String nombreSesion(String sesion) {

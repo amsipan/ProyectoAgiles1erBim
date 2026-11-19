@@ -52,6 +52,16 @@ public final class Autenticador {
         return estaBloqueado() ? Resultado.BLOQUEADO : Resultado.RECHAZADO;
     }
 
+    /**
+     * Mismo conteo de intentos con el equipo recién recargado. La pantalla de ingreso se vuelve a crear al
+     * regresar del hormiguero o al recargar la configuración, y eso no debe devolver intentos.
+     */
+    public Autenticador conEquipo(Equipo equipoRecargado) {
+        Autenticador a = new Autenticador(equipoRecargado);
+        a.intentosFallidos = intentosFallidos;
+        return a;
+    }
+
     public boolean estaBloqueado() {
         return intentosFallidos >= MAX_INTENTOS;
     }

@@ -5,9 +5,9 @@
 El proyecto dura **dos días** y cada día es una iteración: **Día 1 = Iteración 1**, **Día 2 = Iteración 2**. Las historias, sus puntos, prioridades y responsables salen de `xp/historias.csv`; este documento solo las organiza. Para ver siempre los datos actualizados:
 
 ```text
-xp ...klog
-xp ...n
-xp ...ocidad
+xp backlog
+xp plan
+xp velocidad
 ```
 
 ## Estimación y velocidad

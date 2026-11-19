@@ -50,11 +50,11 @@ public final class LectorConfiguracion {
     public List<Integrante> parsearIntegrantes(List<String> lineas) {
         List<Integrante> integrantes = new ArrayList<>();
         for (int i = 0; i < lineas.size(); i++) {
-            String linea = lineas.get(i).replace("\uFEFF", "").strip();
+            String linea = Utility.limpiarLinea(lineas.get(i));
             if (Utility.esLineaIgnorable(linea, "cedula;")) {
                 continue;
             }
-            String[] c = Utility.camposCsv(linea);
+            String[] c = Utility.campos(linea);
             if (c.length < 4 || c.length > 5) {
                 throw new IllegalArgumentException(ARCHIVO_INTEGRANTES + " línea " + (i + 1)
                         + ": se esperaban 5 campos separados por ';' (cedula;nombre;usuario;clave;rol)");
@@ -67,4 +67,5 @@ public final class LectorConfiguracion {
         }
         return integrantes;
     }
+
 }

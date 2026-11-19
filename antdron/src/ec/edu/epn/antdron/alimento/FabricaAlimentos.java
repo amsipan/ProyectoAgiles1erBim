@@ -4,7 +4,7 @@ import java.util.List;
 
 import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
 
-/** Crea alimentos a partir de su nombre (usado por las pantallas). */
+/** Crea alimentos a partir de su nombre (usado por las pantallas web). */
 public final class FabricaAlimentos {
 
     private FabricaAlimentos() {

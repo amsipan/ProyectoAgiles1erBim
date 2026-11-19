@@ -25,7 +25,6 @@ import ec.edu.epn.antdron.config.Claves;
 import ec.edu.epn.antdron.hormiga.HLarva;
 import ec.edu.epn.antdron.hormiga.Hormiga;
 import ec.edu.epn.antdron.hormiga.TipoHormiga;
-import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
 
 /**
  * Hormiguero virtual de los usuarios de la KGD: registro e ingreso, creación de hormigas (nacen como
@@ -59,14 +58,14 @@ public final class HormigueroServicio {
 
     // ------------------------------------------------------------ Usuarios
 
-    public synchronized int registrar(String usuario, String clave) {
+    public int registrar(String usuario, String clave) {
         if (usuario == null || !usuario.matches("[A-Za-z0-9_]{3,20}")) {
             throw new IllegalArgumentException("El usuario debe tener de 3 a 20 letras, números o _");
         }
         if (clave == null || clave.length() < 4) {
             throw new IllegalArgumentException("La contraseña debe tener al menos 4 caracteres");
         }
-        return bd.enTransaccion(c -> {
+        return bd.enEscritura(c -> {
             if (buscarUsuario(c, usuario).isPresent()) {
                 throw new IllegalArgumentException("El usuario '" + usuario + "' ya existe");
             }
@@ -117,7 +116,7 @@ public final class HormigueroServicio {
 
     public int crearHormiga(int usuarioId, String sexo) {
         Hormiga larva = new HLarva(0, sexo, tipoDelGrupo);
-        return bd.enTransaccion(c -> insertar(c,
+        return bd.enEscritura(c -> insertar(c,
                 "INSERT INTO hormiga (hormiguero_id, tipo, sexo, estado, creada_en) VALUES (?, ?, ?, ?, ?)",
                 hormigueroId(c, usuarioId), larva.getTipo(), larva.getSexo(), larva.getEstado(), ahora()));
     }
@@ -143,9 +142,9 @@ public final class HormigueroServicio {
     }
 
     /** Aplica {@link Hormiga#comer}, guarda el nuevo tipo/estado y el historial. Devuelve el mensaje para la pantalla. */
-    public synchronized String alimentar(int usuarioId, int hormigaId, String nombreAlimento) {
+    public String alimentar(int usuarioId, int hormigaId, String nombreAlimento) {
         Alimento alimento = FabricaAlimentos.desde(nombreAlimento);
-        return bd.enTransaccion(c -> {
+        return bd.enEscritura(c -> {
             HormigaRegistro r = listar(c, usuarioId).stream().filter(h -> h.id() == hormigaId).findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("La hormiga no existe en su hormiguero"));
             if (Hormiga.MUERTA.equals(r.estado())) {
@@ -217,17 +216,26 @@ public final class HormigueroServicio {
         if (!Files.exists(directorio.resolve(TABLAS_CSV[0][0]))) {
             return;
         }
-        bd.enTransaccion(c -> {
-            try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM usuario")) {
-                if (rs.next() && rs.getInt(1) > 0) {
+        bd.enEscritura(c -> {
+            try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("PRAGMA user_version")) {
+                if (rs.next() && rs.getInt(1) >= 1) {
                     return null;
                 }
             }
-            for (String[] tabla : TABLAS_CSV) {
-                Path csv = directorio.resolve(tabla[0]);
-                if (Files.exists(csv)) {
-                    importar(c, csv, tabla[1], List.of(tabla).subList(2, tabla.length));
+            boolean vacia;
+            try (Statement st = c.createStatement(); ResultSet rs = st.executeQuery("SELECT 1 FROM usuario LIMIT 1")) {
+                vacia = !rs.next();
+            }
+            if (vacia) {
+                for (String[] tabla : TABLAS_CSV) {
+                    Path csv = directorio.resolve(tabla[0]);
+                    if (Files.exists(csv)) {
+                        importar(c, csv, tabla[1], List.of(tabla).subList(2, tabla.length));
+                    }
                 }
+            }
+            try (Statement st = c.createStatement()) {
+                st.execute("PRAGMA user_version = 1");
             }
             return null;
         });
@@ -243,14 +251,19 @@ public final class HormigueroServicio {
             throw new UncheckedIOException("No se pudo leer " + csv, e);
         }
         try (PreparedStatement ps = c.prepareStatement(sql)) {
-            for (String linea : lineas) {
-                String[] f = Utility.camposCsv(linea);
-                if (Utility.esLineaIgnorable(linea, "id;") || f.length != columnas.size()) {
+            // La primera línea es la cabecera.
+            for (int i = 1; i < lineas.size(); i++) {
+                String linea = lineas.get(i);
+                if (linea.isBlank()) {
                     continue;
                 }
-                ps.setInt(1, Integer.parseInt(f[0].strip()));
-                for (int i = 1; i < f.length; i++) {
-                    ps.setString(i + 1, f[i]);
+                String[] campos = linea.split(";", -1);
+                if (campos.length != columnas.size() || !campos[0].strip().matches("[0-9]+")) {
+                    throw new IllegalStateException(csv.getFileName() + " línea " + (i + 1)
+                            + ": fila de migración inválida");
+                }
+                for (int j = 0; j < campos.length; j++) {
+                    ps.setString(j + 1, campos[j].strip());
                 }
                 ps.executeUpdate();
             }

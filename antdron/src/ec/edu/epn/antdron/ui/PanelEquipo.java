@@ -8,6 +8,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import ec.edu.epn.antdron.MotorAntdron;
@@ -28,7 +30,7 @@ final class PanelEquipo {
         tabla.getColumns().add(Ui.columna("Alumno", f -> "Alumno " + f.numero(), 90));
         tabla.getColumns().add(Ui.columna("Cédula", f -> f.integrante().cedulaVisible(), 170));
         tabla.getColumns().add(Ui.columna("Nombre", f -> f.integrante().nombre(), 260));
-        tabla.getColumns().add(Ui.columna("Rol XP", f -> f.integrante().rol(), 200));
+        tabla.getColumns().add(Ui.columna("Rol XP", f -> Ui.rolLegible(f.integrante().rol()), 240));
         tabla.getColumns().add(Ui.columna("Usuario", f -> f.integrante().usuario(), 140));
         List<Fila> filas = new ArrayList<>();
         for (int i = 0; i < equipo.integrantes().size(); i++) {
@@ -36,17 +38,24 @@ final class PanelEquipo {
         }
         tabla.setItems(FXCollections.observableArrayList(filas));
         tabla.setId("tabla-equipo");
+        // Alto justo para las filas: sin renglones vacíos debajo.
+        tabla.setFixedCellSize(34);
+        tabla.setPrefHeight(34 * (filas.size() + 1) + 8);
+        tabla.setMaxHeight(Region.USE_PREF_SIZE);
+        VBox.setVgrow(tabla, Priority.NEVER);
 
-        Label metafora = Ui.texto("Metáfora: " + equipo.metafora());
+        Label etiquetaMetafora = new Label("Metáfora del sistema");
+        etiquetaMetafora.getStyleClass().add("seccion");
+        VBox metafora = Ui.tarjeta(etiquetaMetafora, Ui.texto(equipo.metafora()));
         Label archivo = Ui.texto("Las cédulas, nombres, usuarios y claves se editan en config/integrantes.csv; "
                 + "el número y nombre del grupo en config/equipo.properties. Luego pulse «Recargar configuración».");
         archivo.getStyleClass().add("tenue");
-        Label cedulas = Ui.texto("Cédulas registradas: " + equipo.cedulas().size() + " de "
-                + equipo.integrantes().size());
+        Label cedulas = Ui.insignia("Cédulas registradas: " + equipo.cedulas().size() + " de "
+                + equipo.integrantes().size(), equipo.cedulasPendientes() == 0 ? "verde" : "ambar");
 
-        raiz = new VBox(12, Ui.titulo("[+] TEAM [" + equipo.grupo() + "]: " + equipo.nombre()),
-                metafora, cedulas, tabla, archivo);
-        raiz.setPadding(new Insets(18));
+        raiz = new VBox(14, Ui.titulo("[+] TEAM [" + equipo.grupo() + "]: " + equipo.nombre()),
+                cedulas, metafora, tabla, archivo);
+        raiz.setPadding(new Insets(22, 26, 22, 26));
     }
 
     Parent getRaiz() {

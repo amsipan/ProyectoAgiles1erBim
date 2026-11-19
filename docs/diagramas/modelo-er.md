@@ -1,6 +1,6 @@
 # Modelo entidad-relación
 
-**Responsable:** Leonel Morales (Gestor) · **Historias:** HU-11 (pantallas del hormiguero virtual) y HU-12 (persistencia).
+**Responsable:** Integrante 6 (Gestor) · **Historias:** HU-11 (pantallas del hormiguero virtual) y HU-12 (persistencia).
 
 El hormiguero virtual de los usuarios KGD se guarda en una base de datos **SQLite**: el archivo `datos/hormiguero/hormiguero.db`, con **cuatro tablas**. La base se crea sola la primera vez que se abre el hormiguero; el esquema está en `antdron/src/ec/edu/epn/antdron/persistencia/esquema.sql`. `BaseDatos` abre la conexión (controlador `lib/sqlite-jdbc-3.54.1.0.jar`) y `HormigueroServicio` aplica las reglas del dominio.
 

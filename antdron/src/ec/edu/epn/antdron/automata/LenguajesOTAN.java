@@ -23,7 +23,7 @@ public final class LenguajesOTAN {
         "ab*",     // Coord-09
     };
 
-    private static final Pattern GEOPOSICION = Pattern.compile("Coord-(\\d{2})");
+    private static final Pattern GEOPOSICION = Pattern.compile("Coord-(0\\d)");
 
     private static final Map<Character, String> ARSENAL =
             Map.of('a', "Avión", 'b', "Barco", 'c', "Convoy", 'd', "Dron", 't', "Tanque");
@@ -45,7 +45,7 @@ public final class LenguajesOTAN {
         if (m == null || !m.matches()) {
             throw new IllegalArgumentException("Geoposición inválida: '" + geoposicion + "' (formato Coord-0N)");
         }
-        return Integer.parseInt(m.group(1)) % 10;
+        return Integer.parseInt(m.group(1));
     }
 
     /** 5 → "Coord-05". */

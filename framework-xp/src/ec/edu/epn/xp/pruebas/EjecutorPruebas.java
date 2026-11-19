@@ -195,4 +195,16 @@ public final class EjecutorPruebas {
         Files.writeString(archivo, sb.toString(), StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
+
+    /** Escribe una fila por prueba, incluso si se ejecutó sin historia asignada. */
+    public static void guardarDetalle(List<ResultadoPrueba> resultados, Path archivo) throws IOException {
+        StringBuilder tsv = new StringBuilder("clase\tmétodo\thistorias\tresultado\tms\tdetalle\n");
+        for (ResultadoPrueba r : resultados) {
+            String detalle = r.detalle() == null ? "" : r.detalle().replaceAll("[\\t\\r\\n]+", " ");
+            tsv.append(String.join("\t", r.clase(), r.metodo(), String.join(", ", r.historias()),
+                    r.paso() ? "PASO" : "FALLO", Long.toString(r.milisegundos()), detalle)).append('\n');
+        }
+        Files.createDirectories(archivo.toAbsolutePath().getParent());
+        Files.writeString(archivo, tsv, StandardCharsets.UTF_8);
+    }
 }

@@ -28,7 +28,7 @@ public enum Practica {
             "Las parejas rotan en cada bloque de trabajo (al menos una vez por iteración) para que todos "
             + "conozcan todo el código."),
     REUNIONES(Fase.PLANIFICACION, "Reuniones", RolXP.GESTOR, "xp/reuniones.md",
-            "Reunión diaria de pie de 15 minutos: qué hice, qué haré, qué me bloquea. Se registran los acuerdos."),
+            "Reunión diaria de pie de 10 minutos como máximo: qué hice, qué haré, qué me bloquea. Se registran los acuerdos."),
 
     // II. Diseño
     METAFORA(Fase.DISENO, "Metáfora del sistema", RolXP.CONSULTOR, "xp/metafora.md",
@@ -37,12 +37,10 @@ public enum Practica {
             "Cada clase principal tiene su tarjeta Clase-Responsabilidad-Colaborador y se actualiza con el código."),
     SOLUCIONES_PUNTUALES(Fase.DISENO, "Soluciones puntuales (spikes)", RolXP.CONSULTOR, "xp/spikes.md",
             "Ante una duda técnica se hace un prototipo pequeño y desechable y se anota la conclusión."),
-    FUNCIONALIDAD_MINIMA(Fase.DISENO, "Funcionalidad mínima", RolXP.CLIENTE, "xp/funcionalidad-minima.md",
-            "Se programa solo lo que piden las historias de la iteración actual; nada \"por si acaso\". El cliente "
-            + "deja escrito qué historias son imprescindibles y por qué."),
-    RECICLAJE(Fase.DISENO, "Reciclaje (refactorización)", RolXP.ENTRENADOR, "xp/reciclaje.md",
-            "Se mejora el diseño sin cambiar el comportamiento, siempre con todas las pruebas en verde. El "
-            + "artefacto es el código reciclado (o una nota que lo describa)."),
+    FUNCIONALIDAD_MINIMA(Fase.DISENO, "Funcionalidad mínima", RolXP.ENTRENADOR, null,
+            "Se programa solo lo que piden las historias de la iteración actual; nada \"por si acaso\"."),
+    RECICLAJE(Fase.DISENO, "Reciclaje (refactorización)", RolXP.ENTRENADOR, null,
+            "Se mejora el diseño sin cambiar el comportamiento, siempre con todas las pruebas en verde."),
 
     // III. Desarrollo
     DISPONIBILIDAD_CLIENTE(Fase.DESARROLLO, "Disponibilidad del cliente", RolXP.CLIENTE, "config/integrantes.csv",

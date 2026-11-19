@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import ec.edu.epn.xp.pruebas.AntesDeCada;
 import ec.edu.epn.xp.pruebas.Afirmar;
@@ -148,5 +151,32 @@ class HormigueroServicioTest {
         // Los nuevos id continúan después de los importados y abrir otra vez no duplica nada.
         Afirmar.igual(9, migrado.crearHormiga(3, "HEMBRA"));
         Afirmar.igual(3, new HormigueroServicio(anterior, TipoHormiga.ZANGANO).listar(3).size());
+    }
+
+    @Prueba
+    void dosInstanciasPuedenEscribirEnLaMismaBase() throws Exception {
+        HormigueroServicio otra = new HormigueroServicio(dir.resolve("sub"), TipoHormiga.ZANGANO);
+        int usuario = servicio.registrar("kgd", "clave");
+        int hormiga = servicio.crearHormiga(usuario, "HEMBRA");
+        CountDownLatch iniciar = new CountDownLatch(1);
+        try (var ejecutor = Executors.newFixedThreadPool(2)) {
+            var primera = ejecutor.submit(() -> {
+                iniciar.await();
+                return servicio.alimentar(usuario, hormiga, "Néctar");
+            });
+            var segunda = ejecutor.submit(() -> {
+                iniciar.await();
+                return otra.alimentar(usuario, hormiga, "Néctar");
+            });
+            iniciar.countDown();
+            Afirmar.contiene(primera.get(10, TimeUnit.SECONDS), "sigue viva");
+            Afirmar.contiene(segunda.get(10, TimeUnit.SECONDS), "sigue viva");
+        }
+        try (Connection c = DriverManager.getConnection("jdbc:sqlite:" + servicio.getArchivoBaseDatos());
+                Statement st = c.createStatement();
+                ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM alimentacion")) {
+            Afirmar.verdadero(rs.next());
+            Afirmar.igual(2, rs.getInt(1));
+        }
     }
 }

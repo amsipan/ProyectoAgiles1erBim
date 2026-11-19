@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import ec.edu.epn.antdron.MotorAntdron;
+import ec.edu.epn.antdron.auth.Autenticador;
 
 /**
  * Aplicación JavaFX: ingreso (equipo/profesor o usuario KGD) → ventana principal o hormiguero virtual.
@@ -25,6 +26,8 @@ public final class AntdronFx extends Application {
 
     private Stage ventana;
     private MotorAntdron motor;
+    /** Intentos de la sesión de ingreso actual; se reinicia solo cuando alguien ingresa. */
+    private Autenticador autenticador;
 
     public static void iniciar(String[] args) {
         launch(AntdronFx.class, args);
@@ -55,11 +58,15 @@ public final class AntdronFx extends Application {
 
     void mostrarIngreso() {
         if (recargar()) {
-            mostrar(new VistaIngreso(this, motor).getRaiz());
+            autenticador = autenticador == null
+                    ? new Autenticador(motor.getEquipo())
+                    : autenticador.conEquipo(motor.getEquipo());
+            mostrar(new VistaIngreso(this, motor, autenticador).getRaiz());
         }
     }
 
     void mostrarPrincipal(String usuario, String nombre) {
+        autenticador = null;
         mostrar(new VistaPrincipal(this, motor, usuario, nombre).getRaiz());
     }
 

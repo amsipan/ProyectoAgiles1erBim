@@ -11,37 +11,41 @@ import java.text.Normalizer;
 import java.util.Locale;
 
 /**
- * Utilidades compartidas (reciclaje): manejo de líneas CSV separadas por ';' y normalización de textos.
- * Antes este código estaba repetido en LectorConfiguracion, SistemaRuso, la tabla CSV del hormiguero y
- * FabricaAlimentos.
+ * Utilidades compartidas por los módulos del AntCiberDron (diagrama de clases del enunciado).
+ * Reúne el manejo de líneas CSV separadas por ';' y la normalización de textos, que antes estaba
+ * repetido en SistemaRuso, LectorConfiguracion y FabricaAlimentos.
  */
 public final class Utility {
 
-    public static final String SEPARADOR_CSV = ";";
+    /** Separador de los archivos CSV del proyecto. */
+    public static final String SEPARADOR = ";";
 
     private Utility() {
     }
 
-    /** Campos de una línea CSV; conserva los campos vacíos del final ("a;;" → 3 campos). */
-    public static String[] camposCsv(String linea) {
-        return linea.split(SEPARADOR_CSV, -1);
+    /** Quita la marca BOM y los espacios de los extremos; {@code null} se trata como línea vacía. */
+    public static String limpiarLinea(String linea) {
+        return linea == null ? "" : linea.replace("﻿", "").strip();
     }
 
-    /** Línea vacía, comentario ('#') o cabecera (empieza con {@code cabecera}, sin importar mayúsculas). */
+    /** Parte una línea CSV en sus campos, conservando los campos vacíos del final. */
+    public static String[] campos(String linea) {
+        return linea.split(SEPARADOR, -1);
+    }
+
+    /** True si la línea es un comentario ({@code #...}). */
+    public static boolean esComentario(String linea) {
+        return linea.startsWith("#");
+    }
+
+    /** Reconoce líneas vacías, comentarios y cabeceras de CSV. */
     public static boolean esLineaIgnorable(String linea, String cabecera) {
-        String l = quitarBom(linea).strip();
-        return l.isEmpty() || l.startsWith("#")
-                || (cabecera != null && l.toLowerCase(Locale.ROOT).startsWith(cabecera.toLowerCase(Locale.ROOT)));
+        String limpia = limpiarLinea(linea);
+        return limpia.isEmpty() || esComentario(limpia)
+                || (cabecera != null && limpia.regionMatches(true, 0, cabecera, 0, cabecera.length()));
     }
 
-    public static String quitarBom(String texto) {
-        return texto.startsWith("\uFEFF") ? texto.substring(1) : texto;
-    }
-
-    /**
-     * Lee un archivo editado a mano en Windows: acepta UTF-8 (con o sin BOM) y, si no lo es,
-     * ANSI/windows-1252, que es como Excel guarda «CSV (delimitado por comas)».
-     */
+    /** Lee UTF-8 con o sin BOM y admite CSV anteriores guardados en Windows-1252. */
     public static String leerTexto(Path archivo) throws IOException {
         byte[] bytes = Files.readAllBytes(archivo);
         String texto;
@@ -50,10 +54,15 @@ public final class Utility {
         } catch (CharacterCodingException e) {
             texto = new String(bytes, Charset.forName("windows-1252"));
         }
-        return quitarBom(texto);
+        return texto.startsWith("\uFEFF") ? texto.substring(1) : texto;
     }
 
-    /** Sin tildes, sin espacios a los lados y en minúsculas: "  Carnívoro " → "carnivoro". */
+    /** Valor seguro para escribir en un campo CSV: sin separadores ni saltos de línea. */
+    public static String campoSeguro(String valor) {
+        return valor == null ? "" : valor.replace(SEPARADOR, ",").replace("\n", " ").replace("\r", " ");
+    }
+
+    /** Texto sin tildes, sin espacios en los extremos y en minúsculas: "Carnívoro " → "carnivoro". */
     public static String normalizar(String texto) {
         return Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "")

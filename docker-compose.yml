@@ -9,12 +9,17 @@ services:
     command: ["gui"]
     ports:
       - "6080:6080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS --max-time 3 http://localhost:6080/vnc.html >/dev/null && xwininfo -root -tree | grep -Fq AntCiberDron"]
+      interval: 5s
+      timeout: 5s
+      start_period: 15s
+      retries: 6
     volumes:
       - ./config:/opt/antdron/config
       - ./datos:/opt/antdron/datos
-      # El Tablero XP lee las tareas y las capturas de su carpeta: pulse «Actualizar» sin reconstruir.
       - ./xp:/opt/antdron/xp
-      - ./docs:/opt/antdron/docs
+      - ./docs:/opt/antdron/docs:ro
 
   consola:
     image: antdron:latest
