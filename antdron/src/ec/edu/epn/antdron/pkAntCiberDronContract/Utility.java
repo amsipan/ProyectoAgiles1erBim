@@ -11,9 +11,9 @@ import java.text.Normalizer;
 import java.util.Locale;
 
 /**
- * Utilidades compartidas (reciclaje): manejo de líneas CSV separadas por ';' y normalización de textos.
- * Antes este código estaba repetido en LectorConfiguracion, SistemaRuso, la tabla CSV del hormiguero y
- * FabricaAlimentos.
+ * Utilidades compartidas por los módulos del AntCiberDron (diagrama de clases del enunciado).
+ * Reúne el manejo de líneas CSV separadas por ';' y la normalización de textos, que antes estaba
+ * repetido en SistemaRuso, LectorConfiguracion y FabricaAlimentos.
  */
 public final class Utility {
 
@@ -38,10 +38,14 @@ public final class Utility {
         return texto.startsWith("\uFEFF") ? texto.substring(1) : texto;
     }
 
-    /**
-     * Lee un archivo editado a mano en Windows: acepta UTF-8 (con o sin BOM) y, si no lo es,
-     * ANSI/windows-1252, que es como Excel guarda «CSV (delimitado por comas)».
-     */
+    /** Reconoce líneas vacías, comentarios y cabeceras de CSV. */
+    public static boolean esLineaIgnorable(String linea, String cabecera) {
+        String limpia = limpiarLinea(linea);
+        return limpia.isEmpty() || esComentario(limpia)
+                || (cabecera != null && limpia.regionMatches(true, 0, cabecera, 0, cabecera.length()));
+    }
+
+    /** Lee UTF-8 con o sin BOM y admite CSV anteriores guardados en Windows-1252. */
     public static String leerTexto(Path archivo) throws IOException {
         byte[] bytes = Files.readAllBytes(archivo);
         String texto;
@@ -50,7 +54,12 @@ public final class Utility {
         } catch (CharacterCodingException e) {
             texto = new String(bytes, Charset.forName("windows-1252"));
         }
-        return quitarBom(texto);
+        return texto.startsWith("\uFEFF") ? texto.substring(1) : texto;
+    }
+
+    /** Valor seguro para escribir en un campo CSV: sin separadores ni saltos de línea. */
+    public static String campoSeguro(String valor) {
+        return valor == null ? "" : valor.replace(SEPARADOR, ",").replace("\n", " ").replace("\r", " ");
     }
 
     /** Sin tildes, sin espacios a los lados y en minúsculas: "  Carnívoro " → "carnivoro". */

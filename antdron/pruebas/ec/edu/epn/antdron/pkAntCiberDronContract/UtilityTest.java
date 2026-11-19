@@ -15,9 +15,9 @@ class UtilityTest {
 
     @Prueba
     void separaCamposCsvConservandoLosVacios() {
-        Afirmar.igual(3, Utility.camposCsv("a;;").length);
-        Afirmar.igual("", Utility.camposCsv(";Ana;ana;1234;CLIENTE")[0]);
-        Afirmar.igual("Ana", Utility.camposCsv(";Ana;ana;1234;CLIENTE")[1]);
+        Afirmar.igual(3, Utility.campos("a;;").length);
+        Afirmar.igual("", Utility.campos(";Ana;ana;1234;CLIENTE")[0]);
+        Afirmar.igual("Ana", Utility.campos(";Ana;ana;1234;CLIENTE")[1]);
     }
 
     @Prueba

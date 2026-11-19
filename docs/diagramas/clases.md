@@ -322,6 +322,8 @@ classDiagram
 
 `MotorAntdron` es el punto central: lee `config/`, regenera `datos/Grupo##.csv`, la bomba y `datos/automata-grupo##.md` cada vez que se carga (arranque o «Recargar configuración»), y entrega todo a la consola y a la interfaz JavaFX.
 
+`Utility` (paquete `pkAntCiberDronContract`, como en el diagrama del enunciado) reúne el manejo de líneas CSV separadas por `;` y la normalización de textos que usan `LectorConfiguracion`, `SistemaRuso` y `FabricaAlimentos`.
+
 ```mermaid
 classDiagram
     direction TB
@@ -416,8 +418,9 @@ classDiagram
         String creadaEn
     }
     class BaseDatos {
-        ~enTransaccion(Trabajo) T
         ~getArchivo() Path
+        ~enTransaccion(Trabajo)
+        ~enEscritura(Trabajo)
     }
     class GeneradorCsvGrupo
     class Bomba
@@ -444,10 +447,13 @@ classDiagram
     Autenticador ..> Claves
     Integrante ..> Claves
     PresentadorEquipo ..> Equipo
-    HormigueroServicio *-- BaseDatos : hormiguero.db (SQLite)
+    HormigueroServicio *-- BaseDatos : SQLite
     HormigueroServicio ..> HormigaRegistro : lista
     HormigueroServicio ..> Claves : hash con sal
     HormigueroServicio --> TipoHormiga
+    LectorConfiguracion ..> Utility : líneas CSV
+    SistemaRuso ..> Utility : líneas CSV
+    FabricaAlimentos ..> Utility : normalizar
 ```
 
 ## 5. Aplicación · Interfaz JavaFX (sin FXML) y tablero XP

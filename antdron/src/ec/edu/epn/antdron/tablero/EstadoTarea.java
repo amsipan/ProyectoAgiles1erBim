@@ -1,5 +1,7 @@
 package ec.edu.epn.antdron.tablero;
 
+import java.util.Locale;
+
 /** Columna del tablero en la que está una tarea. */
 public enum EstadoTarea {
     POR_HACER("Por hacer"),
@@ -17,7 +19,7 @@ public enum EstadoTarea {
     }
 
     public static EstadoTarea desde(String texto) {
-        String t = texto == null ? "" : texto.trim().toUpperCase().replace(' ', '_');
+        String t = texto == null ? "" : texto.trim().toUpperCase(Locale.ROOT).replace(' ', '_');
         if (t.isEmpty()) {
             return POR_HACER;
         }

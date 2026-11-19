@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 /**
  * Archivo SQLite del hormiguero virtual. Cada operación abre su propia conexión y corre en una transacción,
@@ -42,7 +43,7 @@ final class BaseDatos {
             throw new UncheckedIOException("No se pudo crear la carpeta de " + this.archivo, e);
         }
         String esquema = leerEsquema();
-        enTransaccion(c -> {
+        enEscritura(c -> {
             try (Statement st = c.createStatement()) {
                 for (String sentencia : esquema.split(";")) {
                     if (!sentencia.isBlank()) {
@@ -60,7 +61,18 @@ final class BaseDatos {
 
     /** Ejecuta {@code trabajo} en una transacción: si algo falla no se guarda nada. */
     <T> T enTransaccion(Trabajo<T> trabajo) {
-        try (Connection c = DriverManager.getConnection(url)) {
+        return enTransaccion(trabajo, new Properties());
+    }
+
+    /** Reserva la escritura antes de leer el estado que se va a modificar. */
+    <T> T enEscritura(Trabajo<T> trabajo) {
+        Properties opciones = new Properties();
+        opciones.setProperty("transaction_mode", "IMMEDIATE");
+        return enTransaccion(trabajo, opciones);
+    }
+
+    private <T> T enTransaccion(Trabajo<T> trabajo, Properties opciones) {
+        try (Connection c = DriverManager.getConnection(url, opciones)) {
             try (Statement st = c.createStatement()) {
                 // SQLite solo valida las claves foráneas si se activan en cada conexión.
                 st.execute("PRAGMA foreign_keys = ON");
@@ -69,10 +81,14 @@ final class BaseDatos {
             c.setAutoCommit(false);
             try {
                 T resultado = trabajo.ejecutar(c);
-                c.commit();
+                c.setAutoCommit(true);
                 return resultado;
             } catch (SQLException | RuntimeException e) {
-                c.rollback();
+                try {
+                    c.rollback();
+                } catch (SQLException falloAlRevertir) {
+                    e.addSuppressed(falloAlRevertir);
+                }
                 throw e;
             }
         } catch (SQLException e) {

@@ -126,7 +126,7 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 |---|---|
 | Relacionar el número de grupo con el tipo de hormiga | Equipo, MotorAntdron |
 | Dar el alimento y crear la hormiga adulta de cada tipo | Alimento, Hormiga |
-| Buscar un tipo por nombre (al leer los CSV) | HormigueroServicio |
+| Buscar un tipo por nombre (al leer la base) | HormigueroServicio |
 
 ### Clase: Extremidad
 
@@ -195,9 +195,8 @@ Reciclaje (Sebastián Jibaja y Daniel Mera): reúne el código que estaba repeti
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Separar líneas CSV con `;` e ignorar vacías, comentarios y cabeceras | LectorConfiguracion, SistemaRuso, HormigueroServicio, TableroXp |
-| Leer archivos editados en Windows (UTF-8 con o sin BOM, o windows-1252) | LectorConfiguracion, TableroXp |
-| Normalizar textos sin tildes ni mayúsculas | FabricaAlimentos |
+| Limpiar y partir las líneas de los archivos CSV separados por `;` | LectorConfiguracion, SistemaRuso |
+| Normalizar textos sin tildes y en minúsculas | FabricaAlimentos |
 
 ## Paquete `antciberdron`
 
@@ -399,8 +398,8 @@ Reciclaje (Sebastián Jibaja y Daniel Mera): reúne el código que estaba repeti
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Crear `hormiguero.db` y sus tablas con `esquema.sql` si no existen | HormigueroServicio |
-| Ejecutar cada operación en una transacción con las claves foráneas activas | Controlador sqlite-jdbc |
+| Abrir SQLite y aplicar el esquema del modelo ER | HormigueroServicio |
+| Ejecutar lecturas y escrituras en transacciones con claves foráneas | HormigueroServicio |
 
 ### Clase: HormigaRegistro
 
@@ -408,27 +407,26 @@ Reciclaje (Sebastián Jibaja y Daniel Mera): reúne el código que estaba repeti
 |---|---|
 | Guardar una fila de hormiga (id, tipo, sexo, estado, fecha) para mostrarla | HormigueroServicio, VistaKgd |
 
-## Paquete `tablero` (tablero de trabajo XP)
-
-### Clase: TableroXp
-
-| Responsabilidades | Colaboradores |
-|---|---|
-| Leer las tareas de `xp/tareas.csv`, el backlog y el reporte de aceptación | Tarea, Utility, Equipo |
-| Decidir el estado de cada tarea: Hecha si su captura existe, En curso si su artefacto existe | EstadoTarea |
-| Calcular el avance por integrante, por práctica XP y por iteración (velocidad) | Integrante |
+## Paquete `tablero`
 
 ### Clase: Tarea
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Guardar una tarea de la división por fases: sesión, práctica, responsables, artefacto y evidencia | TableroXp |
+| Representar una tarea con sesión, responsables, artefacto y evidencia | EstadoTarea, TableroXp |
 
 ### Clase: EstadoTarea
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Nombrar las columnas del tablero: Por hacer, En curso, Hecha | TableroXp, PanelTablero |
+| Definir las columnas Por hacer, En curso y Hecha | TableroXp, PanelTablero |
+
+### Clase: TableroXp
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Leer tareas, capturas, backlog, aceptación y resultados de la suite | Tarea, Equipo, Utility |
+| Calcular avance por integrante, práctica e iteración | EstadoTarea, PanelTablero |
 
 ## Paquete `ui` (JavaFX sin FXML)
 
@@ -487,6 +485,13 @@ Reciclaje (Sebastián Jibaja y Daniel Mera): reúne el código que estaba repeti
 |---|---|
 | Ofrecer IA buscar arsenal, armas, vuelo, energía e idiomas | AntCiberDron, MotorAntdron |
 | Mostrar los errores de entrenamiento no autorizado | ExpertoParlante, EntrenamientoNoAutorizadoException |
+
+### Clase: PanelTablero
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Mostrar tareas por sesión y responsable, y resultados por historia y prueba | TableroXp, Tarea, Ui |
+| Recargar el tablero cuando cambian los artefactos | MotorAntdron |
 
 ### Clase: VistaKgd
 

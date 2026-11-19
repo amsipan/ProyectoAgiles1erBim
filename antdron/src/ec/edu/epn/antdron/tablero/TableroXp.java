@@ -5,9 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import ec.edu.epn.antdron.config.Equipo;
@@ -24,6 +26,7 @@ public final class TableroXp {
     public static final String TAREAS = "xp/tareas.csv";
     public static final String BACKLOG = "xp/historias.csv";
     public static final String ACEPTACION = "xp/pruebas-aceptacion.md";
+    public static final String SUITE = "build/pruebas/suite.tsv";
     public static final String TODOS = "todos";
 
     /** Historia del backlog con el resultado de sus pruebas. */
@@ -50,16 +53,27 @@ public final class TableroXp {
     public record AvanceIteracion(int numero, int planificados, int terminados) {
     }
 
+    public record PruebaEjecutada(String clase, String metodo, String historias, String resultado,
+                                  String milisegundos, String detalle) {
+    }
+
+    private record ResultadoAceptacion(int pasadas, int fallidas, String estado) {
+        private static final ResultadoAceptacion SIN_PRUEBAS = new ResultadoAceptacion(0, 0, "SIN_PRUEBAS");
+    }
+
     private final Path raiz;
     private final Equipo equipo;
     private final List<Tarea> tareas;
     private final List<Historia> historias;
+    private final List<PruebaEjecutada> pruebas;
 
-    private TableroXp(Path raiz, Equipo equipo, List<Tarea> tareas, List<Historia> historias) {
+    private TableroXp(Path raiz, Equipo equipo, List<Tarea> tareas, List<Historia> historias,
+                      List<PruebaEjecutada> pruebas) {
         this.raiz = raiz;
         this.equipo = equipo;
         this.tareas = List.copyOf(tareas);
         this.historias = List.copyOf(historias);
+        this.pruebas = List.copyOf(pruebas);
     }
 
     public static TableroXp cargar(Path raiz, Equipo equipo) throws IOException {
@@ -68,21 +82,38 @@ public final class TableroXp {
             throw new IOException("No existe " + TAREAS + ": es la lista de tareas del tablero");
         }
         List<Tarea> tareas = leerTareas(Utility.leerTexto(archivoTareas).lines().toList(), equipo);
-        Map<String, int[]> resultados = Files.exists(raiz.resolve(ACEPTACION))
+        Map<String, ResultadoAceptacion> resultados = Files.exists(raiz.resolve(ACEPTACION))
                 ? leerAceptacion(Utility.leerTexto(raiz.resolve(ACEPTACION)).lines().toList()) : Map.of();
         List<Historia> historias = Files.exists(raiz.resolve(BACKLOG))
                 ? leerBacklog(Utility.leerTexto(raiz.resolve(BACKLOG)).lines().toList(), resultados) : List.of();
-        return new TableroXp(raiz, equipo, tareas, historias);
+        return new TableroXp(raiz, equipo, tareas, historias, leerPruebas(raiz.resolve(SUITE)));
+    }
+
+    private static List<PruebaEjecutada> leerPruebas(Path archivo) throws IOException {
+        if (!Files.isRegularFile(archivo)) {
+            return List.of();
+        }
+        List<PruebaEjecutada> pruebas = new ArrayList<>();
+        List<String> lineas = Files.readAllLines(archivo);
+        for (int i = 1; i < lineas.size(); i++) {
+            String[] campos = lineas.get(i).split("\t", -1);
+            if (campos.length != 6) {
+                throw new IllegalArgumentException(SUITE + " línea " + (i + 1) + ": se esperaban 6 campos");
+            }
+            pruebas.add(new PruebaEjecutada(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5]));
+        }
+        return pruebas;
     }
 
     static List<Tarea> leerTareas(List<String> lineas, Equipo equipo) {
         List<Tarea> tareas = new ArrayList<>();
+        Set<String> ids = new HashSet<>();
         for (int i = 0; i < lineas.size(); i++) {
-            String linea = lineas.get(i);
+            String linea = Utility.limpiarLinea(lineas.get(i));
             if (Utility.esLineaIgnorable(linea, "id;")) {
                 continue;
             }
-            String[] c = Utility.camposCsv(linea);
+            String[] c = Utility.campos(linea);
             if (c.length != 8) {
                 throw new IllegalArgumentException(TAREAS + " línea " + (i + 1) + ": se esperaban 8 campos y hay " + c.length);
             }
@@ -94,8 +125,12 @@ public final class TableroXp {
                 }
             }
             try {
-                tareas.add(new Tarea(c[0].strip(), c[1].strip(), c[2].strip(), responsables, c[4].strip(),
-                        c[5].strip(), c[6].strip(), EstadoTarea.desde(c[7])));
+                Tarea tarea = new Tarea(c[0].strip(), c[1].strip(), c[2].strip(), responsables, c[4].strip(),
+                        c[5].strip(), c[6].strip(), EstadoTarea.desde(c[7]));
+                if (!ids.add(tarea.id())) {
+                    throw new IllegalArgumentException("ID de tarea duplicado: " + tarea.id());
+                }
+                tareas.add(tarea);
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(TAREAS + " línea " + (i + 1) + ": " + e.getMessage(), e);
             }
@@ -104,19 +139,15 @@ public final class TableroXp {
     }
 
     /** Filas «| HU-01 | Título | pasadas | fallidas | otras | ESTADO |» del reporte de aceptación. */
-    static Map<String, int[]> leerAceptacion(List<String> lineas) {
-        Map<String, int[]> resultados = new LinkedHashMap<>();
+    private static Map<String, ResultadoAceptacion> leerAceptacion(List<String> lineas) {
+        Map<String, ResultadoAceptacion> resultados = new LinkedHashMap<>();
         for (String linea : lineas) {
             String[] c = linea.split("\\|", -1);
-            if (c.length == 8 && c[1].strip().matches("[A-Z]+-\\d+")) {
+            if (c.length >= 8 && c[1].strip().matches("[A-Z]+-\\d+")) {
                 try {
-                    int estado = switch (c[6].strip()) {
-                        case "ACEPTADA" -> 0;
-                        case "RECHAZADA" -> 1;
-                        default -> 2;
-                    };
-                    resultados.put(c[1].strip(), new int[] {Integer.parseInt(c[3].strip()),
-                            Integer.parseInt(c[4].strip()), estado});
+                    int pasadas = Integer.parseInt(c[c.length - 5].strip());
+                    int fallidas = Integer.parseInt(c[c.length - 4].strip());
+                    resultados.put(c[1].strip(), new ResultadoAceptacion(pasadas, fallidas, c[c.length - 2].strip()));
                 } catch (NumberFormatException e) {
                     // Fila con otro formato: se ignora.
                 }
@@ -125,35 +156,29 @@ public final class TableroXp {
         return resultados;
     }
 
-    static List<Historia> leerBacklog(List<String> lineas, Map<String, int[]> resultados) {
+    private static List<Historia> leerBacklog(List<String> lineas, Map<String, ResultadoAceptacion> resultados) {
         List<Historia> historias = new ArrayList<>();
-        for (String linea : lineas) {
+        for (int i = 0; i < lineas.size(); i++) {
+            String linea = Utility.limpiarLinea(lineas.get(i));
             if (Utility.esLineaIgnorable(linea, "id;")) {
                 continue;
             }
-            String[] c = Utility.camposCsv(linea);
+            String[] c = Utility.campos(linea);
             if (c.length != 11) {
-                continue;
+                throw new IllegalArgumentException(BACKLOG + " línea " + (i + 1) + ": se esperaban 11 campos");
             }
-            int[] r = resultados.getOrDefault(c[0].strip(), new int[] {0, 0, 3});
-            String aceptacion = switch (r[2]) {
-                case 0 -> "ACEPTADA";
-                case 1 -> "RECHAZADA";
-                default -> "SIN_PRUEBAS";
-            };
-            historias.add(new Historia(c[0].strip(), c[1].strip(),
-                    Arrays.stream(c[9].split(",")).map(String::strip).filter(s -> !s.isEmpty()).toList(),
-                    entero(c[6]), entero(c[7]), c[8].strip(), r[0], r[1], aceptacion));
+            ResultadoAceptacion resultado = resultados.getOrDefault(c[0].strip(), ResultadoAceptacion.SIN_PRUEBAS);
+            try {
+                int puntos = Integer.parseInt(c[6].strip());
+                int iteracion = c[7].isBlank() ? 0 : Integer.parseInt(c[7].strip());
+                historias.add(new Historia(c[0].strip(), c[1].strip(),
+                        Arrays.stream(c[9].split(",")).map(String::strip).filter(s -> !s.isEmpty()).toList(),
+                        puntos, iteracion, c[8].strip(), resultado.pasadas(), resultado.fallidas(), resultado.estado()));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(BACKLOG + " línea " + (i + 1) + ": puntos o iteración inválidos", e);
+            }
         }
         return historias;
-    }
-
-    private static int entero(String texto) {
-        try {
-            return Integer.parseInt(texto.strip());
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 
     /**
@@ -161,7 +186,7 @@ public final class TableroXp {
      * artefacto existe pero falta la evidencia; si no, POR_HACER.
      */
     public EstadoTarea estado(Tarea t) {
-        if (t.estadoDeclarado() == EstadoTarea.HECHA || (t.evidenciaEsArchivo() && existe(t.evidencia()))) {
+        if (t.estadoDeclarado() == EstadoTarea.HECHA || (t.evidenciaEsArchivo() && esCaptura(t.evidencia()))) {
             return EstadoTarea.HECHA;
         }
         if (t.estadoDeclarado() == EstadoTarea.EN_CURSO || (!t.artefacto().isEmpty() && existe(t.artefacto()))) {
@@ -172,6 +197,11 @@ public final class TableroXp {
 
     public boolean existe(String rutaRelativa) {
         return !rutaRelativa.isEmpty() && Files.exists(raiz.resolve(rutaRelativa));
+    }
+
+    public boolean esCaptura(String rutaRelativa) {
+        Path ruta = raiz.resolve(rutaRelativa).normalize();
+        return ruta.startsWith(raiz.resolve("docs/evidencias").normalize()) && Files.isRegularFile(ruta);
     }
 
     public List<Integrante> responsables(Tarea t) {
@@ -193,8 +223,8 @@ public final class TableroXp {
         return historias;
     }
 
-    public Equipo getEquipo() {
-        return equipo;
+    public List<PruebaEjecutada> getPruebas() {
+        return pruebas;
     }
 
     public long contar(EstadoTarea estado) {
@@ -248,10 +278,6 @@ public final class TableroXp {
 
     public long historiasAceptadas() {
         return historias.stream().filter(Historia::aceptada).count();
-    }
-
-    public int pruebasPasadas() {
-        return historias.stream().mapToInt(Historia::pasadas).sum();
     }
 
     public int pruebasFallidas() {

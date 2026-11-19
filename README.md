@@ -4,10 +4,10 @@ Proyecto en dos partes independientes, desarrollado con Extreme Programming:
 
 | Parte | Carpeta | Descripción |
 |---|---|---|
-| 1. Framework XP | `framework-xp/` | Dicta las directrices de XP y las verifica: backlog, plan, velocidad, parejas, tarjetas CRC y pruebas por historia. |
+| 1. Framework XP | `framework-xp/` | Verifica las prácticas XP y muestra el trabajo del equipo, el backlog, las iteraciones y la aceptación en un tablero. |
 | 2. Aplicación AntCiberDron | `antdron/` | Lo que pide el enunciado, con pantallas **JavaFX** y dockerizada. Funciona sin el framework. |
 
-Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de construcción: VS Code compila todo, y JavaFX 21 y el controlador de SQLite ya vienen en `lib/`.
+En Windows, VS Code compila el proyecto. JavaFX 21 y el controlador SQLite vienen en `lib/`.
 
 ## Requisitos (Windows)
 
@@ -27,6 +27,7 @@ Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de co
 | **AntCiberDron (consola)** | Versión de consola del enunciado, en la terminal. |
 | **AntCiberDron (autómata de cédulas)** | Imprime el autómata, la gramática y el grafo de las cédulas que escriba. |
 | **Pruebas + reporte de aceptación** | Ejecuta todas las pruebas y actualiza `xp/pruebas-aceptacion.md`. |
+| **Framework XP (tablero del equipo)** | Genera `build/xp/tablero.html` y lo abre en el navegador. Ejecute primero las pruebas para que el tablero muestre la aceptación. |
 | **Framework XP (comando)** | Pide un comando del framework: `verificar`, `backlog`, `plan`, `velocidad`, `parejas 2`, `crc`, `ayuda`... |
 
 Usuarios: el profesor `patmic` con clave `123`, y los integrantes `sjibaja`, `kmosquera`, `klugmana`, `djumbo`, `dmera` y `lmorales` con clave `1234`.
@@ -63,12 +64,20 @@ Si faltan cédulas, la aplicación no falla: usa las que haya y muestra un aviso
 Con Docker Desktop abierto, en una terminal dentro de la carpeta del repositorio:
 
 ```powershell
-docker compose up --build          # luego abra http://localhost:6080/vnc.html
+docker compose up -d --build --wait
+docker compose ps
 docker compose run --rm consola    # versión de consola
 docker compose run --rm antdron verificar   # cualquier comando del framework XP
+docker compose run --rm antdron tablero --salida datos/tablero-xp.html
 ```
 
-La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alguna falla, no se construye. `config/` y `datos/` se montan desde su carpeta, así que puede editar las cédulas y pulsar «Recargar configuración». La base SQLite del hormiguero queda en `datos/hormiguero/hormiguero.db` de su equipo, por lo que las hormigas se conservan al detener y volver a levantar el contenedor. `xp/` y `docs/` también se montan: al agregar una captura en `docs/evidencias/` o cambiar `xp/tareas.csv`, pulse **Actualizar** en el Tablero XP.
+Abra [AntCiberDron en noVNC](http://localhost:6080/vnc.html?autoconnect=true&resize=scale) cuando `docker compose ps` muestre el servicio `antdron` como `healthy`. El arranque espera a que respondan noVNC y la ventana JavaFX. La imagen ejecuta todas las pruebas en la construcción.
+
+Abra **Entrar al hormiguero virtual**, registre una cuenta y pulse **Crear HLarva**. El archivo SQLite se crea en `datos/hormiguero/hormiguero.db` y el montaje de `datos/` lo conserva cuando se recrea el contenedor. En la primera migración, los datos de los CSV se importan con sus identificadores. El CSV de coordenadas `datos/Grupo##.csv` sigue siendo un artefacto independiente.
+
+Tras entrar con una cuenta del equipo o del profesor, la pestaña **Tablero XP** muestra la preparación y las fases S1 a S4, con filtros por integrante y sesión. Edita `xp/tareas.csv` o añade capturas en la carpeta de su fase dentro de `docs/evidencias/`. Usa **Actualizar** para leer los cambios. Docker monta `xp/` y `docs/` desde el proyecto.
+
+La sección **Pruebas ejecutadas** de ambos tableros muestra cada resultado de la suite, incluso las pruebas sin una historia asociada. La imagen ya trae los resultados de su construcción. Para volver a ejecutar las pruebas en el contenedor activo, usa `docker compose exec antdron java -cp 'bin:/opt/javafx/*:lib/*' ec.edu.epn.xp.XpCli probar` y pulsa **Actualizar**. El tablero HTML exportado con Compose queda en `datos/tablero-xp.html`.
 
 ## Documentación
 
@@ -85,17 +94,19 @@ La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alg
 | [docs/diagramas/grafo-automata.md](docs/diagramas/grafo-automata.md) | Grafo con gramática del autómata |
 | [docs/diagramas/modelo-er.md](docs/diagramas/modelo-er.md) | Modelo entidad-relación |
 | [docs/diagramas/arquitectura.md](docs/diagramas/arquitectura.md) | Diagrama de arquitectura |
-| [xp/](xp/) | Backlog, plan de entregas, reuniones, metáfora, tarjetas CRC, spikes y reporte de aceptación |
+| [xp/](xp/) | Backlog, plan de entregas, reuniones y actas, metáfora, tarjetas CRC, spikes, funcionalidad mínima y reporte de aceptación |
+| [Videos de evidendia](https://epnecuador-my.sharepoint.com/:f:/r/personal/velky_jibaja_epn_edu_ec/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim&share=cgrUtkIE7YrIQZ%2DL%2DrtcRnQREgUDKWnlfLpdcQsaUgJLh1w5qw) | Videos de evidencia de la aplicación de programación XP, seccionador por los roles de los integrantes |
 
 ## Estructura
 
 ```
 .vscode/        carpetas de fuentes, JavaFX y configuraciones de ejecución para VS Code
-lib/            JavaFX 21.0.5 para Windows (base, graphics, controls) y sqlite-jdbc 3.54.1.0
+lib/            JavaFX 21.0.5 para Windows y controlador SQLite JDBC
 framework-xp/   Parte 1: src/, pruebas/, docs/
 antdron/        Parte 2: src/, pruebas/
 config/         equipo.properties e integrantes.csv (cédulas)
-datos/          se genera: Grupo##.csv, automata-grupo##.md, hormiguero/hormiguero.db (SQLite)
+datos/          Grupo04.csv, automata-grupo04.md y hormiguero/hormiguero.db generado al abrirlo
+docs/           diagramas/, evidencias.md (índice) y evidencias/ (capturas)
 xp/             artefactos XP que revisa el framework
 docker/, Dockerfile, docker-compose.yml
 ```

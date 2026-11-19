@@ -18,6 +18,8 @@ import ec.edu.epn.xp.ContextoXP;
  */
 public final class ComandoProbar implements ComandoXP {
 
+    public static final String DETALLE = "build/pruebas/suite.tsv";
+
     @Override
     public String nombre() {
         return "probar";
@@ -46,6 +48,7 @@ public final class ComandoProbar implements ComandoXP {
             todos.addAll(ejecutor.ejecutarDirectorio(carpeta));
         }
         EjecutorPruebas.registrar(todos, resultados);
+        EjecutorPruebas.guardarDetalle(todos, contexto.getRaiz().resolve(DETALLE));
 
         contexto.getSalida().println();
         new ComandoAceptacion().ejecutar(List.of("--escribir"), contexto);

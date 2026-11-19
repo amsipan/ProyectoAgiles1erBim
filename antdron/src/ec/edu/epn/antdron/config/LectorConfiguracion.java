@@ -50,7 +50,7 @@ public final class LectorConfiguracion {
     public List<Integrante> parsearIntegrantes(List<String> lineas) {
         List<Integrante> integrantes = new ArrayList<>();
         for (int i = 0; i < lineas.size(); i++) {
-            String linea = lineas.get(i).replace("\uFEFF", "").strip();
+            String linea = Utility.limpiarLinea(lineas.get(i));
             if (Utility.esLineaIgnorable(linea, "cedula;")) {
                 continue;
             }
@@ -67,4 +67,5 @@ public final class LectorConfiguracion {
         }
         return integrantes;
     }
+
 }

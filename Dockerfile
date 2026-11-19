@@ -1,18 +1,18 @@
 # Imagen de la aplicación AntCiberDron (JavaFX), sin Maven.
 # La interfaz gráfica se ve en el navegador: http://localhost:6080/vnc.html
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jdk-noble
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      xvfb x11vnc novnc websockify \
+      ca-certificates curl xvfb x11vnc x11-utils novnc websockify \
       libgtk-3-0t64 libxtst6 libgl1 libxxf86vm1 fonts-dejavu-core \
  && rm -rf /var/lib/apt/lists/*
 
 # JavaFX para Linux (los .jar de lib/ son para Windows y no se copian).
 ARG JAVAFX=21.0.5
-ADD https://repo1.maven.org/maven2/org/openjfx/javafx-base/${JAVAFX}/javafx-base-${JAVAFX}-linux.jar \
-    https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/${JAVAFX}/javafx-graphics-${JAVAFX}-linux.jar \
-    https://repo1.maven.org/maven2/org/openjfx/javafx-controls/${JAVAFX}/javafx-controls-${JAVAFX}-linux.jar \
+ADD https://repo.maven.apache.org/maven2/org/openjfx/javafx-base/${JAVAFX}/javafx-base-${JAVAFX}-linux.jar \
+    https://repo.maven.apache.org/maven2/org/openjfx/javafx-graphics/${JAVAFX}/javafx-graphics-${JAVAFX}-linux.jar \
+    https://repo.maven.apache.org/maven2/org/openjfx/javafx-controls/${JAVAFX}/javafx-controls-${JAVAFX}-linux.jar \
     /opt/javafx/
 
 WORKDIR /opt/antdron
