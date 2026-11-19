@@ -118,7 +118,7 @@ Las elabora Leonel Morales (Gestor). Las fases I y II se documentan con capturas
 
 La rotación del equipo se registra en la tabla de rotación de parejas (práctica *Rotaciones*).
 
-### ### Acta de coordinación · S1 y S2 (Planificación y Diseño)
+### Acta de coordinación · S1 y S2 (Planificación y Diseño)
 
 **Proyecto:** ANTDRON  
 **Grupo:** 4 — Pragmatics  
