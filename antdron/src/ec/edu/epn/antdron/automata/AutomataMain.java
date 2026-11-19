@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * Muestra el autómata para las cédulas del equipo:
- * {@code java -cp bin ec.edu.epn.antdron.automata.AutomataMain 1103635 1503639} (o «AntCiberDron (autómata de cédulas)» en VS Code).
+ * {@code java -cp antdron/target/antdron.jar ec.edu.epn.antdron.automata.AutomataMain 1103635 1503639}.
  * Imprime la definición formal, la gramática y el grafo (Graphviz y Mermaid) para la documentación.
  */
 public final class AutomataMain {

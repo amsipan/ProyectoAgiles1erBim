@@ -24,7 +24,8 @@ final class VistaIngreso {
 
     private final VBox raiz;
 
-    VistaIngreso(AntdronFx app, MotorAntdron motor, Autenticador autenticador) {
+    VistaIngreso(AntdronFx app, MotorAntdron motor) {
+        Autenticador autenticador = new Autenticador(motor.getEquipo());
 
         TextField usuario = new TextField();
         usuario.setPromptText("usuario");
@@ -42,18 +43,6 @@ final class VistaIngreso {
         mensaje.setVisible(false);
         mensaje.setManaged(false);
 
-        Runnable bloquear = () -> {
-            Ui.mensaje(mensaje, "Acceso denegado: se superó el máximo de " + Autenticador.MAX_INTENTOS
-                    + " intentos. Cierre y vuelva a abrir la aplicación.", true);
-            intentos.setText("Intentos disponibles: 0");
-            usuario.setDisable(true);
-            clave.setDisable(true);
-            ingresar.setDisable(true);
-        };
-        if (autenticador.estaBloqueado()) {
-            bloquear.run();
-        }
-
         ingresar.setOnAction(e -> {
             switch (autenticador.intentar(usuario.getText(), clave.getText())) {
                 case ACEPTADO -> app.mostrarPrincipal(usuario.getText().trim(),
@@ -64,7 +53,14 @@ final class VistaIngreso {
                     clave.clear();
                     clave.requestFocus();
                 }
-                case BLOQUEADO -> bloquear.run();
+                case BLOQUEADO -> {
+                    Ui.mensaje(mensaje, "Acceso denegado: se superó el máximo de " + Autenticador.MAX_INTENTOS
+                            + " intentos. Cierre y vuelva a abrir la aplicación.", true);
+                    intentos.setText("Intentos disponibles: 0");
+                    usuario.setDisable(true);
+                    clave.setDisable(true);
+                    ingresar.setDisable(true);
+                }
                 default -> throw new IllegalStateException();
             }
         });

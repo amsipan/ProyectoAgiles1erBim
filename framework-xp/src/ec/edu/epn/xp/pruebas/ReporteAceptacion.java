@@ -72,7 +72,7 @@ public final class ReporteAceptacion {
 
     public static String generar(Path resultados, List<HistoriaUsuario> backlog) throws IOException {
         if (!Files.exists(resultados)) {
-            throw new IOException("No existe " + resultados + ": ejecute primero las pruebas (xp probar o «Pruebas + reporte de aceptación» en VS Code)");
+            throw new IOException("No existe " + resultados + ": ejecute primero las pruebas (mvn verify)");
         }
         return markdown(resumir(Files.readAllLines(resultados, StandardCharsets.UTF_8)), backlog);
     }

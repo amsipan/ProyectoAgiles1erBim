@@ -1,6 +1,6 @@
-# Backlog XP del proyecto ANTDRON (lo leen los comandos del framework: xp backlog | plan | velocidad | aceptacion).
+# Backlog XP del proyecto ANTDRON (lo leen los comandos del framework: antdron xp backlog | plan | velocidad | aceptacion).
 # Proyecto de 2 días: iteración 1 = día 1, iteración 2 = día 2. 1 punto ≈ 1 hora ideal de trabajo en pareja.
-# Responsable: nombre del integrante (roles en config/integrantes.csv; ver docs/division-tareas.md). Criterios separados por '|'.
+# Responsables con su nombre, según la división de tareas del Grupo 4 (docs/division-tareas.md). Criterios separados por '|'.
 id;titulo;como;quiero;para;prioridad;puntos;iteracion;estado;responsable;criterios
 XP-01;Núcleo y directrices XP;entrenador;que el framework dicte las prácticas XP y verifique sus artefactos;que todo el equipo siga el mismo proceso;ALTA;3;1;TERMINADA;Sebastián Jibaja;17 prácticas en 4 fases con regla, responsable y artefacto|xp verificar indica qué falta y de quién es|Los módulos se agregan sin tocar el núcleo
 XP-02;Historias de usuario;cliente;registrar las historias en un CSV;priorizarlas y estimarlas;ALTA;2;1;TERMINADA;Karen Mosquera;Lee id, prioridad, puntos, iteración y estado|Indica la línea con error|xp backlog

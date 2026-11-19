@@ -95,11 +95,7 @@ final class PanelDron {
         dron.setPresentador(filas::add);
 
         TextField tipo = new TextField();
-        // El ejemplo sale del Grupo##.csv: una palabra que no está en el archivo no tiene coordenada que destruir.
-        String ejemplo = motor.getBomba().flatMap(b -> motor.getCoordenadas().stream()
-                .filter(c -> b.debeExplotar(c.getGeoposicion(), c.getTipoArsenal()))
-                .map(CoordenadaUK::getTipoArsenal).findFirst()).orElse("abcdt");
-        tipo.setPromptText("tipo de arsenal, p. ej. " + ejemplo);
+        tipo.setPromptText("tipo de arsenal, p. ej. abcdttt");
         tipo.setId("tipo-arsenal");
         Label resultado = new Label();
         resultado.setVisible(false);

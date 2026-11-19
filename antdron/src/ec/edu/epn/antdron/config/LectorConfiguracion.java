@@ -54,7 +54,7 @@ public final class LectorConfiguracion {
             if (Utility.esLineaIgnorable(linea, "cedula;")) {
                 continue;
             }
-            String[] c = Utility.campos(linea);
+            String[] c = Utility.camposCsv(linea);
             if (c.length < 4 || c.length > 5) {
                 throw new IllegalArgumentException(ARCHIVO_INTEGRANTES + " línea " + (i + 1)
                         + ": se esperaban 5 campos separados por ';' (cedula;nombre;usuario;clave;rol)");

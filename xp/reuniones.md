@@ -46,7 +46,7 @@ Después, el Gestor anota **acuerdos**, **impedimentos** (con responsable y plaz
 
 ```text
 ## Reunión: <nombre> · <día y hora>
-Asistentes: Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales
+Asistentes: Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera, Leonel Morales
 Duración: <min>
 Parejas del bloque: A-B / C-D / E-F
 
@@ -63,8 +63,8 @@ Puntos terminados en el bloque: <n> · Acumulado de la iteración: <n> de <plani
 
 ### Reunión: Inicio del Día 1 · Iteración 1
 
-- **Asistentes:** Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales · **Duración:** 10 min
-- **Parejas del bloque:** Sebastián–Leonel, Karen–Daniel, Kened–David (ronda 1)
+- **Asistentes:** Integrantes 1 a 6 · **Duración:** 10 min
+- **Parejas del bloque:** 1–6, 2–5, 3–4 (ronda 1)
 - **Objetivo del día:** 35 puntos (13 historias).
 - **Avances:** el Cliente (Karen Mosquera) presentó el backlog `xp/historias.csv`; el Consultor (Daniel Mera) propuso la metáfora «Hormiguero de guerra».
 - **Impedimentos:** ninguno.
@@ -75,16 +75,16 @@ Puntos terminados en el bloque: <n> · Acumulado de la iteración: <n> de <plani
 
 ### Reunión: Mediodía del Día 1
 
-- **Asistentes:** Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales · **Duración:** 10 min
-- **Parejas del bloque siguiente:** Sebastián–Daniel, Leonel–David, Karen–Kened (ronda 2)
+- **Asistentes:** Integrantes 1 a 6 · **Duración:** 10 min
+- **Parejas del bloque siguiente:** 1–5, 6–4, 2–3 (ronda 2)
 - **Avances:** núcleo y directrices en marcha; autenticación y generación de `Grupo##.csv` con sus pruebas.
 - **Impedimentos:** VS Code no reconocía JavaFX en una computadora porque se abrió una subcarpeta; siempre se abre la raíz del repositorio, donde están `.vscode/` y `lib/` (responsable: Daniel Mera).
 - **Acuerdos:** cada pareja deja su historia con pruebas antes del cambio de ronda; el Encargado de seguimiento actualiza los estados en `xp/historias.csv`.
 
 ### Reunión: Inicio del Día 2 · Iteración 2
 
-- **Asistentes:** Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales · **Duración:** 10 min
-- **Parejas del bloque:** Sebastián–David, Daniel–Kened, Leonel–Karen (ronda 3)
+- **Asistentes:** Integrantes 1 a 6 · **Duración:** 10 min
+- **Parejas del bloque:** 1–4, 5–3, 6–2 (ronda 3)
 - **Velocidad del Día 1:** se leyó con `xp velocidad`; el objetivo del Día 2 es de 18 puntos (8 historias).
 - **Acuerdos:**
   - Orden del Día 2 según `xp/plan-entregas.md`: HU-15, HU-14, HU-04 y HU-09 por la mañana; HU-07, HU-10, HU-11 y HU-02 por la tarde.
@@ -92,15 +92,15 @@ Puntos terminados en el bloque: <n> · Acumulado de la iteración: <n> de <plani
 
 ### Reunión: Mediodía del Día 2
 
-- **Asistentes:** Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales · **Duración:** 10 min
-- **Parejas del bloque siguiente:** Sebastián–Kened, David–Karen, Daniel–Leonel (ronda 4)
+- **Asistentes:** Integrantes 1 a 6 · **Duración:** 10 min
+- **Parejas del bloque siguiente:** 1–3, 4–2, 5–6 (ronda 4)
 - **Avances:** configuración por archivo, bomba y coordenadas con loading listas.
 - **Impedimentos:** ninguno anotado.
 - **Acuerdos:** cada integrante escribe su cédula en `config/integrantes.csv` y se pulsa «Recargar configuración» para regenerar `Grupo##.csv`, la bomba y el autómata del equipo.
 
 ### Reunión: Cierre y retrospectiva · Día 2
 
-- **Asistentes:** Sebastián Jibaja, Karen Mosquera, Kened Lugmaña, David Jumbo, Daniel Mera y Leonel Morales · **Duración:** 20 min
+- **Asistentes:** Integrantes 1 a 6 · **Duración:** 20 min
 - **Verificación:** «Pruebas + reporte de aceptación» en VS Code sin fallos y `xp verificar` con todas las directrices en `[OK]`.
 - **Salió bien:** las parejas rotativas repartieron el conocimiento; el framework avisó qué artefacto faltaba y de quién era.
 - **A mejorar:** estimar con más holgura el primer día y escribir las cédulas desde el inicio.

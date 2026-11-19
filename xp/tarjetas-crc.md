@@ -191,6 +191,8 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 
 ### Clase: Utility
 
+Reciclaje (Sebastián Jibaja y Daniel Mera): reúne el código que estaba repetido sin cambiar el comportamiento.
+
 | Responsabilidades | Colaboradores |
 |---|---|
 | Limpiar y partir las líneas de los archivos CSV separados por `;` | LectorConfiguracion, SistemaRuso |
@@ -390,6 +392,7 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 | Registrar usuarios con clave con sal y hash y crear su hormiguero | BaseDatos, Claves |
 | Crear hormigas HLarva y listarlas por usuario | HormigaRegistro, HLarva |
 | Alimentar aplicando las reglas del dominio y guardar el historial | Hormiga, FabricaAlimentos, TipoHormiga |
+| Importar una vez los CSV de la versión anterior | BaseDatos |
 
 ### Clase: BaseDatos
 
@@ -496,6 +499,13 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 |---|---|
 | Registrar e ingresar a usuarios KGD | HormigueroServicio |
 | Crear hormigas y alimentarlas, mostrando su estado | HormigaRegistro, FabricaAlimentos |
+
+### Clase: PanelTablero
+
+| Responsabilidades | Colaboradores |
+|---|---|
+| Mostrar las tareas en columnas Por hacer / En curso / Hecha, filtradas por integrante y sesión | TableroXp, Tarea |
+| Mostrar el avance por integrante, por historia (con sus pruebas) y por práctica XP | TableroXp |
 
 ### Clase: Ui
 

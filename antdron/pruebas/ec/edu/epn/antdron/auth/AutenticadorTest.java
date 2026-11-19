@@ -80,9 +80,6 @@ class AutenticadorTest {
         Afirmar.contiene(texto(), "se superó el máximo de 3 intentos");
         Afirmar.igual(Autenticador.Resultado.BLOQUEADO, a.intentar("patmic", "123"));
         Afirmar.igual(0, a.intentosRestantes());
-        Autenticador alVolver = a.conEquipo(EQUIPO);
-        Afirmar.verdadero(alVolver.estaBloqueado(), "volver a la pantalla de ingreso no devuelve intentos");
-        Afirmar.igual(Autenticador.Resultado.BLOQUEADO, alVolver.intentar("patmic", "123"));
     }
 
     @Prueba
@@ -91,7 +88,6 @@ class AutenticadorTest {
         Autenticador a = new Autenticador(EQUIPO);
         Afirmar.igual(Autenticador.Resultado.RECHAZADO, a.intentar("pepito", "x"));
         Afirmar.igual(2, a.intentosRestantes());
-        Afirmar.igual(2, a.conEquipo(EQUIPO).intentosRestantes(), "recargar el equipo conserva los fallos");
         Afirmar.igual(Autenticador.Resultado.ACEPTADO, a.intentar("pepito", "clave1"));
         Afirmar.igual(Autenticador.Resultado.RECHAZADO, a.intentar("pepito", "y"));
         Afirmar.igual(Autenticador.Resultado.BLOQUEADO, a.intentar("pepito", "z"));

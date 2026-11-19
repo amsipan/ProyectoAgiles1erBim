@@ -26,11 +26,11 @@ public class SistemaRuso {
     public List<CoordenadaUK> parsear(List<String> lineas) {
         List<CoordenadaUK> coordenadas = new ArrayList<>();
         for (int i = 0; i < lineas.size(); i++) {
-            String linea = Utility.limpiarLinea(lineas.get(i));
+            String linea = lineas.get(i).strip();
             if (linea.isEmpty() || linea.startsWith("Geopos")) {
                 continue;
             }
-            String[] c = Utility.campos(linea);
+            String[] c = Utility.camposCsv(linea);
             if (c.length != 7) {
                 throw new IllegalArgumentException("Línea " + (i + 1) + " del CSV: se esperaban 7 columnas y hay "
                         + c.length);

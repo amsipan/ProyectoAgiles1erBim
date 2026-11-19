@@ -17,25 +17,25 @@ import java.util.Locale;
  */
 public final class Utility {
 
-    /** Separador de los archivos CSV del proyecto. */
-    public static final String SEPARADOR = ";";
+    public static final String SEPARADOR_CSV = ";";
 
     private Utility() {
     }
 
-    /** Quita la marca BOM y los espacios de los extremos; {@code null} se trata como línea vacía. */
-    public static String limpiarLinea(String linea) {
-        return linea == null ? "" : linea.replace("﻿", "").strip();
+    /** Campos de una línea CSV; conserva los campos vacíos del final ("a;;" → 3 campos). */
+    public static String[] camposCsv(String linea) {
+        return linea.split(SEPARADOR_CSV, -1);
     }
 
-    /** Parte una línea CSV en sus campos, conservando los campos vacíos del final. */
-    public static String[] campos(String linea) {
-        return linea.split(SEPARADOR, -1);
+    /** Línea vacía, comentario ('#') o cabecera (empieza con {@code cabecera}, sin importar mayúsculas). */
+    public static boolean esLineaIgnorable(String linea, String cabecera) {
+        String l = quitarBom(linea).strip();
+        return l.isEmpty() || l.startsWith("#")
+                || (cabecera != null && l.toLowerCase(Locale.ROOT).startsWith(cabecera.toLowerCase(Locale.ROOT)));
     }
 
-    /** True si la línea es un comentario ({@code #...}). */
-    public static boolean esComentario(String linea) {
-        return linea.startsWith("#");
+    public static String quitarBom(String texto) {
+        return texto.startsWith("\uFEFF") ? texto.substring(1) : texto;
     }
 
     /** Reconoce líneas vacías, comentarios y cabeceras de CSV. */
@@ -62,7 +62,7 @@ public final class Utility {
         return valor == null ? "" : valor.replace(SEPARADOR, ",").replace("\n", " ").replace("\r", " ");
     }
 
-    /** Texto sin tildes, sin espacios en los extremos y en minúsculas: "Carnívoro " → "carnivoro". */
+    /** Sin tildes, sin espacios a los lados y en minúsculas: "  Carnívoro " → "carnivoro". */
     public static String normalizar(String texto) {
         return Normalizer.normalize(texto.trim(), Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "")
