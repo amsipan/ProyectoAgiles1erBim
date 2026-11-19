@@ -204,19 +204,123 @@ Estos compromisos deberán coincidir con los acuerdos efectivamente alcanzados d
 Se establece la organización documental para las cuatro fases de XP, con responsables, entregables y fechas de presentación.
 
 La ejecución y el cumplimiento de cada actividad se demostrarán mediante las capturas, actas, videos y registros de GitHub correspondientes.
-### S3 · Fase III: Desarrollo
+### S3 Fase III: Desarrollo
 
-- **Fecha:** ____ · **Hora de inicio:** ____ · **Duración:** ____ min
-- **Participantes en el video:** Karen Mosquera (Cliente) y Sebastián Jibaja (Entrenador)
-- **Evidencia previa:** Kened Lugmaña (captura de las pruebas: `s3-pruebas-verde-hu01.png`)
-- **Prácticas defendidas:** programación en parejas, disponibilidad del cliente, unidad de pruebas e integración
-- **Historia trabajada:** HU-01 Autenticación · conductora: Karen Mosquera · navegante: Sebastián Jibaja · cambio de rol a los ____ min
-- **Criterios de HU-01 confirmados por el Cliente:** máximo 3 intentos ( ) · ingreso de integrantes ( ) · ingreso de `patmic`/`123` ( )
-- **Pruebas:** ____ en verde · HU-01: ____ pruebas aceptadas
-- **PR:** aprobado por Karen ( ) · fusionado por Sebastián ( ) · pruebas en verde después de fusionar ( )
-- **Acuerdos:**
-  - ____
-- **Video:** ____ · **Captura:** `s3-live-share-karen-sebas.png`
+**Proyecto:** ANTDRON  
+**Grupo:** 4 — Pragmatics  
+**Metodología:** Extreme Programming (XP)  
+**Fecha:** 18 de noviembre de 2026  
+**Hora de inicio programada:** 17:30  
+**Duración de la grabación:** 2 minutos y 40 segundos  
+**Responsable del acta:** Leonel Morales (Gestor)
+
+#### 1. Participantes
+
+- Karen Mosquera — Cliente.
+- Sebastián Jibaja — Entrenador (Coach).
+
+#### 2. Objetivo de la sesión
+
+Evidenciar las prácticas de Extreme Programming durante el desarrollo y validación de la historia de usuario HU-01, correspondiente al sistema de autenticación de ANTDRON.
+
+#### 3. Prácticas XP documentadas
+
+**Programación en parejas:**
+
+Se presenta una sesión colaborativa utilizando Discord para compartir la pantalla y Visual Studio Code para trabajar con el código Java.
+
+Karen participa como conductora inicial y Sebastián como navegante, según la organización establecida para S3.
+
+El cambio de roles se registra en el minuto **1:50** de la grabación, conforme al registro proporcionado por el equipo.
+
+**Disponibilidad del cliente:**
+
+Karen Mosquera participa en la sesión relacionada con HU-01, contribuyendo a la revisión del comportamiento esperado del sistema de autenticación.
+
+**Pruebas unitarias:**
+
+Se muestra el archivo `AutenticadorTest.java`, con pruebas relacionadas con la validación de credenciales y el límite de intentos.
+
+**Integración:**
+
+La implementación está documentada mediante el Pull Request #10, que figura como fusionado en el repositorio.
+
+#### 4. Historia de usuario trabajada
+
+**HU-01 — Autenticación**
+
+Se aborda la corrección del comportamiento del bloqueo después de tres intentos fallidos.
+
+El problema identificado consistía en que, después de agotar los intentos de autenticación, era posible recuperar tres nuevos intentos al regresar a la pantalla inicial desde el hormiguero virtual.
+
+La corrección busca conservar el estado de bloqueo y evitar que se reinicie indebidamente el contador.
+
+Los criterios asociados a HU-01 son:
+
+- Validar las credenciales de los integrantes autorizados.
+- Permitir un máximo de tres intentos fallidos.
+- Bloquear el acceso cuando se agoten los intentos.
+- Mantener el bloqueo cuando se vuelva a mostrar la pantalla de ingreso.
+- Permitir la autenticación con credenciales válidas.
+
+#### 5. Actividades observadas en el video
+
+**Minutos 0:00–1:40:**
+
+Se presenta código Java relacionado con las pruebas automatizadas de autenticación y el comportamiento de la aplicación.
+
+**Minutos 1:40–2:15:**
+
+Se muestra la aplicación ANTDRON, incluyendo el formulario de ingreso, el acceso al hormiguero virtual y los mensajes asociados a intentos incorrectos y al bloqueo.
+
+**Minuto 1:50:**
+
+Cambio de roles reportado por los participantes.
+
+**Minutos 2:15–2:40:**
+
+Se presenta documentación visual de la corrección realizada, incluyendo imágenes comparativas del comportamiento anterior y posterior.
+
+#### 6. Resultados y validación
+
+- **Historia:** HU-01 — Autenticación.
+- **Estado registrado en el reporte:** ACEPTADA.
+- **Pruebas aceptadas según `xp/pruebas-aceptacion.md`:** 7.
+- **Pruebas fallidas según ese reporte:** 0.
+- **Ejecución completa de pruebas en el video:** no se observa una salida concluyente del ejecutor.
+- **Pull Request:** #10 — Fusionado.
+- **Aprobación formal del cliente en GitHub:** no verificada.
+- **Pruebas posteriores al merge:** no demostradas explícitamente en la grabación.
+
+#### 7. Evidencias
+
+**Video:** `Video4-Cliente.mp4` — enlace externo pendiente de registrar.
+
+**Capturas disponibles en el repositorio:**
+
+- `docs/evidencias/3-desarrollo/s3-liveshare-karen-autenticador.png`
+- `docs/evidencias/3-desarrollo/s3-liveshare-karen-prueba.png`
+- `docs/evidencias/3-desarrollo/s3-pruebas-hu01-sebas.png`
+- `docs/evidencias/3-desarrollo/s3-hu01-antes-despues.png`
+
+**Pull Request:** https://github.com/amsipan/ProyectoAgiles1erBim/pull/10
+
+#### 8. Observaciones y seguimiento
+
+- Mantener documentada la corrección del bloqueo de tres intentos.
+- Conservar las capturas de programación colaborativa y del comportamiento anterior y posterior.
+- Vincular el video con el índice general de evidencias.
+- Adjuntar los resultados de las pruebas automatizadas como respaldo independiente de la demostración visual.
+
+Estas acciones se registran como seguimiento documental; no se presentan como acuerdos verbales confirmados.
+
+#### 9. Conclusión
+
+La sesión documenta el trabajo colaborativo sobre HU-01 y demuestra visualmente el funcionamiento del inicio de sesión y el bloqueo por intentos fallidos.
+
+El repositorio respalda la integración de la corrección mediante el Pull Request #10 y registra la aceptación de HU-01 con siete pruebas satisfactorias.
+
+La grabación sirve como evidencia de colaboración y demostración funcional, mientras que el reporte de pruebas y GitHub complementan los resultados que no se observan completamente en el video.
 
 ### S4 · Fase IV: Pruebas y retrospectiva
 
