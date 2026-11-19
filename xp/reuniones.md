@@ -119,16 +119,45 @@ Las elabora Leonel Morales (Gestor). Las fases I y II se documentan con capturas
 La rotación del equipo se registra en la tabla de rotación de parejas (práctica *Rotaciones*).
 
 ### Acta de coordinación · S1 y S2 (Planificación y Diseño)
+- Proyecto: ANTDRON · Grupo: 4 — Pragmatics · Metodología: Extreme Programming (XP).
+- Fecha de la reunión: martes 17 de noviembre de 2026 · Hora de inicio: 09:00 (Ecuador) · Duración: 30 minutos · Modalidad: reunión virtual.
+- Responsable de coordinación y del acta: Leonel Morales (Gestor).
+- Asistentes: Sebastián Jibaja (Entrenador/Coach), Karen Mosquera (Cliente), Kened Lugmaña (Encargado de pruebas/Tester), David Jumbo (Encargado de seguimiento/Tracker), Daniel Mera (Consultor) y Leonel Morales (Gestor).
+- Objetivo: organizar la recopilación y presentación de evidencias de las cuatro fases de XP para el proyecto ANTDRON, identificando responsables, formatos y fechas.
+Organización de las sesiones
+Sesión	Fase	Participantes	Evidencia
+S1	I. Planificación	Los seis integrantes	Capturas, tabla de rotaciones y acta
+S2	II. Diseño	Los seis integrantes	Capturas, tarjetas CRC, spikes, refactorización y cinco diagramas
+S3	III. Desarrollo	Karen Mosquera y Sebastián Jibaja	Video de programación en parejas, validación de HU-01, pruebas e integración
+S4	IV. Pruebas y retrospectiva	Leonel Morales, Kened Lugmaña y Daniel Mera	Video de Docker, aceptación, retrospectiva y cierre
 
-- **Fecha:** ____ · **Hora de inicio:** ____ · **Duración:** ____ min · **Medio:** chat / llamada
-- **Asistentes:** Sebastián Jibaja (Entrenador), Karen Mosquera (Cliente), Kened Lugmaña (Encargado de pruebas), David Jumbo (Encargado de seguimiento), Daniel Mera (Consultor), Leonel Morales (Gestor)
-- **Fechas acordadas:** S3 ____ · S4 ____ · plazo para subir capturas ____
-- **Participantes de los videos:** S3: Karen Mosquera y Sebastián Jibaja · S4: Leonel Morales, Kened Lugmaña y Daniel Mera
-- **Resumen de la fase de Diseño (Daniel):** ____
-- **Capturas de S1 y S2:** cada rol según `docs/evidencias/LEEME.md`
-- **Acuerdos:**
-  - ____
-- **Captura de la reunión:** `docs/evidencias/1-planificacion/f1-reunion-coordinacion.png`
+
+Fechas coordinadas
+- S3 — Desarrollo: miércoles 18 de noviembre de 2026, 17:30 (hora de Ecuador).
+- S4 — Pruebas y retrospectiva: miércoles 18 de noviembre de 2026, 20:00 (hora de Ecuador).
+- Fecha límite para entregar capturas: jueves 19 de noviembre de 2026, 10:00 (hora de Ecuador).
+Distribución de responsabilidades y entregables
+La siguiente distribución corresponde al plan de evidencias del Grupo 4:
+Responsable	Compromiso / entregable	Sesión
+Karen Mosquera (Cliente)	Historias de usuario, criterios de aceptación, funcionalidad mínima, casos de uso y validación de HU-01	S1, S2, S3 y aceptación de S4
+David Jumbo (Tracker)	Plan de entregas, iteraciones, velocidad, diagrama de clases y estado final de las historias	S1, S2 y evidencia previa a S4
+Sebastián Jibaja (Coach)	Directrices XP, autómata, spikes 1 y 5, refactorización con Utility, colaboración de S3 y notas de la versión v1.0	S1, S2, S3 y evidencia previa a S4
+Daniel Mera (Consultor)	Metáfora, CRC, spike 2, arquitectura, refactorización y demostración Docker	S2 y S4
+Kened Lugmaña (Tester)	Validación, spike 4, pruebas unitarias y reporte de aceptación	S1, S2, evidencia previa a S3 y S4
+Leonel Morales (Gestor)	Coordinar la reunión, documentar las rotaciones, presentar el modelo ER y el spike 3, elaborar actas e índice, y dirigir el cierre de S4	S1, S2, S3 (acta) y S4
+
+
+Resumen previsto de la fase de Diseño (S2)
+El material de Diseño abarca la metáfora del hormiguero, las tarjetas CRC, las cinco investigaciones técnicas (spikes), la funcionalidad mínima, la refactorización mediante Utility y los cinco diagramas exigidos: clases, casos de uso, grafo y gramática del autómata, entidad-relación y arquitectura. Este resumen describe los artefactos programados; no constituye una transcripción de lo dicho por Daniel durante la llamada.
+Registro y seguimiento de evidencias
+- Capturas de S1: docs/evidencias/1-planificacion/.
+- Capturas de S2: docs/evidencias/2-diseno/.
+- Videos de S3 y S4: enlaces externos, registrados en docs/evidencias.md.
+- Actas de reuniones: xp/reuniones.md.
+- Captura de la reunión de coordinación: docs/evidencias/1-planificacion/f1-reunion-coordinacion.png (se adjunta por separado).
+- Captura de la tabla de rotaciones: docs/evidencias/1-planificacion/f1-rotaciones.png (se adjunta por separado).
+- Seguimiento: Leonel consolidará el índice de evidencias y verificará qué entregables están realmente publicados.
+Nota de trazabilidad: se consigna el horario informado por el Gestor y la distribución del plan aprobado para documentar el trabajo. Los resultados de pruebas, las aprobaciones de PR y la realización efectiva de las sesiones se respaldarán con sus respectivas evidencias; no se dan por verificados únicamente por figurar aquí.
 
 ### S3 · Fase III: Desarrollo
 
