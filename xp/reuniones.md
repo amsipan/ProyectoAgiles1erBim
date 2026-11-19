@@ -294,7 +294,7 @@ Se presenta documentación visual de la corrección realizada, incluyendo imáge
 
 #### 7. Evidencias
 
-**Video:** `Video4-Cliente.mp4` — enlace externo pendiente de registrar.
+**Video:** `Video4-Cliente.mp4` — enlace externo: https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FCliente%2FVideo4%2DCliente%2Emp4&share=cQo%5FugZXmz5BQIrjGmUzrt8IEgUDAzuSWnqQtNA1XUi6R6FShg&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eebb673f0%2D55eb%2D4a17%2D83f9%2Da87b1fef11b2
 
 **Capturas disponibles en el repositorio:**
 
