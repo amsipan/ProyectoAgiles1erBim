@@ -21,7 +21,9 @@
 |---|---|---|---|---|---|---|---|
 | S1 | I. Planificación | Capturas + acta de coordinación | Los 6 | | [`1-planificacion/`](evidencias/1-planificacion/) | — | [Acta de coordinación](../xp/reuniones.md#acta-de-coordinación--s1-y-s2-planificación-y-diseño) |
 | S2 | II. Diseño | Capturas y diagramas (incluye el reciclaje: clase `Utility`) | Los 6 | | [`2-diseno/`](evidencias/2-diseno/) | — | [Acta de coordinación](../xp/reuniones.md#acta-de-coordinación--s1-y-s2-planificación-y-diseño) |
-| S3 | III. Desarrollo | Video (~12 min) | Karen Mosquera y Sebastián Jibaja | | [`3-desarrollo/`](evidencias/3-desarrollo/) | | [Acta S3](../xp/reuniones.md#s3--fase-iii-desarrollo) |
+
+| S3 | III. Desarrollo | Video (2:40) | Karen Mosquera y Sebastián Jibaja | 18/11/2026 | [Capturas](evidencias/3-desarrollo/) | [Ver video](PEGA_AQUI_EL_ENLACE_DE_DRIVE) | [Acta S3](../xp/reuniones.md#s3-fase-iii-desarrollo) |
+
 | S4 | IV. Pruebas y retrospectiva | Video (~20 min) | Leonel Morales, Kened Lugmaña y Daniel Mera | | [`4-pruebas/`](evidencias/4-pruebas/) | | [Acta S4](../xp/reuniones.md#s4--fase-iv-pruebas-y-retrospectiva) |
 
 ## Las 17 prácticas XP
