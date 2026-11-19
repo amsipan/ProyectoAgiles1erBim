@@ -136,6 +136,7 @@ Abra la carpeta raíz del repositorio en VS Code y use **Ejecutar y depurar** (C
 | Configuración | Qué hace |
 |---|---|
 | «Framework XP (comando)» | Pide el comando y lo ejecuta: `ayuda`, `directrices diseno`, `verificar`, `backlog`, `plan`, `plan --proponer 5`, `velocidad`, `equipo`, `parejas 2`, `crc`, `aceptacion`. |
+| «Framework XP (tablero del equipo)» | `xp tablero --abrir` abre el estado del equipo, el avance por iteración, las historias, la aceptación de las últimas pruebas y las prácticas verificadas. |
 | «Pruebas + reporte de aceptación» | `xp probar`: todas las pruebas y `xp/pruebas-aceptacion.md`. |
 
 Con Docker: `docker compose run --rm antdron verificar` (o cualquier otro comando).

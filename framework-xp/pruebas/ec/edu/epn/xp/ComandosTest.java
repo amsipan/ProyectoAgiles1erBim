@@ -62,7 +62,7 @@ class ComandosTest {
     @Prueba
     void losModulosSeRegistranConServiceLoader() {
         Afirmar.igual(java.util.List.of("aceptacion", "backlog", "crc", "directrices", "equipo", "parejas", "plan",
-                "probar", "velocidad", "verificar"), new XpCli().nombresDeComandos());
+                "probar", "tablero", "velocidad", "verificar"), new XpCli().nombresDeComandos());
     }
 
     @Prueba
@@ -88,6 +88,25 @@ class ComandosTest {
         Afirmar.igual(0, xp("parejas", "2"));
         Afirmar.contiene(out(), "Ronda 2:");
         Afirmar.igual(1, xp("parejas", "dos"));
+    }
+
+    @Prueba
+    void elTableroUsaElBacklogYLosResultadosReales() throws IOException {
+        Files.writeString(raiz.resolve("xp.properties"), "proyecto.nombre=Equipo <XP>\n");
+        Afirmar.igual(0, xp("tablero"));
+        Path tablero = raiz.resolve("build/xp/tablero.html");
+        String html = Files.readString(tablero);
+        Afirmar.contiene(html, "Equipo &lt;XP&gt;");
+        Afirmar.contiene(html, "<td>Alumno 1</td>");
+        Afirmar.contiene(html, "<td>Aceptada</td>");
+        Afirmar.contiene(html, "<td>Rechazada</td>");
+        Afirmar.contiene(html, "<td>Sin pruebas</td>");
+        Afirmar.noContiene(html, "1754265385");
+
+        Files.delete(raiz.resolve("build/pruebas/resultados.csv"));
+        Afirmar.igual(0, xp("tablero", "--salida", "build/sin-resultados.html"));
+        Afirmar.contiene(Files.readString(raiz.resolve("build/sin-resultados.html")), "Pendiente de ejecutar");
+        Afirmar.igual(1, xp("tablero", "--salida"));
     }
 
     @Prueba

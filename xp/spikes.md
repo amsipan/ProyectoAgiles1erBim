@@ -8,7 +8,7 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 |---|---|---|---|---|
 | 1 | Sebastián | HU-13, XP-05 | ¿Se puede usar JavaFX sin Maven? | Sí: VS Code compila con los `.jar` de JavaFX para Windows en `lib/`. |
 | 2 | Daniel | HU-13 | ¿Se puede ver una interfaz gráfica dentro de Docker? | Sí: Xvfb + x11vnc + noVNC en el puerto 6080. |
-| 3 | Leonel | HU-12 | ¿SQLite o CSV para el hormiguero? | CSV, con el mismo modelo ER. |
+| 3 | Leonel | HU-12 | ¿SQLite o CSV para el hormiguero? | SQLite con el mismo modelo ER e importación desde CSV. |
 | 4 | Kened | XP-05 | ¿JUnit o un ejecutor de pruebas propio? | Ejecutor propio con `@Prueba` y `@Historia`. |
 | 5 | Sebastián | HU-06 | ¿Cómo construir el AFD mínimo? | Subconjuntos + minimización de Moore. |
 
@@ -61,8 +61,8 @@ Un **spike** es una investigación corta para reducir un riesgo técnico antes d
 | Ver y corregir los datos | Con una herramienta | Con cualquier editor o Excel |
 | Pruebas | Base temporal | Carpeta temporal |
 
-- **Decisión:** **CSV**, con el mismo modelo entidad-relación (`docs/diagramas/modelo-er.md`): `usuarios`, `hormigueros`, `hormigas` y `alimentaciones` en `datos/hormiguero/`. `TablaCsv` ofrece `filas`, `insertar` (id = máximo + 1) y `actualizar`. Las claves se guardan con sal y SHA-256.
-- **Consecuencias:** si el proyecto creciera, cambiar a una base de datos solo afectaría a `HormigueroServicio` y `TablaCsv`.
+- **Decisión inicial:** se usó CSV para las cuatro tablas del modelo.
+- **Decisión actual:** SQLite en `datos/hormiguero/hormiguero.db`. El controlador JDBC incluido en `lib/` permite usar el mismo esquema en VS Code y Docker. Los CSV existentes se importan conservando sus identificadores.
 
 ## Spike 4 · Ejecutor de pruebas propio o JUnit
 

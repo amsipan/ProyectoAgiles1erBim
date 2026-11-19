@@ -4,10 +4,10 @@ Proyecto en dos partes independientes, desarrollado con Extreme Programming:
 
 | Parte | Carpeta | Descripción |
 |---|---|---|
-| 1. Framework XP | `framework-xp/` | Dicta las directrices de XP y las verifica: backlog, plan, velocidad, parejas, tarjetas CRC y pruebas por historia. |
+| 1. Framework XP | `framework-xp/` | Verifica las prácticas XP y muestra el trabajo del equipo, el backlog, las iteraciones y la aceptación en un tablero. |
 | 2. Aplicación AntCiberDron | `antdron/` | Lo que pide el enunciado, con pantallas **JavaFX** y dockerizada. Funciona sin el framework. |
 
-Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de construcción: VS Code compila todo y JavaFX 21 ya viene en `lib/`.
+En Windows, VS Code compila el proyecto. JavaFX 21 y el controlador SQLite vienen en `lib/`.
 
 ## Requisitos (Windows)
 
@@ -27,6 +27,7 @@ Se trabaja en **Windows con VS Code**. No usa Maven ni ninguna herramienta de co
 | **AntCiberDron (consola)** | Versión de consola del enunciado, en la terminal. |
 | **AntCiberDron (autómata de cédulas)** | Imprime el autómata, la gramática y el grafo de las cédulas que escriba. |
 | **Pruebas + reporte de aceptación** | Ejecuta todas las pruebas y actualiza `xp/pruebas-aceptacion.md`. |
+| **Framework XP (tablero del equipo)** | Genera `build/xp/tablero.html` y lo abre en el navegador. Ejecute primero las pruebas para que el tablero muestre la aceptación. |
 | **Framework XP (comando)** | Pide un comando del framework: `verificar`, `backlog`, `plan`, `velocidad`, `parejas 2`, `crc`, `ayuda`... |
 
 ## Usuarios
@@ -71,12 +72,18 @@ Si faltan cédulas, la aplicación no falla: usa las que haya y muestra un aviso
 Con Docker Desktop abierto, en una terminal dentro de la carpeta del repositorio:
 
 ```powershell
-docker compose up --build          # luego abra http://localhost:6080/vnc.html
+docker compose up -d --build --wait
+docker compose ps
 docker compose run --rm consola    # versión de consola
 docker compose run --rm antdron verificar   # cualquier comando del framework XP
+docker compose run --rm antdron tablero --salida datos/tablero-xp.html
 ```
 
-La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alguna falla, no se construye. `config/` y `datos/` se montan desde su carpeta, así que puede editar las cédulas y pulsar «Recargar configuración».
+Abra [AntCiberDron en noVNC](http://localhost:6080/vnc.html?autoconnect=true&resize=scale) cuando `docker compose ps` muestre el servicio `antdron` como `healthy`. El arranque espera a que respondan noVNC y la ventana JavaFX. La imagen ejecuta todas las pruebas en la construcción.
+
+Abra **Entrar al hormiguero virtual**, registre una cuenta y pulse **Crear HLarva**. El archivo SQLite se crea en `datos/hormiguero/hormiguero.db` y el montaje de `datos/` lo conserva cuando se recrea el contenedor. En la primera migración, los datos de los CSV se importan con sus identificadores. El CSV de coordenadas `datos/Grupo##.csv` sigue siendo un artefacto independiente.
+
+El tablero exportado desde Docker queda en `datos/tablero-xp.html`. Ábralo con su navegador.
 
 ## Documentación
 
@@ -98,11 +105,11 @@ La imagen compila el proyecto y ejecuta todas las pruebas al construirse: si alg
 
 ```
 .vscode/        carpetas de fuentes, JavaFX y configuraciones de ejecución para VS Code
-lib/            JavaFX 21.0.5 para Windows (base, graphics, controls)
+lib/            JavaFX 21.0.5 para Windows y controlador SQLite JDBC
 framework-xp/   Parte 1: src/, pruebas/, docs/
 antdron/        Parte 2: src/, pruebas/
 config/         equipo.properties e integrantes.csv (cédulas)
-datos/          se genera: Grupo04.csv, automata-grupo04.md, hormiguero/
+datos/          Grupo04.csv, automata-grupo04.md y hormiguero/hormiguero.db generado al abrirlo
 docs/           diagramas/, evidencias.md (índice) y evidencias/ (capturas)
 xp/             artefactos XP que revisa el framework
 docker/, Dockerfile, docker-compose.yml

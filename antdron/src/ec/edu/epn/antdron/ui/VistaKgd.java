@@ -1,6 +1,8 @@
 package ec.edu.epn.antdron.ui;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -63,18 +65,13 @@ final class VistaKgd {
         Button ingresar = new Button("Ingresar");
         ingresar.getStyleClass().add("primario");
         ingresar.setId("kgd-ingresar");
-        ingresar.setOnAction(e -> servicio.autenticar(usuario.getText(), clave.getText()).ifPresentOrElse(
-                this::mostrarHormiguero,
-                () -> Ui.mensaje(mensaje, "Usuario o contraseña incorrectos.", true)));
+        ingresar.setOnAction(e -> ejecutar(mensaje, () -> servicio.autenticar(usuario.getText(), clave.getText())
+                .orElseThrow(() -> new IllegalArgumentException("Usuario o contraseña incorrectos.")),
+                this::mostrarHormiguero));
         Button registrar = new Button("Crear cuenta y hormiguero");
         registrar.setId("kgd-registrar");
-        registrar.setOnAction(e -> {
-            try {
-                mostrarHormiguero(servicio.registrar(usuario.getText().trim(), clave.getText()));
-            } catch (IllegalArgumentException ex) {
-                Ui.mensaje(mensaje, ex.getMessage(), true);
-            }
-        });
+        registrar.setOnAction(e -> ejecutar(mensaje, () -> servicio.registrar(usuario.getText().trim(), clave.getText()),
+                this::mostrarHormiguero));
         clave.setOnAction(e -> ingresar.fire());
 
         VBox tarjeta = Ui.tarjeta(Ui.subtitulo("Usuarios de la KGD"), new Label("Usuario"), usuario,
@@ -108,13 +105,12 @@ final class VistaKgd {
         Button crear = new Button("Crear HLarva");
         crear.getStyleClass().add("primario");
         crear.setId("kgd-crear");
-        crear.setOnAction(e -> {
-            int id = servicio.crearHormiga(usuarioId, sexo.getValue());
+        crear.setOnAction(e -> ejecutar(mensaje, () -> servicio.crearHormiga(usuarioId, sexo.getValue()), id -> {
             refrescar.run();
             tabla.getSelectionModel().selectLast();
             Ui.mensaje(mensaje, "Nació la HLarva #" + id + ". Aliméntela con Néctar para que viva o con "
                     + tipo.alimento() + " para que se transforme en " + tipo.getNombre() + ".", false);
-        });
+        }));
 
         ComboBox<String> alimento = new ComboBox<>(FXCollections.observableArrayList(
                 FabricaAlimentos.todos().stream().map(Alimento::getNombre).toList()));
@@ -128,15 +124,12 @@ final class VistaKgd {
                 Ui.mensaje(mensaje, "Seleccione una hormiga de la tabla.", true);
                 return;
             }
-            try {
-                String texto = servicio.alimentar(usuarioId, h.id(), alimento.getValue());
+            ejecutar(mensaje, () -> servicio.alimentar(usuarioId, h.id(), alimento.getValue()), texto -> {
                 int fila = tabla.getSelectionModel().getSelectedIndex();
                 refrescar.run();
                 tabla.getSelectionModel().select(fila);
                 Ui.mensaje(mensaje, texto, texto.contains("murió") || texto.contains("muerta"));
-            } catch (IllegalArgumentException ex) {
-                Ui.mensaje(mensaje, ex.getMessage(), true);
-            }
+            });
         });
 
         Button salir = new Button("Cerrar sesión KGD");
@@ -155,6 +148,14 @@ final class VistaKgd {
                 mensaje, tabla);
         agregarVolver(caja);
         raiz.getChildren().setAll(caja);
+    }
+
+    private static <T> void ejecutar(Label mensaje, Supplier<T> operacion, Consumer<T> exito) {
+        try {
+            exito.accept(operacion.get());
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+            Ui.mensaje(mensaje, ex.getMessage(), true);
+        }
     }
 
     private void agregarVolver(VBox caja) {

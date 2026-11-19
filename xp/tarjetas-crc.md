@@ -126,7 +126,7 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 |---|---|
 | Relacionar el número de grupo con el tipo de hormiga | Equipo, MotorAntdron |
 | Dar el alimento y crear la hormiga adulta de cada tipo | Alimento, Hormiga |
-| Buscar un tipo por nombre (al leer los CSV) | HormigueroServicio |
+| Buscar un tipo por nombre (al leer la base) | HormigueroServicio |
 
 ### Clase: Extremidad
 
@@ -193,8 +193,7 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Limpiar y partir las líneas de los archivos CSV separados por `;` | LectorConfiguracion, SistemaRuso, TablaCsv |
-| Dejar un valor seguro para escribirlo en un campo CSV | TablaCsv |
+| Limpiar y partir las líneas de los archivos CSV separados por `;` | LectorConfiguracion, SistemaRuso |
 | Normalizar textos sin tildes y en minúsculas | FabricaAlimentos |
 
 ## Paquete `antciberdron`
@@ -388,16 +387,16 @@ La metáfora que ordena las tarjetas está en `xp/metafora.md`.
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Registrar usuarios con clave con sal y hash y crear su hormiguero | TablaCsv, Claves |
+| Registrar usuarios con clave con sal y hash y crear su hormiguero | BaseDatos, Claves |
 | Crear hormigas HLarva y listarlas por usuario | HormigaRegistro, HLarva |
 | Alimentar aplicando las reglas del dominio y guardar el historial | Hormiga, FabricaAlimentos, TipoHormiga |
 
-### Clase: TablaCsv
+### Clase: BaseDatos
 
 | Responsabilidades | Colaboradores |
 |---|---|
-| Crear el archivo CSV con su cabecera si no existe | HormigueroServicio |
-| Leer filas, insertar con id nuevo y actualizar una fila por id | HormigaRegistro |
+| Abrir SQLite y aplicar el esquema del modelo ER | HormigueroServicio |
+| Ejecutar lecturas y escrituras en transacciones con claves foráneas | HormigueroServicio |
 
 ### Clase: HormigaRegistro
 

@@ -6,7 +6,7 @@ import java.util.Locale;
 /**
  * Utilidades compartidas por los módulos del AntCiberDron (diagrama de clases del enunciado).
  * Reúne el manejo de líneas CSV separadas por ';' y la normalización de textos, que antes estaba
- * repetido en SistemaRuso, LectorConfiguracion, TablaCsv y FabricaAlimentos.
+ * repetido en SistemaRuso, LectorConfiguracion y FabricaAlimentos.
  */
 public final class Utility {
 
