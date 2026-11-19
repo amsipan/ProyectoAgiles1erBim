@@ -13,11 +13,16 @@ import ec.edu.epn.xp.pruebas.ReporteAceptacion.Resumen;
 
 final class TableroHtml {
 
+    record TareaEquipo(String id, String sesion, String practica, String responsables, String tarea,
+                       String artefacto, String evidencia, String estado) {
+    }
+
     private TableroHtml() {
     }
 
     static String generar(String proyecto, Equipo equipo, List<HistoriaUsuario> historias, List<Resultado> practicas,
-                          Map<String, Resumen> aceptacion, boolean hayResultados) {
+                          Map<String, Resumen> aceptacion, boolean hayResultados, List<TareaEquipo> tareas,
+                          List<String[]> suite) {
         List<Iteracion> iteraciones = PlanEntregas.agrupar(historias);
         long terminadas = historias.stream().filter(HistoriaUsuario::estaTerminada).count();
         long aceptadas = historias.stream().filter(h -> estado(h, aceptacion) == Estado.ACEPTADA).count();
@@ -34,7 +39,8 @@ final class TableroHtml {
         metrica(html, "Artefactos XP verificados", verificadas + " / " + verificables);
         metrica(html, "Puntos en la última iteración con avance", String.valueOf(Velocidad.climaDeAyer(iteraciones)));
         html.append("</div><nav aria-label='Secciones'><a href='#equipo'>Equipo</a><a href='#iteraciones'>Iteraciones</a>"
-                + "<a href='#historias'>Historias</a><a href='#practicas'>Prácticas</a></nav>");
+                + "<a href='#division'>División por fase</a><a href='#historias'>Historias</a>"
+                + "<a href='#practicas'>Prácticas</a><a href='#pruebas'>Pruebas ejecutadas</a></nav>");
 
         aporteDelEquipo(html, equipo, historias);
         html.append("<section id='iteraciones'><h2>Iteraciones</h2><p>Velocidad media: ")
@@ -49,7 +55,9 @@ final class TableroHtml {
         if (iteraciones.isEmpty()) {
             html.append("<p>El backlog todavía no tiene historias asignadas a iteraciones.</p>");
         }
-        html.append("</div></section><section id='historias'><h2>Historias</h2>");
+        html.append("</div></section>");
+        divisionPorFase(html, tareas);
+        html.append("<section id='historias'><h2>Historias</h2>");
         if (!hayResultados) {
             html.append("<p>Ejecute las pruebas con <code>xp probar</code> y vuelva a generar el tablero para ver la aceptación.</p>");
         }
@@ -68,7 +76,50 @@ final class TableroHtml {
             fila(html, fase.titulo(), resultado.practica().getNombre(),
                     resultado.practica().getResponsable().getEtiqueta(), estado);
         }
-        return html.append("</tbody></table></div></section></main></body></html>").toString();
+        html.append("</tbody></table></div></section>");
+        pruebas(html, suite);
+        return html.append("</main></body></html>").toString();
+    }
+
+    private static void divisionPorFase(StringBuilder html, List<TareaEquipo> tareas) {
+        html.append("<section id='division'><h2>División por fase</h2>");
+        mostrarFase(html, tareas, "PREP", "Preparación");
+        mostrarFase(html, tareas, "S1", "S1 · Planificación");
+        mostrarFase(html, tareas, "S2", "S2 · Diseño");
+        mostrarFase(html, tareas, "S3", "S3 · Desarrollo");
+        mostrarFase(html, tareas, "S4", "S4 · Pruebas y retrospectiva");
+        if (tareas.isEmpty()) {
+            html.append("<p>Agregue las asignaciones al archivo <code>xp/tareas.csv</code>.</p>");
+        }
+        html.append("</section>");
+    }
+
+    private static void mostrarFase(StringBuilder html, List<TareaEquipo> tareas, String clave, String nombre) {
+        List<TareaEquipo> fase = tareas.stream().filter(t -> clave.equals(t.sesion())).toList();
+        if (fase.isEmpty()) {
+            return;
+        }
+        html.append("<details><summary>").append(esc(nombre)).append(" · ").append(fase.size())
+                .append(" tareas</summary>");
+        tabla(html, "ID", "Tarea", "Responsable", "Práctica XP", "Artefacto", "Evidencia", "Estado");
+        for (TareaEquipo t : fase) {
+            fila(html, t.id(), t.tarea(), t.responsables(), t.practica(), t.artefacto(), t.evidencia(), t.estado());
+        }
+        html.append("</tbody></table></div></details>");
+    }
+
+    private static void pruebas(StringBuilder html, List<String[]> suite) {
+        html.append("<section id='pruebas'><h2>Pruebas ejecutadas</h2>");
+        if (suite.isEmpty()) {
+            html.append("<p>Ejecute <code>xp probar</code> para cargar la lista de pruebas.</p>");
+        } else {
+            long pasadas = suite.stream().filter(c -> c.length == 6 && "PASO".equals(c[3])).count();
+            html.append("<p>").append(suite.size()).append(" pruebas · ").append(pasadas).append(" pasaron</p>");
+            tabla(html, "Clase", "Prueba", "Historias", "Resultado", "ms", "Detalle");
+            suite.forEach(resultados -> fila(html, resultados));
+            html.append("</tbody></table></div>");
+        }
+        html.append("</section>");
     }
 
     private static void aporteDelEquipo(StringBuilder html, Equipo equipo, List<HistoriaUsuario> historias) {
@@ -142,6 +193,8 @@ final class TableroHtml {
               a { color: #14593e; font-weight: 650; text-underline-offset: 0.2em; }
               section { margin-bottom: 1rem; }
               .tabla { overflow-x: auto; }
+              details { padding: 0.55rem 0; }
+              summary { cursor: pointer; font-weight: 650; }
               table { width: 100%; border-collapse: collapse; text-align: left; }
               th, td { padding: 0.65rem 0.7rem; border-bottom: 1px solid #e3eae5; }
               th { background: #eaf2ed; }

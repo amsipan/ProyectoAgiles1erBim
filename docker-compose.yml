@@ -18,6 +18,8 @@ services:
     volumes:
       - ./config:/opt/antdron/config
       - ./datos:/opt/antdron/datos
+      - ./xp:/opt/antdron/xp
+      - ./docs:/opt/antdron/docs:ro
 
   consola:
     image: antdron:latest
