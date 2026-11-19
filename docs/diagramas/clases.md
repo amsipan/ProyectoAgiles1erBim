@@ -322,7 +322,7 @@ classDiagram
 
 `MotorAntdron` es el punto central: lee `config/`, regenera `datos/Grupo##.csv`, la bomba y `datos/automata-grupo##.md` cada vez que se carga (arranque o «Recargar configuración»), y entrega todo a la consola y a la interfaz JavaFX.
 
-`Utility` (paquete `pkAntCiberDronContract`, como en el diagrama del enunciado) reúne el manejo de líneas CSV separadas por `;` y la normalización de textos que usan `LectorConfiguracion`, `TablaCsv`, `SistemaRuso` y `FabricaAlimentos`.
+`Utility` (paquete `pkAntCiberDronContract`, como en el diagrama del enunciado) reúne el manejo de líneas CSV separadas por `;` y la normalización de textos que usan `LectorConfiguracion`, `SistemaRuso` y `FabricaAlimentos`.
 
 ```mermaid
 classDiagram
@@ -417,10 +417,10 @@ classDiagram
         String estado
         String creadaEn
     }
-    class TablaCsv {
-        ~filas() List
-        ~insertar(String[]) int
-        ~actualizar(int, UnaryOperator) void
+    class BaseDatos {
+        ~getArchivo() Path
+        ~enTransaccion(Trabajo)
+        ~enEscritura(Trabajo)
     }
     class GeneradorCsvGrupo
     class Bomba
@@ -458,12 +458,11 @@ classDiagram
     Autenticador ..> Claves
     Integrante ..> Claves
     PresentadorEquipo ..> Equipo
-    HormigueroServicio *-- TablaCsv : 4 tablas
+    HormigueroServicio *-- BaseDatos : SQLite
     HormigueroServicio ..> HormigaRegistro : lista
     HormigueroServicio ..> Claves : hash con sal
     HormigueroServicio --> TipoHormiga
     LectorConfiguracion ..> Utility : líneas CSV
-    TablaCsv ..> Utility : campos CSV
     SistemaRuso ..> Utility : líneas CSV
     FabricaAlimentos ..> Utility : normalizar
 ```

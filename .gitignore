@@ -4,6 +4,7 @@ build/
 
 # Generado por la aplicación a partir de config/ (se puede regenerar en cualquier momento)
 datos/hormiguero/
+datos/tablero-xp.html
 
 .idea/
 *.iml

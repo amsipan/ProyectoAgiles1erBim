@@ -1,0 +1,45 @@
+name: Docker y SQLite
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integracion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir y esperar JavaFX y noVNC
+        run: |
+          docker compose up -d --build --wait
+          curl --fail --silent --show-error http://localhost:6080/vnc.html > /dev/null
+      - name: Crear cuenta y alimentar una hormiga
+        run: |
+          docker compose exec -T antdron java -cp 'bin:/opt/javafx/*:lib/*' ec.edu.epn.antdron.PersistenciaDocker crear
+          python3 - <<'PY'
+          import sqlite3
+          with sqlite3.connect('file:datos/hormiguero/hormiguero.db?mode=ro', uri=True) as bd:
+              assert bd.execute('PRAGMA integrity_check').fetchone() == ('ok',)
+              assert bd.execute('SELECT COUNT(*) FROM alimentacion').fetchone() == (2,)
+          PY
+      - name: Recrear y recuperar el hormiguero
+        run: |
+          anterior=$(docker compose ps -q antdron)
+          docker compose up -d --force-recreate --wait
+          test "$anterior" != "$(docker compose ps -q antdron)"
+          docker compose exec -T antdron java -cp 'bin:/opt/javafx/*:lib/*' ec.edu.epn.antdron.PersistenciaDocker reabrir
+      - name: Verificar framework XP y tablero
+        run: |
+          docker compose exec -T antdron java -cp 'bin:/opt/javafx/*:lib/*' ec.edu.epn.xp.XpCli verificar
+          docker compose run --rm -T antdron tablero --salida datos/tablero-xp.html
+          grep -q 'Tablero XP' datos/tablero-xp.html
+      - name: Mostrar registros si falla
+        if: failure()
+        run: docker compose logs
+      - name: Detener los contenedores de prueba
+        if: always()
+        run: docker compose down

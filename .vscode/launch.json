@@ -47,6 +47,17 @@
         },
         {
             "type": "java",
+            "name": "Framework XP (tablero del equipo)",
+            "request": "launch",
+            "mainClass": "ec.edu.epn.xp.XpCli",
+            "args": "tablero --abrir",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "encoding": "UTF-8",
+            "shortenCommandLine": "argfile"
+        },
+        {
+            "type": "java",
             "name": "Framework XP (comando)",
             "request": "launch",
             "mainClass": "ec.edu.epn.xp.XpCli",
@@ -68,7 +79,7 @@
         {
             "id": "comandoXp",
             "type": "promptString",
-            "description": "Comando del framework XP (ayuda, directrices, verificar, backlog, plan, plan --proponer 5, velocidad, equipo, parejas 2, crc, aceptacion)",
+            "description": "Comando del framework XP (ayuda, tablero, directrices, verificar, backlog, plan, velocidad, equipo, parejas 2, crc, aceptacion)",
             "default": "verificar"
         }
     ]

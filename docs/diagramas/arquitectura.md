@@ -24,7 +24,7 @@ flowchart TB
 
     subgraph herr["VS Code en Windows"]
         Construir[".vscode/settings.json y launch.json<br/>compila en bin/"]
-        Sdk[("lib/ JavaFX 21.0.5 para Windows")]
+        Sdk[("lib/ JavaFX 21.0.5 y SQLite JDBC")]
         Construir --> Sdk
     end
 
@@ -35,7 +35,7 @@ flowchart TB
         Motor["MotorAntdron"]
         Dominio["Dominio: hormiga, alimento, antciberdron, bomba, automata, sistema"]
         Auth["auth + config"]
-        Pers["persistencia - TablaCsv, HormigueroServicio"]
+        Pers["persistencia - BaseDatos, HormigueroServicio"]
         UI --> Motor
         Consola --> Motor
         Motor --> Dominio
@@ -47,14 +47,16 @@ flowchart TB
         direction TB
         Cli["XpCli y comandos ComandoXP"]
         Runner["EjecutorPruebas, Afirmar"]
+        Tablero["Tablero HTML de seguimiento"]
         Cli --> Runner
+        Cli --> Tablero
     end
 
     subgraph archivos["Archivos del proyecto"]
         direction TB
         Cfg["config/equipo.properties<br/>config/integrantes.csv"]
         Gen["datos/Grupo##.csv<br/>datos/automata-grupo##.md"]
-        Hormi["datos/hormiguero/*.csv"]
+        Hormi[("datos/hormiguero/hormiguero.db")]
         Xp["xp/historias.csv, metafora, CRC,<br/>plan, reuniones, spikes"]
     end
 
@@ -98,7 +100,7 @@ flowchart LR
     A -. no depende .- F
 ```
 
-La aplicación se compila **sin** el framework (`javac` solo con JavaFX). Solo las pruebas de la aplicación, que están en otra carpeta, usan el ejecutor de pruebas y `Afirmar` del framework. Así, borrar `framework-xp/` no rompe la aplicación.
+La aplicación se compila con JavaFX y usa SQLite JDBC en ejecución. Las pruebas de la aplicación, que están en otra carpeta, usan el ejecutor y `Afirmar` del framework.
 
 ## Capas
 
@@ -108,8 +110,8 @@ La aplicación se compila **sin** el framework (`javac` solo con JavaFX). Solo l
 | Orquestación | `MotorAntdron` | Lee `config/`, regenera `Grupo##.csv`, la bomba y `automata-grupo##.md`, y crea el AntCiberDron. |
 | Dominio | `hormiga`, `alimento`, `antciberdron`, `bomba`, `automata`, `sistema`, `pkAntCiberDronContract` | Reglas del enunciado: hormigas y alimentos, IA y armas, autómata, estrategia OTAN, coordenadas. |
 | Configuración y seguridad | `config`, `auth` | Lectura de `config/`, validación de usuarios (3 intentos) y claves con SHA-256. |
-| Persistencia | `persistencia` | Cuatro tablas CSV en `datos/hormiguero/`. |
-| Proceso XP | `framework-xp` | Comandos `xp ...` que dictan y verifican las prácticas XP. |
+| Persistencia | `persistencia` | Cuatro tablas en la base SQLite `datos/hormiguero/hormiguero.db`. |
+| Proceso XP | `framework-xp` | Comandos `xp ...`, verificación de prácticas y tablero HTML de seguimiento. |
 
 ## Decisiones de arquitectura
 
@@ -117,7 +119,7 @@ La aplicación se compila **sin** el framework (`javac` solo con JavaFX). Solo l
 |---|---|---|
 | JavaFX **sin FXML** | Las pantallas son código Java (`Ui` y los paneles). Menos archivos y nada que cargar en tiempo de ejecución. | Las vistas se prueban igual que cualquier clase; no hay editor visual. |
 | **Sin Maven ni herramienta de construcción** | Se trabaja en Windows con VS Code; nada que instalar aparte del JDK y la extensión de Java. | `.vscode/settings.json` define las carpetas de fuentes y `lib/` trae JavaFX; ver `xp/spikes.md`. |
-| Persistencia **CSV** en lugar de base de datos | Sin Maven no hay controladores JDBC; los CSV se editan y se montan en Docker. | `TablaCsv` es simple; no hay transacciones ni concurrencia entre procesos. |
+| **SQLite embebido** | El controlador en `lib/` permite compartir el esquema entre VS Code y Docker. | El registro, la alimentación y la importación usan transacciones. El montaje de `datos/` conserva la base. |
 | **Ejecutor de pruebas propio** | Sin Maven no hay JUnit; además permite el reporte de aceptación por historia con `@Historia`. | Solo existen las funciones necesarias de `Afirmar` y de las anotaciones `@Prueba`, `@AntesDeCada` y `@DespuesDeCada`. |
 | **Independencia verificada** | La aplicación sigue las directrices XP pero no importa el framework. | `IndependenciaTest` falla si `antdron/src` importa el framework, y la imagen Docker compila todo y ejecuta las pruebas al construirse. |
 | **Configuración por archivo** | El equipo solo escribe cédulas en `config/integrantes.csv`. | Al recargar, el motor regenera coordenadas, bomba y autómata sin tocar código. |
@@ -132,5 +134,5 @@ La aplicación se compila **sin** el framework (`javac` solo con JavaFX). Solo l
 | Consola | VS Code: «AntCiberDron (consola)» |
 | Pruebas y reporte de aceptación | «Pruebas + reporte de aceptación» en VS Code |
 | Framework XP | VS Code: «Framework XP (comando)» → `ayuda`, `verificar`, ... |
-| Docker (interfaz en el navegador) | `docker compose up --build` y abrir `http://localhost:6080/vnc.html` |
+| Docker (interfaz en el navegador) | `docker compose up -d --build --wait` y abrir `http://localhost:6080/vnc.html` |
 | Docker (consola) | `docker compose run --rm consola` |
