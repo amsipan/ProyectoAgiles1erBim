@@ -88,6 +88,11 @@ class TableroXpTest {
         Afirmar.igual(1, karen.hechas());
         Afirmar.igual(List.of(new TableroXp.AvancePractica("Reuniones", 1, 2),
                 new TableroXp.AvancePractica("Integración continua", 1, 1)), tablero.porPractica());
+        Afirmar.igual(List.of(new TableroXp.AvanceSesion("PREP", 0, 1, 1), new TableroXp.AvanceSesion("S1", 1, 1, 2),
+                new TableroXp.AvanceSesion("S2", 0, 0, 0), new TableroXp.AvanceSesion("S3", 1, 0, 1),
+                new TableroXp.AvanceSesion("S4", 0, 0, 1)), tablero.porSesion());
+        Afirmar.igual(50, tablero.porSesion().get(1).porcentaje());
+        Afirmar.igual(java.util.Map.of("PREP", 1, "S3", 1, "S4", 1), tablero.tareasPorSesion(EQUIPO.integrantes().get(1)));
     }
 
     @Prueba

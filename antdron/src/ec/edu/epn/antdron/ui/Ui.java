@@ -15,13 +15,59 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
-/** Utilidades de las pantallas: tarjetas, títulos, columnas de tablas y mensajes. */
+/** Utilidades de las pantallas: tarjetas, títulos, columnas de tablas, insignias, avatares y mensajes. */
 final class Ui {
 
+    private static final List<String> ROLES = List.of("ENTRENADOR", "CLIENTE", "ENCARGADO_PRUEBAS",
+            "ENCARGADO_SEGUIMIENTO", "CONSULTOR", "GESTOR");
+
     private Ui() {
+    }
+
+    /** Etiqueta redondeada; {@code color}: gris, indigo, verde, ambar o roja. */
+    static Label insignia(String texto, String color) {
+        Label l = new Label(texto);
+        l.getStyleClass().addAll("insignia", "insignia-" + color);
+        l.setMinWidth(Label.USE_PREF_SIZE);
+        return l;
+    }
+
+    /** Círculo con las iniciales del nombre, del color del rol XP. */
+    static StackPane avatar(String nombre, String rol, double tamano) {
+        Label l = new Label(iniciales(nombre));
+        l.setStyle("-fx-font-size: " + Math.round(tamano * 0.38) + "px;");
+        StackPane circulo = new StackPane(l);
+        circulo.getStyleClass().addAll("avatar", "avatar-" + (ROLES.contains(rol) ? rol : "OTRO"));
+        circulo.setMinSize(tamano, tamano);
+        circulo.setMaxSize(tamano, tamano);
+        return circulo;
+    }
+
+    /** Primeras letras de las dos primeras palabras: «Kened Lugmaña» → «KL», «Profesor (patmic)» → «P». */
+    static String iniciales(String nombre) {
+        List<String> palabras = java.util.Arrays.stream(nombre.trim().split("\\s+"))
+                .filter(p -> !p.isEmpty() && Character.isLetter(p.charAt(0))).toList();
+        return palabras.isEmpty() ? "?"
+                : (palabras.get(0).substring(0, 1) + (palabras.size() > 1 ? palabras.get(1).substring(0, 1) : ""))
+                        .toUpperCase();
+    }
+
+    /** «ENCARGADO_PRUEBAS» → «Encargado de pruebas (Tester)». */
+    static String rolLegible(String rol) {
+        return switch (rol == null ? "" : rol) {
+            case "ENTRENADOR" -> "Entrenador (Coach)";
+            case "CLIENTE" -> "Cliente";
+            case "ENCARGADO_PRUEBAS" -> "Encargado de pruebas (Tester)";
+            case "ENCARGADO_SEGUIMIENTO" -> "Encargado de seguimiento (Tracker)";
+            case "CONSULTOR" -> "Consultor";
+            case "GESTOR" -> "Gestor";
+            case "" -> "Sin rol";
+            default -> rol;
+        };
     }
 
     static String estilos() {

@@ -276,6 +276,29 @@ public final class TableroXp {
         return avance;
     }
 
+    /** Avance de cada sesión (Preparación, S1 a S4), en el orden de {@link Tarea#SESIONES}. */
+    public List<AvanceSesion> porSesion() {
+        List<AvanceSesion> avance = new ArrayList<>();
+        for (String s : Tarea.SESIONES) {
+            List<Tarea> deSesion = tareas.stream().filter(t -> t.sesion().equals(s)).toList();
+            avance.add(new AvanceSesion(s, (int) deSesion.stream().filter(t -> estado(t) == EstadoTarea.HECHA).count(),
+                    (int) deSesion.stream().filter(t -> estado(t) == EstadoTarea.EN_CURSO).count(), deSesion.size()));
+        }
+        return avance;
+    }
+
+    /** Cuántas tareas tiene el integrante en cada sesión (solo las sesiones donde tiene alguna). */
+    public Map<String, Integer> tareasPorSesion(Integrante integrante) {
+        Map<String, Integer> conteo = new LinkedHashMap<>();
+        for (String s : Tarea.SESIONES) {
+            int n = (int) tareas.stream().filter(t -> t.sesion().equals(s) && esDe(t, integrante)).count();
+            if (n > 0) {
+                conteo.put(s, n);
+            }
+        }
+        return conteo;
+    }
+
     public long historiasAceptadas() {
         return historias.stream().filter(Historia::aceptada).count();
     }

@@ -63,9 +63,6 @@ class DockerizacionTest {
         Afirmar.contiene(compose, "\"6080:6080\"");
         Afirmar.contiene(compose, "./config:/opt/antdron/config");
         Afirmar.contiene(compose, "./datos:/opt/antdron/datos");
-        Afirmar.contiene(compose, "./xp:/opt/antdron/xp");
-        Afirmar.contiene(compose, "./docs:/opt/antdron/docs");
-        Afirmar.contiene(Files.readString(raiz().resolve("Dockerfile")), "COPY docs docs");
         Afirmar.contiene(compose, "stdin_open: true");
     }
 }

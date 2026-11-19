@@ -8,7 +8,7 @@ Convenciones: `<<abstract>>` clase abstracta, `<<interface>>` interfaz, `<<enume
 
 ## 1. Aplicación · Hormigas y alimentos (HU-05)
 
-`Hormiga` y `Alimento` son abstractas y el contrato `pkAntCiberDronContract` define `IHormiga` e `IIA`, como pide el enunciado. Toda hormiga **nace como `HLarva`**: vive con néctar y se transforma al comer el alimento de su `TipoHormiga` (según el número de grupo: 1-2 `HSoldado`, 3-4 `HZangano`, 5 `HRastreadora`).
+`Hormiga` y `Alimento` son abstractas y el contrato `pkAntCiberDronContract` define `IHormiga`, `IIA` y `Utility`, como pide el enunciado. Toda hormiga **nace como `HLarva`**: vive con néctar y se transforma al comer el alimento de su `TipoHormiga` (según el número de grupo: 1-2 `HSoldado`, 3-4 `HZangano`, 5 `HRastreadora`).
 
 ```mermaid
 classDiagram
@@ -428,6 +428,17 @@ classDiagram
     class TipoHormiga {
         <<enumeration>>
     }
+    class Utility {
+        <<pkAntCiberDronContract>>
+        +SEPARADOR String$
+        +limpiarLinea(String) String$
+        +campos(String) String[]$
+        +esComentario(String) boolean$
+        +campoSeguro(String) String$
+        +normalizar(String) String$
+    }
+    class SistemaRuso
+    class FabricaAlimentos
 
     App --> MotorAntdron : consola y generar
     App --> Autenticador
@@ -456,7 +467,7 @@ classDiagram
     FabricaAlimentos ..> Utility : normalizar
 ```
 
-## 5. Aplicación · Interfaz JavaFX (sin FXML) y tablero XP
+## 5. Aplicación · Interfaz JavaFX (sin FXML)
 
 Las clases de la interfaz son de acceso de paquete (`ec.edu.epn.antdron.ui`) salvo `AntdronFx`. Cada pestaña de `VistaPrincipal` es un panel que recibe el `MotorAntdron`.
 
@@ -499,37 +510,6 @@ classDiagram
         ~getRaiz() Parent
         ~getMotor() MotorAntdron
     }
-    class PanelTablero {
-        ~getRaiz() Parent
-    }
-    class TableroXp {
-        +cargar(Path, Equipo)$ TableroXp
-        +estado(Tarea) EstadoTarea
-        +porIntegrante() List
-        +porPractica() List
-        +porIteracion() List
-    }
-    class Tarea {
-        <<record>>
-        String id
-        String sesion
-        String practica
-        List responsables
-        String artefacto
-        String evidencia
-    }
-    class EstadoTarea {
-        <<enumeration>>
-        POR_HACER
-        EN_CURSO
-        HECHA
-    }
-    class Utility {
-        +camposCsv(String)$ String[]
-        +esLineaIgnorable(String, String)$ boolean
-        +leerTexto(Path)$ String
-        +normalizar(String)$ String
-    }
     class Ui {
         ~estilos() String
         ~titulo(String) Label
@@ -554,11 +534,6 @@ classDiagram
     VistaPrincipal *-- PanelAutomata
     VistaPrincipal *-- PanelDron
     VistaPrincipal *-- VistaKgd
-    VistaPrincipal *-- PanelTablero
-    PanelTablero --> TableroXp : xp/tareas.csv
-    TableroXp *-- Tarea
-    TableroXp ..> EstadoTarea
-    TableroXp ..> Utility
     PanelAutomata --> LienzoAutomata
     LienzoAutomata ..> Automata
     PanelDron --> AntCiberDron
@@ -568,11 +543,8 @@ classDiagram
     PanelAutomata ..> Ui
     PanelDron ..> Ui
     VistaKgd ..> Ui
-    PanelTablero ..> Ui
     VistaIngreso ..> Ui
 ```
-
-`Utility` (paquete `pkAntCiberDronContract`) es el resultado del **reciclaje**: reúne el manejo de líneas CSV con `;`, la lectura de archivos editados en Windows y la normalización de textos que antes estaban repetidos. La usan `LectorConfiguracion`, `SistemaRuso`, `FabricaAlimentos`, `HormigueroServicio` (importación de los CSV anteriores) y `TableroXp`.
 
 ## 6. Framework XP (`framework-xp/`)
 

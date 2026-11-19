@@ -1,24 +1,21 @@
-# Evidencias de XP · Grupo 4 Pragmatics
+# Evidencias XP · Grupo 4 Pragmatics
 
-**Responsable:** Leonel Morales (Gestor). Índice para el profesor: cada práctica XP con su artefacto y su evidencia (captura, video, acta o PR). El avance de cada tarea se ve en la pestaña **Tablero XP** de la aplicación, que lee `xp/tareas.csv`.
+Índice para el profesor: cada práctica XP con su artefacto en el repositorio y su evidencia. Las fases I y II se documentan con capturas y diagramas; las fases III y IV se registran en video. Los videos están en Drive o YouTube (oculto) y no se suben al repositorio; las capturas están en [`docs/evidencias/`](evidencias/), en una carpeta por fase, y las actas en [`xp/reuniones.md`](../xp/reuniones.md).
 
-- Las capturas se guardan en [`docs/evidencias/`](evidencias/) con el nombre indicado; al subirla, la tarea pasa sola a «Hecha» en el tablero.
-- Los videos se suben a Drive o YouTube (oculto) y se pega aquí el enlace; no se suben al repositorio.
-- Nunca se capturan cédulas.
+**Cómo llenarlo:** las capturas se guardan en la carpeta de su fase con el nombre indicado (guía en [`LEEME.md`](evidencias/LEEME.md)). Después de S3 y S4 se pegan el enlace del video en la tabla «Sesiones», el minuto en que aparece cada práctica en «Video (minuto)» y el enlace del PR cuando corresponda.
 
-## I. Planificación (S1 · capturas)
+## Equipo
 
-| Práctica | Artefacto | Quién | Evidencia |
-|---|---|---|---|
-| Historias de usuario | [`xp/historias.csv`](../xp/historias.csv) | Karen Mosquera | [f1-historias.png](evidencias/f1-historias.png) · validación de Kened: [f1-validacion.png](evidencias/f1-validacion.png) |
-| Plan de entregas | [`xp/plan-entregas.md`](../xp/plan-entregas.md) | David Jumbo | [f1-plan-entregas.png](evidencias/f1-plan-entregas.png) |
-| Velocidad del proyecto | `xp velocidad` | David Jumbo | [f1-velocidad.png](evidencias/f1-velocidad.png) |
-| Iteraciones | [`xp/plan-entregas.md`](../xp/plan-entregas.md) (iteraciones 1 y 2) | David Jumbo | [f1-plan-entregas.png](evidencias/f1-plan-entregas.png) |
-| Rotaciones | [`xp/reuniones.md`](../xp/reuniones.md) o `xp parejas` | Leonel Morales | [f1-rotaciones.png](evidencias/f1-rotaciones.png) |
-| Reuniones | [`xp/reuniones.md`](../xp/reuniones.md) (actas de coordinación, S3 y S4) | Leonel Morales | [f1-reunion-coordinacion.png](evidencias/f1-reunion-coordinacion.png) |
-| (Reglas XP del equipo) | [`framework-xp/docs/guia-xp.md`](../framework-xp/docs/guia-xp.md) | Sebastián Jibaja | [f1-reglas-xp.png](evidencias/f1-reglas-xp.png) |
+| Integrante | Rol XP |
+|---|---|
+| Sebastián Jibaja | Entrenador (Coach) |
+| Karen Mosquera | Cliente |
+| Kened Lugmaña | Encargado de pruebas (Tester) |
+| David Jumbo | Encargado de seguimiento (Tracker) |
+| Daniel Mera | Consultor |
+| Leonel Morales | Gestor |
 
-## II. Diseño (S2 · capturas y diagramas)
+## Sesiones
 
 | Sesión | Fase | Evidencia | Participantes | Fecha | Capturas | Video | Acta |
 |---|---|---|---|---|---|---|---|
@@ -27,7 +24,7 @@
 | S3 | III. Desarrollo | Video (2:40) | Karen Mosquera y Sebastián Jibaja | 18/11/2026 | [Capturas](evidencias/3-desarrollo/) | [Ver video](https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FCliente%2FVideo4%2DCliente%2Emp4&share=cQo%5FugZXmz5BQIrjGmUzrt8IEgUDAzuSWnqQtNA1XUi6R6FShg&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eebb673f0%2D55eb%2D4a17%2D83f9%2Da87b1fef11b2) | [Acta S3](../xp/reuniones.md#s3-fase-iii-desarrollo) |
 | S4 | IV. Pruebas y retrospectiva | Video (~20 min) | Leonel Morales, Kened Lugmaña y Daniel Mera | | [`4-pruebas/`](evidencias/4-pruebas/) |https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FGestor%2FLlamada%20con%20DANIEL%20y%201%20persona%20m%C3%A1s%2D20261118%5F235106%2DGrabaci%C3%B3n%20de%20la%20reuni%C3%B3n%2Emp4&share=cQqALYi1YZZNQICysACVZDd0EgUD3OKVRv1w9Y4%5Fr0KTarNmRw&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ee9a66fe5%2Dc3df%2D4866%2D9f0a%2D8710233796fe | [Acta S4](../xp/reuniones.md#s4--fase-iv-pruebas-y-retrospectiva) |
 
-**Diagramas obligatorios** (en [`docs/diagramas/`](diagramas/)):
+## Las 17 prácticas XP
 
 ### I. Planificación
 
@@ -80,27 +77,7 @@
 
 | Evidencia | Quién | Dónde |
 |---|---|---|
-| [Arquitectura](diagramas/arquitectura.md) | Daniel Mera | [f2-arquitectura.png](evidencias/f2-arquitectura.png) |
-| [Casos de uso](diagramas/casos-uso.md) | Karen Mosquera | [f2-casos-uso.png](evidencias/f2-casos-uso.png) |
-| [Clases](diagramas/clases.md) | David Jumbo | [f2-clases.png](evidencias/f2-clases.png) |
-| [Grafo del autómata](diagramas/grafo-automata.md) | Sebastián Jibaja | [f2-grafo-automata.png](evidencias/f2-grafo-automata.png) |
-| [Entidad-relación (SQLite)](diagramas/modelo-er.md) | Leonel Morales | [f2-modelo-er.png](evidencias/f2-modelo-er.png) |
-
-## III. Desarrollo (S3 · video de ~12 min, Karen y Sebastián)
-
-| Práctica | Artefacto | Quién | Evidencia |
-|---|---|---|---|
-| Programación por parejas | Live Share sobre HU-01 (`Autenticador`, `Claves`) | Karen Mosquera y Sebastián Jibaja | Video S3: _(enlace)_ · [f3-live-share.png](evidencias/f3-live-share.png) |
-| Disponibilidad del cliente | Karen confirma los criterios de HU-01 y aprueba el PR | Karen Mosquera | Video S3: _(enlace)_ · PR: _(enlace)_ |
-| Unidad de pruebas | [`antdron/pruebas/`](../antdron/pruebas/) | Kened Lugmaña | [f3-pruebas-hu01.png](evidencias/f3-pruebas-hu01.png) |
-| Integración continua | PR aprobado y fusionado a `main` | Sebastián Jibaja | PR: _(enlace)_ |
-
-## IV. Pruebas (S4 · video de ~20 min, Leonel, Kened y Daniel)
-
-| Práctica | Artefacto | Quién | Evidencia |
-|---|---|---|---|
-| Implantación | [`Dockerfile`](../Dockerfile) y `docker compose up --build` | Daniel Mera | Video S4: _(enlace)_ · [f4-docker.png](evidencias/f4-docker.png) |
-| Pruebas de aceptación | [`xp/pruebas-aceptacion.md`](../xp/pruebas-aceptacion.md) | Kened Lugmaña y Karen Mosquera | Video S4: _(enlace)_ · aceptación de Karen en GitHub: _(enlace)_ |
-| (Estado y velocidad final) | `xp plan` y `xp velocidad` | David Jumbo | [f4-estado-velocidad.png](evidencias/f4-estado-velocidad.png) |
-| (Versión final) | Release `v1.0` con la evaluación de XP | Sebastián Jibaja | Release: _(enlace)_ |
-| (Retrospectiva) | Acta en [`xp/reuniones.md`](../xp/reuniones.md) | Leonel Morales | [f4-cierre.png](evidencias/f4-cierre.png) |
+| Estado final de las historias y velocidad | David | [`s4-estado-velocidad.png`](evidencias/4-pruebas/s4-estado-velocidad.png) (presentada en el video de S4) |
+| Versión v1.0 con la evaluación de XP | Sebas | GitHub › Releases · [`s4-version-v1.0.png`](evidencias/4-pruebas/s4-version-v1.0.png) |
+| Encabezado del enunciado (fecha, grupo, metáfora, cédula, nombre y rol) | Leonel | S4 |
+| Acta de la retrospectiva | Leonel | [`xp/reuniones.md`](../xp/reuniones.md#s4--fase-iv-pruebas-y-retrospectiva) |

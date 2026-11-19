@@ -80,7 +80,7 @@ flowchart TB
     TableroFX -->|lee tareas, aceptación y capturas| Xp & Evidencias
     Cli -->|lee y verifica| Xp
     Cli -->|lee| Cfg
-    Ini -->|javac + JavaFX Linux| app
+    Ini -->|ejecuta con JavaFX Linux| app
 ```
 
 ## Independencia entre las dos partes
@@ -125,7 +125,7 @@ La aplicación se compila con JavaFX y usa SQLite JDBC en ejecución. Las prueba
 | **Sin Maven ni herramienta de construcción** | Se trabaja en Windows con VS Code; nada que instalar aparte del JDK y la extensión de Java. | `.vscode/settings.json` define las carpetas de fuentes y `lib/` trae JavaFX; ver `xp/spikes.md`. |
 | **SQLite embebido** | El controlador en `lib/` permite compartir el esquema entre VS Code y Docker. | El registro, la alimentación y la importación usan transacciones. El montaje de `datos/` conserva la base. |
 | **Ejecutor de pruebas propio** | Sin Maven no hay JUnit; además permite el reporte de aceptación por historia con `@Historia`. | Solo existen las funciones necesarias de `Afirmar` y de las anotaciones `@Prueba`, `@AntesDeCada` y `@DespuesDeCada`. |
-| **Independencia verificada** | La aplicación sigue las directrices XP pero no importa el framework. | `IndependenciaTest` falla si `antdron/src` importa el framework, y Docker compila la aplicación sola. |
+| **Independencia verificada** | La aplicación sigue las directrices XP pero no importa el framework. | `IndependenciaTest` falla si `antdron/src` importa el framework, y la imagen Docker compila todo y ejecuta las pruebas al construirse. |
 | **Configuración por archivo** | El equipo solo escribe cédulas en `config/integrantes.csv`. | Al recargar, el motor regenera coordenadas, bomba y autómata sin tocar código. |
 | **Docker con Xvfb + noVNC** | Probar la interfaz sin instalar Java ni tener pantalla. | `docker compose up --build` y abrir `http://localhost:6080/vnc.html`; `config/` y `datos/` se montan como volúmenes. |
 | **Integración continua local** | Cada pareja integra varias veces al día sin depender de servicios externos. | «Pruebas + reporte de aceptación» en VS Code antes de subir; `docker compose build` vuelve a ejecutar todas las pruebas. |

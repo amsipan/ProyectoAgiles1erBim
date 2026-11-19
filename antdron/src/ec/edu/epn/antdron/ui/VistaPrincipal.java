@@ -22,9 +22,17 @@ final class VistaPrincipal {
     private final BorderPane raiz = new BorderPane();
 
     VistaPrincipal(AntdronFx app, MotorAntdron motor, String usuario, String nombre) {
-        Label marca = new Label(AntdronFx.TITULO);
+        Label marca = new Label("AntCiberDron");
         marca.getStyleClass().add("marca");
-        Label quien = new Label("Sesión: " + nombre);
+        Label marcaSub = new Label("Grupo " + motor.getEquipo().grupo() + " · " + motor.getEquipo().nombre()
+                + " · Proyecto XP");
+        marcaSub.getStyleClass().add("marca-sub");
+        javafx.scene.layout.VBox marcaCaja = new javafx.scene.layout.VBox(0, marca, marcaSub);
+        String rol = motor.getEquipo().buscarUsuario(usuario).map(i -> i.rol()).orElse("");
+        Label quien = new Label(nombre);
+        HBox chip = new HBox(8, Ui.avatar(nombre, rol, 26), quien);
+        chip.getStyleClass().add("chip-usuario");
+        chip.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         Button recargar = new Button("Recargar configuración");
         recargar.setId("recargar");
         recargar.setOnAction(e -> {
@@ -38,7 +46,7 @@ final class VistaPrincipal {
         salir.setOnAction(e -> Platform.exit());
         Region espacio = new Region();
         HBox.setHgrow(espacio, Priority.ALWAYS);
-        HBox barra = new HBox(12, marca, espacio, quien, recargar, cerrar, salir);
+        HBox barra = new HBox(12, marcaCaja, espacio, chip, recargar, cerrar, salir);
         barra.getStyleClass().add("barra");
         barra.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 

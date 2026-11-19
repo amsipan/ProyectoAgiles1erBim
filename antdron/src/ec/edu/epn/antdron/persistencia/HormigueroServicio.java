@@ -25,7 +25,6 @@ import ec.edu.epn.antdron.config.Claves;
 import ec.edu.epn.antdron.hormiga.HLarva;
 import ec.edu.epn.antdron.hormiga.Hormiga;
 import ec.edu.epn.antdron.hormiga.TipoHormiga;
-import ec.edu.epn.antdron.pkAntCiberDronContract.Utility;
 
 /**
  * Hormiguero virtual de los usuarios de la KGD: registro e ingreso, creación de hormigas (nacen como
