@@ -13,14 +13,14 @@ No se usa Maven: se abre la carpeta en **VS Code** (Windows), que compila todo c
 
 Cada integrante tiene **un rol XP**, **una historia del framework**, **historias de la aplicación** y **un diagrama o documento**. La carga está equilibrada en **8 o 9 puntos** (1 punto ≈ 1 hora ideal de trabajo en pareja). El backlog completo está en `xp/historias.csv`.
 
-| # | Integrante · Rol XP | Parte 1 · Framework | Parte 2 · Aplicación | Diagrama / documento | Pts |
+| # | Rol XP | Parte 1 · Framework | Parte 2 · Aplicación | Diagrama / documento | Pts |
 |---|---|---|---|---|---|
-| 1 | Sebastián Jibaja · Entrenador (Coach) | XP-01 Núcleo y directrices (3) | HU-06 Autómata (3) · HU-14 Bomba (2) | Grafo con gramática del autómata, guía XP, estándar de código | 8 |
-| 2 | Karen Mosquera · Cliente | XP-02 Historias de usuario (2) | HU-01 Autenticación (3) · HU-09 Vuelo y fuente de poder (2) · HU-15 Configuración por archivo (2) | Diagrama de casos de uso | 9 |
-| 3 | Kened Lugmaña · Encargado de pruebas | XP-05 Pruebas y aceptación (3) | HU-03 Generar `Grupo##.csv` (3) · HU-04 Leer con loading (3) | Reporte de pruebas de aceptación | 9 |
-| 4 | David Jumbo · Encargado de seguimiento | XP-03 Plan de entregas y velocidad (3) | HU-05 Hormigas y alimentos (3) · HU-10 Idiomas (2) · HU-02 Presentar equipo (1) | Diagrama de clases, plan de entregas | 9 |
-| 5 | Daniel Mera · Consultor | XP-04 Diseño: metáfora y CRC (2) | HU-07 IA buscar (3) · HU-08 Armas (2) · HU-13 Docker (2) | Diagrama de arquitectura, tarjetas CRC, spikes | 9 |
-| 6 | Leonel Morales · Gestor | XP-06 Equipo, parejas e integración continua (3) | HU-11 Pantallas del hormiguero (3) · HU-12 Persistencia (3) | Modelo entidad-relación, actas de reuniones | 9 |
+| 1 | Entrenador (Coach) | XP-01 Núcleo y directrices (3) | HU-06 Autómata (3) · HU-14 Bomba (2) | Grafo con gramática del autómata, guía XP, estándar de código | 8 |
+| Karen Mosquera | Cliente | XP-02 Historias de usuario (2) | HU-01 Autenticación (3) · HU-09 Vuelo y fuente de poder (2) · HU-15 Configuración por archivo (2) | Diagrama de casos de uso | 9 |
+| Kened Lugmaña | Encargado de pruebas | XP-05 Pruebas y aceptación (3) | HU-03 Generar `Grupo##.csv` (3) · HU-04 Leer con loading (3) | Reporte de pruebas de aceptación | 9 |
+| David Jumbo | Encargado de seguimiento | XP-03 Plan de entregas y velocidad (3) | HU-05 Hormigas y alimentos (3) · HU-10 Idiomas (2) · HU-02 Presentar equipo (1) | Diagrama de clases, plan de entregas | 9 |
+| Daniel Mera | Consultor | XP-04 Diseño: metáfora y CRC (2) | HU-07 IA buscar (3) · HU-08 Armas (2) · HU-13 Docker (2) | Diagrama de arquitectura, tarjetas CRC, spikes | 9 |
+| Leonel Morales | Gestor | XP-06 Equipo, parejas e integración continua (3) | HU-11 Pantallas del hormiguero (3) · HU-12 Persistencia (3) | Modelo entidad-relación, actas de reuniones | 9 |
 
 Total: 16 puntos de framework + 37 de aplicación = 53 puntos.
 
@@ -52,7 +52,7 @@ Cada comando implementa `ec.edu.epn.xp.ComandoXP` y se registra con una línea e
 | **HU-09** Vuelo y fuente de poder | Karen Mosquera | `antciberdron` (`FuentePoder`, `TurboReactor`) | `PanelDron` (energía) |
 | **HU-10** Idiomas | David Jumbo | `antciberdron` (`ModuloIdiomas`, `ExpertoParlante`, `Idioma`, `AspectoLinguistico`) | `PanelDron` (idiomas) |
 | **HU-11** Pantallas del hormiguero | Leonel Morales | `ui` (`VistaKgd`, `AntdronFx`, `VistaPrincipal`, `Ui`) | `VistaKgd` |
-| **HU-12** Persistencia | Leonel Morales | `persistencia` (`HormigueroServicio`, `TablaCsv`) | — |
+| **HU-12** Persistencia | Leonel Morales | `persistencia` (`HormigueroServicio`, `BaseDatos`, `esquema.sql`) | — |
 | **HU-13** Docker | Daniel Mera | `Dockerfile`, `docker/iniciar.sh`, `docker-compose.yml` | GUI en el navegador (noVNC) |
 | **HU-14** Bomba | Sebastián Jibaja | `bomba.Bomba` | `PanelAutomata` |
 | **HU-15** Configuración por archivo | Karen Mosquera | `MotorAntdron`, `App` (consola) | «Recargar configuración» |
@@ -86,10 +86,10 @@ El horario de cada día (planificación, reuniones de pie, bloques en pareja, ac
 
 | Bloque | Pareja A | Pareja B | Pareja C |
 |---|---|---|---|
-| Día 1 · mañana | Sebastián – Leonel | Karen – Daniel | Kened – David |
-| Día 1 · tarde | Sebastián – Daniel | Leonel – David | Karen – Kened |
-| Día 2 · mañana | Sebastián – David | Daniel – Kened | Leonel – Karen |
-| Día 2 · tarde | Sebastián – Kened | David – Karen | Daniel – Leonel |
+| Día 1 · mañana | 1 – 6 | 2 – 5 | 3 – 4 |
+| Día 1 · tarde | 1 – 5 | 6 – 4 | 2 – 3 |
+| Día 2 · mañana | 1 – 4 | 5 – 3 | 6 – 2 |
+| Día 2 · tarde | 1 – 3 | 4 – 2 | 5 – 6 |
 
 `xp parejas` calcula la rotación con los nombres de `config/integrantes.csv`.
 

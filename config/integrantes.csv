@@ -1,7 +1,8 @@
 # Integrantes del grupo. Separador: punto y coma.
-# cedula: déjela vacía hasta tenerla; con solo escribirla, la aplicación genera Grupo##.csv, la bomba y el autómata.
+# cedula: con solo escribirla, la aplicación genera Grupo##.csv, la bomba y el autómata. No la capture ni la grabe.
 # clave: texto tal cual o sha256:<hash> (antdron xp no la usa).
 # rol: ENTRENADOR, CLIENTE, ENCARGADO_PRUEBAS, ENCARGADO_SEGUIMIENTO, CONSULTOR o GESTOR.
+# No edite este archivo con Excel: use VS Code o el Bloc de notas.
 cedula;nombre;usuario;clave;rol
 1754265385;Sebastián Jibaja;sjibaja;1234;ENTRENADOR
 1750094144;Karen Mosquera;kmosquera;1234;CLIENTE

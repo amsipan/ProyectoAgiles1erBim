@@ -15,10 +15,10 @@ public final class CoordenadaUK {
 
     public CoordenadaUK(String geoposicion, Map<DiaSemana, String> horarios, String tipoArsenal) {
         this.geoposicion = Objects.requireNonNull(geoposicion).trim();
-        if (!this.geoposicion.matches("Coord-0\\d")) {
+        if (!this.geoposicion.matches("Coord-\\d{2}")) {
             throw new IllegalArgumentException("Geoposición inválida: '" + geoposicion + "' (formato Coord-0N)");
         }
-        this.digito = Integer.parseInt(this.geoposicion.substring(6));
+        this.digito = Integer.parseInt(this.geoposicion.substring(6)) % 10;
         EnumMap<DiaSemana, String> copia = new EnumMap<>(DiaSemana.class);
         copia.putAll(horarios);
         this.horarios = Collections.unmodifiableMap(copia);

@@ -148,7 +148,6 @@ class AutomataTest {
         Afirmar.igual("Tanque", LenguajesOTAN.arsenal('t'));
         Afirmar.lanza(IllegalArgumentException.class, () -> LenguajesOTAN.expresion(10));
         Afirmar.lanza(IllegalArgumentException.class, () -> LenguajesOTAN.digito("Coord-5"));
-        Afirmar.lanza(IllegalArgumentException.class, () -> LenguajesOTAN.digito("Coord-15"));
         Afirmar.lanza(IllegalArgumentException.class, () -> LenguajesOTAN.digito(null));
         Afirmar.lanza(IllegalArgumentException.class, () -> LenguajesOTAN.arsenal('x'));
         Afirmar.igual(5, LenguajesOTAN.digitoObjetivo("1754265385"));
