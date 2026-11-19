@@ -346,4 +346,4 @@ La grabación sirve como evidencia de colaboración y demostración funcional, m
 
 - **Acuerdos finales:**
   - ____
-- **Video:** ____ · **Captura:** `docs/evidencias/4-pruebas/s4-participantes.png`
+- **Video:** https://epnecuador-my.sharepoint.com/personal/velky_jibaja_epn_edu_ec/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvelky%5Fjibaja%5Fepn%5Fedu%5Fec%2FDocuments%2FVideos%20MA%20Proyecto%201er%20Bim%2FGestor%2FLlamada%20con%20DANIEL%20y%201%20persona%20m%C3%A1s%2D20261118%5F235106%2DGrabaci%C3%B3n%20de%20la%20reuni%C3%B3n%2Emp4&share=cQqALYi1YZZNQICysACVZDd0EgUD3OKVRv1w9Y4%5Fr0KTarNmRw&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ee9a66fe5%2Dc3df%2D4866%2D9f0a%2D8710233796fe· **Captura:** `docs/evidencias/4-pruebas/s4-participantes.png`
